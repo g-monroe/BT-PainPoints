@@ -14,9 +14,12 @@
     <ProjectReference Include="..\BTSuggestions.Core\BTSuggestions.Core.csproj" />
   </ItemGroup>
 
+<<<<<<< HEAD
   <ItemGroup>
     <Folder Include="Infastructure\" />
     <Folder Include="ExtensionMethods\" />
   </ItemGroup>
 
+=======
+>>>>>>> 147a94c071ae8bad57950fecfb3938cea7884c29
 </Project>

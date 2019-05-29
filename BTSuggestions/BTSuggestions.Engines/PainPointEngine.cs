@@ -24,9 +24,10 @@ namespace BTSuggestions.Engines
             return value;
         }
 
-        public Task<IEnumerable<Comment>> GetComments(int id)
+        public async Task<IEnumerable<Comment>> GetComments(int id)
         {
-            throw new NotImplementedException();
+            var result = await __painPointHandler.GetComments(id);
+            return result;
         }
 
         public async Task<PainPoint> GetPainPoint(int id)

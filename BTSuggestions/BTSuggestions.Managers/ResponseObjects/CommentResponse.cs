@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BTSuggestions.Managers.ResponseObjects
 {
-    public class CommentRequest
+    public class CommentResponse
     {
         public int CommentId { get; set; }
         public int IssueId { get; set; }

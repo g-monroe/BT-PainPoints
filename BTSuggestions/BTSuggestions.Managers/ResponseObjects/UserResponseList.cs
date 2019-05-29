@@ -4,7 +4,9 @@ using System.Text;
 
 namespace BTSuggestions.Managers.ResponseObjects
 {
-    class UserResponseList
+    public class UserResponseList
     {
+        public int TotalResults { get; set; }
+        public List<UserResponse> UsersList { get; set; }
     }
 }
