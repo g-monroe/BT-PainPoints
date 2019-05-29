@@ -113,6 +113,16 @@ namespace BTSuggestions.Controllers
                 Privilege = 69,
                 Email = "johnwickboi@gmail.com"
             };
+            var newUser2 = new User
+            {
+                Username = "robinwick",
+                Firstname = "Robin",
+                Lastname = "Hick",
+                Password = "rawnwick2019",
+                Privilege = 67,
+                Email = "johnwickman@gmail.com"
+            };
+            var newUsers = new List<User>() { newUser, newUser2 };
             var newPain = new PainPoint
             {
                 Title = "This is test",
@@ -128,6 +138,39 @@ namespace BTSuggestions.Controllers
                 Type = 3,
                 PriorityLevel = 99
             };
+            var newPain2 = new PainPoint
+            {
+                Title = "A new test. This is test",
+                Summary = "Wow this is cool. This is the summary of the descripted Pain Point.",
+                Annontation = "My manager said Wow I can't bee-lieve you've done this!",
+                Status = "Closed",
+                User = newUser2,
+                UserId = newUser2.Id,
+                CompanyContact = "JimmyWick",
+                CompanyLocation = "Iowa",
+                CompanyName = "FlyLover",
+                IndustryType = "Wow'er",
+                Type = 2,
+                PriorityLevel = 98
+            };
+            var newPains = new List<PainPoint>() { newPain, newPain2 };
+
+            var newComments = new List<Comment>()
+            {
+                new Comment
+                {
+                    User = newUser2,
+                    UserId = newUser2.UserId,
+                    PainPoint = newPain,
+                    PainPointId = newPain.Id,
+                    CommentText = "Hey I like your bees",
+                    Status = "Responded"
+                },
+            };
+            _context.Users.AddRange(newUsers);
+            _context.PainPoints.AddRange(newPains);
+            _context.Comments.AddRange(newComments);
+            _context.SaveChanges();
         }
         // PUT api/values/5
         [HttpPut("{id}")]
