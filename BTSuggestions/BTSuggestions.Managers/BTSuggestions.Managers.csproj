@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <Folder Include="Infastructure\" />
+    <Folder Include="ResponseObjects\" />
+    <Folder Include="RequestObjects\" />
   </ItemGroup>
 
 </Project>
