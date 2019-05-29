@@ -34,9 +34,28 @@ namespace BTSuggestions.Controllers
         }
         // GET api/painpoint
         [HttpGet]
-        public async Task<IEnumerable<PainPoint>> Get()
+        public async Task<Managers.ResponseObjects.PainPointResponseList> Get()
         {
-            return await _painpointManager.GetPainPoints();
+            var pps = await _painpointManager.GetPainPoints();
+            var resp = new Managers.ResponseObjects.PainPointResponseList();
+            resp.TotalResults = pps.Count();
+            resp.PainPointsList = pps.Select(me => new Managers.ResponseObjects.PainPointResponse() {
+                User = me.User,
+                PriorityLevel = me.PriorityLevel,
+                UserId = me.UserId,
+                Annotation = me.Annotation,
+                ComapnyLocation = me.CompanyLocation,
+                CompanyContact = me.CompanyContact,
+                CompanyName = me.CompanyName,
+                Title = me.Title,
+                PainPointId = me.Id,
+                CreatedOn = me.CreatedOn.ToString(),
+                Summary = me.Summary,
+                IndustryType = me.IndustryType,
+                Status = me.Status
+            }).ToList();
+
+            return resp;
         }
 
         // GET api/painpoint/5

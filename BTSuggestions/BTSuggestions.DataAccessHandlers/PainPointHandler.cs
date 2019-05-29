@@ -86,7 +86,7 @@ namespace BTSuggestions.DataAccessHandlers
             {
                 Title = "This is test",
                 Summary = "This is the summary of the descripted Pain Point.",
-                Annontation = "Wow I can't bee-lieve you've done this!",
+                Annotation = "Wow I can't bee-lieve you've done this!",
                 Status = "Open",
                 User = newUser,
                 UserId = newUser.Id,
@@ -101,7 +101,7 @@ namespace BTSuggestions.DataAccessHandlers
             {
                 Title = "A new test. This is test",
                 Summary = "Wow this is cool. This is the summary of the descripted Pain Point.",
-                Annontation = "My manager said Wow I can't bee-lieve you've done this!",
+                Annotation = "My manager said Wow I can't bee-lieve you've done this!",
                 Status = "Closed",
                 User = newUser2,
                 UserId = newUser2.Id,

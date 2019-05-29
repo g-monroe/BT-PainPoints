@@ -11,10 +11,12 @@ namespace BTSuggestions.Managers.RequestObjects
         public string Title { get; set; }
         public string Summary { get; set; }
         public string Annotation { get; set; }
+        public string Status { get; set; }
+        public int PriorityLevel { get; set; }
         public User User { get; set; }
         public int UserId { get; set; }
         public string CompanyName { get; set; }
-        public string CompanyContatact { get; set; }
+        public string CompanyContact { get; set; }
         public string CompanyLocation { get; set; }
         public string IndustryType { get; set; }
         public DateTime CreatedOn { get; set; }

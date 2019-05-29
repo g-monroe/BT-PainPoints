@@ -8,10 +8,12 @@ namespace BTSuggestions.Managers.RequestObjects
     public class CommentRequest
     {
         public int CommentId { get; set; }
-        public int IssueId { get; set; }
+        public int PainPointId { get; set; }
+        public PainPoint PainPoint { get; set; }
         public User User { get; set; }
         public int UserId { get; set; }
         public string CommentText { get; set; }
         public string Status { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

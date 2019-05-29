@@ -20,7 +20,7 @@ namespace BTSuggestions.Core.Entities
         public string Summary { get; set; }
         [MaxLength(1500)]
         #nullable enable
-        public string? Annontation { get; set; }
+        public string? Annotation { get; set; }
         [MaxLength(100)]
         [MinLength(1)]
         [Required]

@@ -66,7 +66,7 @@ namespace BTSuggestions.Engines
             PainPoint result = await __painPointHandler.GetById(painPoint.Id);
             result.Title = newPain.Title;
             result.Summary = newPain.Summary;
-            result.Annontation = newPain.Annontation;
+            result.Annotation = newPain.Annotation;
             result.Status = newPain.Status;
             await __painPointHandler.Update(result);
             return painPoint;
