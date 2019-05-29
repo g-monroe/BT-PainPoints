@@ -67,7 +67,6 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
         const { values, handleSubmit, errors, handleChange, setFieldValue } = this.props;
         const css = "../src/styles/App.css";
         const { inputValue } = this.state;
-        console.log(this.props, this.state);
         return (
             <Layout>
                 <style>

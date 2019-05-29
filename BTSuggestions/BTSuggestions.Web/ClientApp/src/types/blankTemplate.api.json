@@ -1,15 +1,15 @@
 {
     "painPointId": 1,
-    "painPointType": "",
-    "painPointTitle": "",
-    "painPointSummary": "",
-    "painPointAnnotation": "",
+    "painPointType": "Billing",
+    "painPointTitle": "Title",
+    "painPointSummary": "Summary Summary Summary Summary",
+    "painPointAnnotation": "Annotation Annotation Annotation Annotation",
     "painPointSeverity": 1,
-    "submissionStatus": "",
-    "companyName": "",
-    "companyContact": "",
-    "companyLocation": "",
-    "industryType": "",
+    "submissionStatus": "Draft",
+    "companyName": "Company",
+    "companyContact": "Person",
+    "companyLocation": "Location",
+    "industryType": "Housing",
     "userId": 1,
-    "userName": ""
+    "userName": "Person"
 }
