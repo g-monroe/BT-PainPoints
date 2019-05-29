@@ -14,4 +14,8 @@
     <ProjectReference Include="..\BTSuggestions.Core\BTSuggestions.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infastructure\" />
+  </ItemGroup>
+
 </Project>
