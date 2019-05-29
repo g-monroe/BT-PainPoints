@@ -107,7 +107,7 @@ namespace BTSuggestions.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutComment(int id, Comment value)
         {
-            if (id != value.CommentId)
+            if (id != value.Id)
             {
                 return BadRequest();
             }

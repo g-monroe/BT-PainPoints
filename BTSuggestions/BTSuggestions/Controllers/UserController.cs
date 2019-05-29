@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BTSuggestions.Core.Entities;
+using BTSuggestions.Core.Interfaces.Engines;
+using BTSuggestions.Core.Interfaces.Managers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,10 +22,10 @@ namespace BTSuggestions.Controllers
         /// handle differently.
         /// - Gavin
         /// </summary>
-        private readonly Managers.UserManager _manager;
-        private readonly Engines.UserEngine _engine;
+        private readonly IUserManager _manager;
+        private readonly IUserEngine _engine;
 
-        public UserController(Managers.UserManager manager, Engines.UserEngine engine)
+        public UserController(IUserManager manager, IUserEngine engine)
         {
             _manager = manager;
             _engine = engine;
@@ -92,7 +94,7 @@ namespace BTSuggestions.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<User>> PutUser(int id, User value)
         {
-            if (id != value.UserId)
+            if (id != value.Id)
             {
                 return BadRequest();
             }

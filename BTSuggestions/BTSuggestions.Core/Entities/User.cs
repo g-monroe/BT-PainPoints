@@ -7,9 +7,6 @@ namespace BTSuggestions.Core.Entities
 {
     public class User : BaseEntity
     {
-        [Key]
-        [Required]
-        public int UserId { get; set; }
         [Required]
         [MaxLength(120)]
         [MinLength(1)]

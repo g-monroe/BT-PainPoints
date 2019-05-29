@@ -8,9 +8,6 @@ namespace BTSuggestions.Core.Entities
 {
     public class PainPoint : BaseEntity
     {
-        [Key]
-        [Required]
-        public int PainPointId { get; set; }
         [MaxLength(150)]
         [MinLength(2)]
         [Required]

@@ -39,10 +39,10 @@ namespace BTSuggestions
                     {
                         opt.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
                     });
-            services.AddDbContext<DataAccessHandlers.BTSuggestionContext>(options =>
+            services.AddDbContext<BTSuggestionContext>(options =>
             {
                 options.UseSqlServer(Configuration["DefaultConnection"],
-                                     b => b.MigrationsAssembly("BTSuggestions.DataAccessHandlers"));
+                                     b => b.MigrationsAssembly("BTSuggestions.Web"));
                 options.EnableSensitiveDataLogging(true);
             });
             services.AddCors(options =>
@@ -62,7 +62,7 @@ namespace BTSuggestions
             // Handlers
             services.AddTransient<ICommentHandler, CommentHandler>();
             services.AddTransient<IPainPointHandler, PainPointHandler>();
-            services.AddTransient<IUserManager, UserManager>();
+            services.AddTransient<IUserHandler, UserHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

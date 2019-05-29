@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BTSuggestions.Web.Migrations
 {
-    public partial class Intial : Migration
+    public partial class things : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace BTSuggestions.Web.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Email = table.Column<string>(maxLength: 120, nullable: false),
                     Username = table.Column<string>(maxLength: 30, nullable: false),
@@ -23,20 +23,22 @@ namespace BTSuggestions.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "PainPoints",
                 columns: table => new
                 {
-                    PainPointId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(maxLength: 150, nullable: false),
+                    Type = table.Column<int>(nullable: false),
                     Summary = table.Column<string>(maxLength: 1500, nullable: false),
                     Annontation = table.Column<string>(maxLength: 1500, nullable: true),
                     Status = table.Column<string>(maxLength: 100, nullable: false),
                     UserId = table.Column<int>(nullable: false),
+                    PriorityLevel = table.Column<int>(nullable: false),
                     CompanyName = table.Column<string>(nullable: true),
                     CompanyContact = table.Column<string>(nullable: true),
                     CompanyLocation = table.Column<string>(nullable: true),
@@ -45,12 +47,12 @@ namespace BTSuggestions.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PainPoints", x => x.PainPointId);
+                    table.PrimaryKey("PK_PainPoints", x => x.Id);
                     table.ForeignKey(
                         name: "FK_PainPoints_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -58,7 +60,7 @@ namespace BTSuggestions.Web.Migrations
                 name: "Comments",
                 columns: table => new
                 {
-                    CommentId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PainPointId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
@@ -68,18 +70,18 @@ namespace BTSuggestions.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comments", x => x.CommentId);
+                    table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Comments_PainPoints_PainPointId",
                         column: x => x.PainPointId,
                         principalTable: "PainPoints",
-                        principalColumn: "PainPointId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Comments_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 

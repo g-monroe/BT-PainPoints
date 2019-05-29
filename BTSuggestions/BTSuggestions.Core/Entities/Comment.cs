@@ -8,9 +8,6 @@ namespace BTSuggestions.Core.Entities
 {
     public class Comment : BaseEntity
     {
-        [Key]
-        [Required]
-        public int CommentId { get; set; }
         [Required]
         public virtual PainPoint PainPoint { get; set; }
         [Required]

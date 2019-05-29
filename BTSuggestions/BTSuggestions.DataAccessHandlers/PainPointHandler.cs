@@ -12,10 +12,9 @@ namespace BTSuggestions.DataAccessHandlers
 {
     public class PainPointHandler : BaseHandler<PainPoint>, IPainPointHandler
     {
-        private readonly new BTSuggestionContext _context;
+     
         public PainPointHandler(BTSuggestionContext context) : base(context)
         {
-            _context = context;
         }
 
         public async Task<IEnumerable<Comment>> GetComments(int id)
@@ -62,7 +61,7 @@ namespace BTSuggestions.DataAccessHandlers
             return user;
         }
 
-        public async void PostSeed()
+        public void PostSeed()
         {
             var newUser = new User
             {
@@ -120,7 +119,7 @@ namespace BTSuggestions.DataAccessHandlers
                 new Comment
                 {
                     User = newUser2,
-                    UserId = newUser2.UserId,
+                    UserId = newUser2.Id,
                     PainPoint = newPain,
                     PainPointId = newPain.Id,
                     CommentText = "Hey I like your bees",
@@ -130,7 +129,7 @@ namespace BTSuggestions.DataAccessHandlers
             _context.Users.AddRange(newUsers);
             _context.PainPoints.AddRange(newPains);
             _context.Comments.AddRange(newComments);
-            await _context.SaveChangesAsync();
+             _context.SaveChanges();
         }
     }
 }

@@ -4,14 +4,16 @@ using BTSuggestions.DataAccessHandlers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BTSuggestions.Web.Migrations
 {
     [DbContext(typeof(BTSuggestionContext))]
-    partial class BTSuggestionContextModelSnapshot : ModelSnapshot
+    [Migration("20190529201028_things")]
+    partial class things
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +23,7 @@ namespace BTSuggestions.Web.Migrations
 
             modelBuilder.Entity("BTSuggestions.Core.Entities.Comment", b =>
                 {
-                    b.Property<int>("CommentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -31,8 +33,6 @@ namespace BTSuggestions.Web.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
-                    b.Property<int>("Id");
-
                     b.Property<int>("PainPointId");
 
                     b.Property<string>("Status")
@@ -41,7 +41,7 @@ namespace BTSuggestions.Web.Migrations
 
                     b.Property<int>("UserId");
 
-                    b.HasKey("CommentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PainPointId");
 
@@ -52,7 +52,7 @@ namespace BTSuggestions.Web.Migrations
 
             modelBuilder.Entity("BTSuggestions.Core.Entities.PainPoint", b =>
                 {
-                    b.Property<int>("PainPointId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -66,8 +66,6 @@ namespace BTSuggestions.Web.Migrations
                     b.Property<string>("CompanyName");
 
                     b.Property<DateTime>("CreatedOn");
-
-                    b.Property<int>("Id");
 
                     b.Property<string>("IndustryType");
 
@@ -89,7 +87,7 @@ namespace BTSuggestions.Web.Migrations
 
                     b.Property<int>("UserId");
 
-                    b.HasKey("PainPointId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -98,7 +96,7 @@ namespace BTSuggestions.Web.Migrations
 
             modelBuilder.Entity("BTSuggestions.Core.Entities.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -109,8 +107,6 @@ namespace BTSuggestions.Web.Migrations
                     b.Property<string>("Firstname")
                         .IsRequired()
                         .HasMaxLength(80);
-
-                    b.Property<int>("Id");
 
                     b.Property<string>("Lastname")
                         .IsRequired()
@@ -125,7 +121,7 @@ namespace BTSuggestions.Web.Migrations
                         .IsRequired()
                         .HasMaxLength(30);
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });

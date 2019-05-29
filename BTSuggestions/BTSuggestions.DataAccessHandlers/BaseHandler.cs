@@ -13,7 +13,7 @@ namespace BTSuggestions.DataAccessHandlers
     public abstract class BaseHandler<T> : IBaseHandler<T> where T : class, IBaseEntity
     {
         protected readonly DbSet<T> _dbSet;
-        protected readonly DbContext _context;
+        protected readonly BTSuggestionContext _context;
 
         public BaseHandler(BTSuggestionContext context)
         {
