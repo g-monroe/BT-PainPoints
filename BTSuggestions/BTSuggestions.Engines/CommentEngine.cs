@@ -16,7 +16,7 @@ namespace BTSuggestions.Engines
             _commentHandler = commentHandler;
         }
 
-        public Comment CreateCommentEntity(int painPointId, int userId, string commentText, string status, DateTime createdOn)
+        public async Task<Comment> CreateCommentEntity(int painPointId, int userId, string commentText, string status, DateTime createdOn)
         {
             var comment = new Comment
             {
@@ -26,8 +26,8 @@ namespace BTSuggestions.Engines
                 Status = status,
                 CreatedOn = createdOn
             };
-            _commentHandler.Insert(comment);
-            _commentHandler.SaveChanges();
+            await _commentHandler.Insert(comment);
+            await _commentHandler.SaveChanges();
 
             return comment;
         }
@@ -43,11 +43,11 @@ namespace BTSuggestions.Engines
             return await _commentHandler.GetAll();
         }
 
-        public Comment UpdateComment(Comment comment, string commentText, DateTime createdOn)
+        public async Task<Comment> UpdateComment(Comment comment, string commentText, DateTime createdOn)
         {
             comment.CommentText = commentText;
             comment.CreatedOn = createdOn;
-
+            await _commentHandler.Update(comment);
             return comment;
         }
     }

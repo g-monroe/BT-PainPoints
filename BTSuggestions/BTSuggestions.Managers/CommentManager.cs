@@ -4,6 +4,7 @@ using BTSuggestions.Core.Interfaces.Managers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BTSuggestions.Managers
 {
@@ -15,20 +16,22 @@ namespace BTSuggestions.Managers
             _commentEngine = commentEngine;
         }
 
-        public Comment AddNewComment(int userId, int PainPointId, string commentText, string status, DateTime createdOn)
+        public async Task<Comment> AddNewComment(int userId, int PainPointId, string commentText, string status, DateTime createdOn)
         {
-            return _commentEngine.CreateCommentEntity(PainPointId, userId, commentText, status, createdOn);
+            return await _commentEngine.CreateCommentEntity(PainPointId, userId, commentText, status, createdOn);
         }
 
-        public IEnumerable<Comment> GetComments()
+        public async Task<IEnumerable<Comment>> GetComments()
         {
-            return _commentEngine.GetComments();
+            return await _commentEngine.GetComments();
         }
 
-        public Comment UpdateComment(int commentId, string commentText, DateTime createdOn)
+        public async Task<Comment> UpdateComment(int commentId, string commentText, DateTime createdOn)
         {
-            var comment = _commentEngine.GetComment(commentId);
-            return _commentEngine.UpdateComment(comment, commentText, createdOn);
+            var comment = await _commentEngine.GetComment(commentId);
+            return await _commentEngine.UpdateComment(comment, commentText, createdOn);
         }
+
+   
     }
 }

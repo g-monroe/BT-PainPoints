@@ -10,8 +10,8 @@ namespace BTSuggestions.Core.Interfaces.Engines
     {
         Task<IEnumerable<Comment>> GetComments();
         Task<Comment> GetComment(int id);
-        Comment CreateCommentEntity(int painPointId, int userId, string commentText, string status, DateTime createdOn);
-        Comment UpdateComment(Comment comment, string commentText, DateTime createdOn);
+        Task<Comment> CreateCommentEntity(int painPointId, int userId, string commentText, string status, DateTime createdOn);
+        Task<Comment> UpdateComment(Comment comment, string commentText, DateTime createdOn);
         // Comment DeleteComent(Comment comment);
     }
 }
