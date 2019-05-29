@@ -16,8 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Infastructure\" />
-    <Folder Include="ResponseObjects\" />
-    <Folder Include="RequestObjects\" />
+    <Folder Include="ExtensionMethods\" />
   </ItemGroup>
 
 </Project>
