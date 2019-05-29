@@ -10,18 +10,15 @@ const { Content } = Layout;
 const FormItem = AntForm.Item;
 
 interface ICreateFormProps{
-    data: CreateFormEntity; //TODO: Update to match entity form
+    data: CreateFormEntity; 
 }
 
 interface ICreateFormState{
-    painPointId?: number,
     painPointType: string,
     painPointTitle: string,
     painPointSummary: string,
     painPointAnnotation?: string,
     painPointSeverity: number,
-
-    submissionStatus: string,
 
     companyName?: string,
     companyContact?: string,
@@ -33,19 +30,16 @@ interface ICreateFormState{
 }
 
 const yupValidation = yup.object().shape<ICreateFormState>({
-    painPointId: yup.number().lessThan(150).moreThan(2).label('Pain Point ID'),
-    painPointType: yup.string().required().label('Pain Point Type'),
-    painPointTitle: yup.string().min(2).max(150).required().label('Pain Point Title'),
-    painPointSummary: yup.string().min(2).max(1500).required().label('Pain Point Summmary'),
-    painPointAnnotation: yup.string().min(1).max(1500).label('Pain Point Annotation'),
-    painPointSeverity: yup.number().min(0).max(10).required().label('Pain Point Severity'),
-
-    submissionStatus: yup.string().required().label('Submission Status'),
+    painPointType: yup.string().required().label('Issue Type'),
+    painPointTitle: yup.string().min(2).max(150).required().label('Issue Title'),
+    painPointSummary: yup.string().min(2).max(1500).required().label('Issue Summmary'),
+    painPointAnnotation: yup.string().min(1).max(1500).label('Issue Annotation'),
+    painPointSeverity: yup.number().min(0).max(10).required().label('Issue Severity'),
 
     companyName: yup.string().label('Company Name'),
     companyContact: yup.string().label('Company Contact'),
     companyLocation: yup.string().label('Company Location'),
-    industryType: yup.string().label('Industry Type'),
+    industryType: yup.string().label('Industry Type')
 
     //userId: yup.number().required().label('User ID'),
     //userName: yup.string().required().label('User Name')
@@ -53,11 +47,11 @@ const yupValidation = yup.object().shape<ICreateFormState>({
 
 class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, ICreateFormState>>{
     static defaultProps = {
-    }
+    };
 
     state = {
         inputValue: 0
-    }
+    };
 
     slideChange = (value: any) => {
         this.setState({
@@ -67,14 +61,18 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
 
     getValidationStatus = (error: any) => {
         return !!error ? 'error' : 'success';
-    }
+    };
 
     render() {
         const { values, handleSubmit, errors, handleChange, setFieldValue } = this.props;
         const css = "../src/styles/App.css";
         const { inputValue } = this.state;
+        console.log(this.props, this.state);
         return (
             <Layout>
+                <style>
+                    {css}
+                </style>
                 <Content>
                     <Form onSubmitCapture={handleSubmit}>
                         <FormItem label="Issue Title" validateStatus={this.getValidationStatus(errors.painPointTitle)}>
@@ -93,6 +91,7 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
                             <Slider id="painPointSeveritySlide" min={0} max={5} onChange={this.slideChange} value={typeof inputValue === 'number' ? inputValue : 0} />
                             <InputNumber id="painPointSeverityVal" min={0} max={5} value={inputValue} onChange={this.slideChange}/>
                         </FormItem>
+                        <h3>If filling out an issue for a customer, please include the following:</h3>
                         <FormItem label="Company Contact" validateStatus={this.getValidationStatus(errors.companyContact)}>
                             <Input id="companyContact" placeholder="Company Contact Name" onChange={handleChange} value={values.companyContact}/>
                         </FormItem>
@@ -105,15 +104,13 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
                         <FormItem label="Industry Type" validateStatus={this.getValidationStatus(errors.industryType)}>
                             <Select id="industryType" onChange={x => setFieldValue("industryType", x)} value={values.industryType}>{industryList.map(i => <Select.Option key={i.id} value={i.id}>{i.name}</Select.Option>)}</Select>
                         </FormItem>
-                        <FormItem label="Submit">
-                            <Button id="submit" htmlType="submit">Submit Problem</Button>
-                        </FormItem>
+                        <Button id="submit" htmlType="submit">Submit Problem</Button>
                     </Form>
                 </Content>
             </Layout>
         )
     }
-}
+};
 
 export default withFormik<ICreateFormProps, ICreateFormState>({
     mapPropsToValues: props => ({
@@ -127,7 +124,7 @@ export default withFormik<ICreateFormProps, ICreateFormState>({
         companyName: props.data.companyName,
         companyContact: props.data.companyContact,
         companyLocation: props.data.companyLocation,
-        industryType: props.data.industryType,
+        industryType: props.data.industryType
         //userId: props.data.userId,
         //userName: props.data.userName
     }),
@@ -135,5 +132,6 @@ export default withFormik<ICreateFormProps, ICreateFormState>({
     handleSubmit: (values, props) => {
         console.log(values);
         alert("You have submitted an issue");
-    }
+    },
+    displayName: 'Create Issue Form'
 })(CreateForm);
