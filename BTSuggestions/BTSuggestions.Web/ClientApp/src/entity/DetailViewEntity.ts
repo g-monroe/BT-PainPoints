@@ -1,4 +1,4 @@
-export class CreateFormEntity {
+export class DetailViewEntity {
     painPointId: number;
     painPointType: string;
     painPointTitle: string;
@@ -12,6 +12,8 @@ export class CreateFormEntity {
     companyContact: string;
     companyLocation: string;
     industryType: string;
+
+    comments: string[]
 
     //userId?: number;
     //userName: string;
@@ -30,6 +32,7 @@ export class CreateFormEntity {
         this.companyContact = JSONData.companyContact;
         this.companyLocation = JSONData.companyLocation;
         this.industryType = JSONData.industryType;
+        this.comments = JSONData.string;
 
         //this.userId = JSONData.userId;
         //this.userName = JSONData.userName;

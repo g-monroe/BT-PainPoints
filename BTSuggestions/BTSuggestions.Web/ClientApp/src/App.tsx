@@ -5,6 +5,7 @@ import { Link, BrowserRouter, Route } from 'react-router-dom';
 import CreateForm from '../src/components/CreateForm';
 import DetailView from '../src/components/DetailView';
 import blankTemplate from '../src/types/blankTemplate.api.json';
+import testData from '../src/types/testData.api.json';
 
 export default class App extends React.Component {
     displayName = App.name
@@ -22,7 +23,7 @@ export default class App extends React.Component {
                     </nav>
                     <Route path="/home"/>
                     <Route path="/create" exact render={(props) => <CreateForm data={blankTemplate} />}/>
-                    <Route path="/home/:id" exact render={(props) => <DetailView data={blankTemplate}/>}/>
+                    <Route path="/home/:id" exact render={(props) => <DetailView data={testData}/>}/>
                     <Route path="/admin"></Route>
                 </BrowserRouter>
             </>
