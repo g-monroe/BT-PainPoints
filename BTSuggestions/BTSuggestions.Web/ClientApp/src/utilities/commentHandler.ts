@@ -1,5 +1,5 @@
 import { APIHandler } from '../utilities/apiHandler';
-import { CreateFormEntity } from '../entity/CreateFormEntity';
+import CreateFormEntity  from '../entity/CreateFormEntity';
 
 export interface ICommentHandler{
     getUserName(id: number): any;
