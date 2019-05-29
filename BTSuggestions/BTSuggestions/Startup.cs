@@ -51,18 +51,9 @@ namespace BTSuggestions
                                   builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
 
-            // Managers
-            services.AddTransient<ICommentManager, CommentManager>();
-            services.AddTransient<IPainPointManager, PainPointManager>();
-            services.AddTransient<IUserManager, UserManager>();
-            // Engines
-            services.AddTransient<ICommentEngine, CommentEngine>();
-            services.AddTransient<IPainPointEngine, PainPointEngine>();
-            services.AddTransient<IUserEngine, UserEngine>();
-            // Handlers
-            services.AddTransient<ICommentHandler, CommentHandler>();
-            services.AddTransient<IPainPointHandler, PainPointHandler>();
-            services.AddTransient<IUserHandler, UserHandler>();
+            services.AddEngines();
+            services.AddManagers();
+            services.AddHandlers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
