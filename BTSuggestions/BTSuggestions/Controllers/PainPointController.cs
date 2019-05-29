@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BTSuggestions.Core;
 using BTSuggestions.DataAccessHandlers;
+using BTSuggestions.Core.Interfaces.DataAccessHandlers;
+
 namespace BTSuggestions.Controllers
 {
     [Route("api/[controller]")]
@@ -21,40 +23,36 @@ namespace BTSuggestions.Controllers
         /// handle differently.
         /// - Gavin
         /// </summary>
-        private readonly BTSuggestionContext _context;
+        private readonly IPainPointHandler _painpointHandler;
 
-        public PainPointController(BTSuggestionContext context)
+        public PainPointController(IPainPointHandler painPointHandler)
         {
-            _context = context;
+            _painpointHandler = painPointHandler;
         }
         // GET api/painpoint
         [HttpGet]
-        public ActionResult<IEnumerable<PainPoint>> Get()
+        public async Task<IEnumerable<PainPoint>> Get()
         {
-            return _context.PainPoints.ToList();
+            return await _context.PainPoints.ToList();
         }
 
         // GET api/painpoint/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PainPoint>> Get(int id)
         {
-            var issue = await _context.PainPoints.FindAsync(id);
-            if (issue == null)
-            {
-                return NotFound();
-            }
-            return issue;
+            //var issue = await _context.PainPoints.FindAsync(id);
+            //if (issue == null)
+            //{
+            //    return NotFound();
+            //}
+            //return issue;
         }
         // GET api/painpoint/5/comments
         [HttpGet("{id}/comments")]
         public async Task<ActionResult<IEnumerable<Comment>>> GetComments(int id)
         {
-            var issue = await _context.Comments.Where(s => s.PainPointId == id).ToListAsync();
-            if (issue == null)
-            {
-                return NotFound();
-            }
-            return issue;
+            IEnumerable<Comment> result = await _painpointHandler.GetComments(id);
+            return result;
         }
         // GET api/painpoint/5/user
         [HttpGet("{id}/user")]
@@ -104,73 +102,7 @@ namespace BTSuggestions.Controllers
         [HttpPost("seed")]
         public void PostSeed()
         {
-            var newUser = new User
-            {
-                Username = "johnwick",
-                Firstname = "John",
-                Lastname = "Wick",
-                Password = "johnwick2019",
-                Privilege = 69,
-                Email = "johnwickboi@gmail.com"
-            };
-            var newUser2 = new User
-            {
-                Username = "robinwick",
-                Firstname = "Robin",
-                Lastname = "Hick",
-                Password = "rawnwick2019",
-                Privilege = 67,
-                Email = "johnwickman@gmail.com"
-            };
-            var newUsers = new List<User>() { newUser, newUser2 };
-            var newPain = new PainPoint
-            {
-                Title = "This is test",
-                Summary = "This is the summary of the descripted Pain Point.",
-                Annontation = "Wow I can't bee-lieve you've done this!",
-                Status = "Open",
-                User = newUser,
-                UserId = newUser.Id,
-                CompanyContact = "JohnWick",
-                CompanyLocation = "Kansas",
-                CompanyName = "BeeKiller",
-                IndustryType = "Ninja",
-                Type = 3,
-                PriorityLevel = 99
-            };
-            var newPain2 = new PainPoint
-            {
-                Title = "A new test. This is test",
-                Summary = "Wow this is cool. This is the summary of the descripted Pain Point.",
-                Annontation = "My manager said Wow I can't bee-lieve you've done this!",
-                Status = "Closed",
-                User = newUser2,
-                UserId = newUser2.Id,
-                CompanyContact = "JimmyWick",
-                CompanyLocation = "Iowa",
-                CompanyName = "FlyLover",
-                IndustryType = "Wow'er",
-                Type = 2,
-                PriorityLevel = 98
-            };
-            var newPains = new List<PainPoint>() { newPain, newPain2 };
-
-            var newComments = new List<Comment>()
-            {
-                new Comment
-                {
-                    User = newUser2,
-                    UserId = newUser2.UserId,
-                    PainPoint = newPain,
-                    PainPointId = newPain.Id,
-                    CommentText = "Hey I like your bees",
-                    Status = "Responded"
-                },
-            };
-            _context.Users.AddRange(newUsers);
-            _context.PainPoints.AddRange(newPains);
-            _context.Comments.AddRange(newComments);
-            _context.SaveChanges();
+            
         }
         // PUT api/values/5
         [HttpPut("{id}")]
