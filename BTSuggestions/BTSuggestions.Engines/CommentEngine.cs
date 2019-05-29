@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BTSuggestions.Engines
 {
-    class CommentEngine : ICommentEngine
+    public class CommentEngine : ICommentEngine
     {
         private readonly ICommentHandler _commentHandler;
         public CommentEngine(ICommentHandler commentHandler)

@@ -8,7 +8,7 @@ namespace BTSuggestions.Core.Interfaces.Managers
     public interface IUserManager
     {
         IEnumerable<User> GetUsers();
-        User AddNewUser(int userId, string userEmail, string username, string firstName, string lastName, string password, int privilage);
+        User AddNewUser(string userEmail, string username, string firstName, string lastName, string password, int privilage);
         User UpdateUser(int userId, string userEmail, string username, string firstName, string lastName, string password, int privilage);
     }
 }

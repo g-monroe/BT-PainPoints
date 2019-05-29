@@ -8,7 +8,7 @@ namespace BTSuggestions.Core.Interfaces.Managers
     public interface ICommentManager
     {
         IEnumerable<Comment> GetComments();
-        Comment AddNewComment(int userId, int PainPointId, string commentText, int status, DateTime createdOn);
-        Comment UpdateComment(int userId, int PainPointId, string commentText, int status, DateTime createdOn);
+        Comment AddNewComment(int userId, int PainPointId, string commentText, string status, DateTime createdOn);
+        Comment UpdateComment(int commentId, string commentText, DateTime createdOn);
     }
 }
