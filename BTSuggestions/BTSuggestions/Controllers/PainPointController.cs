@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using BTSuggestions.Core;
 using BTSuggestions.DataAccessHandlers;
 using BTSuggestions.Core.Interfaces.DataAccessHandlers;
+using BTSuggestions.Core.Interfaces.Managers;
+using BTSuggestions.Core.Interfaces.Engines;
 
 namespace BTSuggestions.Controllers
 {
@@ -23,125 +25,74 @@ namespace BTSuggestions.Controllers
         /// handle differently.
         /// - Gavin
         /// </summary>
-        private readonly IPainPointHandler _painpointHandler;
-
-        public PainPointController(IPainPointHandler painPointHandler)
+        private readonly IPainPointManager _painpointManager;
+        private readonly IPainPointEngine _painpointEngine;
+        public PainPointController(IPainPointManager painPointManager, IPainPointEngine painPointEngine)
         {
-            _painpointHandler = painPointHandler;
+            _painpointManager = painPointManager;
+            _painpointEngine = painPointEngine;
         }
         // GET api/painpoint
         [HttpGet]
         public async Task<IEnumerable<PainPoint>> Get()
         {
-            return await _context.PainPoints.ToList();
+            return await _painpointManager.GetPainPoints();
         }
 
         // GET api/painpoint/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PainPoint>> Get(int id)
         {
-            //var issue = await _context.PainPoints.FindAsync(id);
-            //if (issue == null)
-            //{
-            //    return NotFound();
-            //}
-            //return issue;
+            return await _painpointEngine.GetPainPoint(id);
         }
         // GET api/painpoint/5/comments
         [HttpGet("{id}/comments")]
         public async Task<ActionResult<IEnumerable<Comment>>> GetComments(int id)
         {
-            IEnumerable<Comment> result = await _painpointHandler.GetComments(id);
-            return result;
+            return await _painpointEngine.GetComments(id);
         }
         // GET api/painpoint/5/user
         [HttpGet("{id}/user")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var issue = await _context.PainPoints.FindAsync(id);
-            var user = await _context.Users.FindAsync(issue.UserId);
-            if (issue == null || user == null)
-            {
-                return NotFound();
-            }
-            
-            return user;
+            return await _painpointEngine.GetUser(id);
         }
         // GET api/painpoint/5/title
         [HttpGet("{id}/title")]
         public async Task<ActionResult<string>> GetTitle(int id)
         {
-            var issue = await _context.PainPoints.FindAsync(id);
-            if (issue == null)
-            {
-                return NotFound();
-            }
-
-            return issue.Title;
+            return await _painpointEngine.GetTitle(id);
         }
         // GET api/painpoint/5/title
         [HttpGet("{id}/summary")]
         public async Task<ActionResult<string>> GetSummary(int id)
         {
-            var issue = await _context.PainPoints.FindAsync(id);
-            if (issue == null)
-            {
-                return NotFound();
-            }
-
-            return issue.Summary;
+            return await _painpointEngine.GetSummary(id);
         }
         // POST api/painpoint
         [HttpPost]
-        public async Task<ActionResult<int>> PostPainPoint(PainPoint value)
+        public async Task<ActionResult<PainPoint>> PostPainPoint(PainPoint value)
         {
-            _context.PainPoints.Add(value);
-            var result = await _context.SaveChangesAsync();
-            return result;
+            return await _painpointManager.AddNewPainPoint(value);
         }
         [HttpPost("seed")]
         public void PostSeed()
         {
-            
+            _painpointManager.PostSeed();
         }
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPainPoint(int id, PainPoint value)
+        public async Task<ActionResult<PainPoint>> PutPainPoint(int id, PainPoint value)
         {
-            if (id != value.PainPointId)
-            {
-                return BadRequest();
-            }
-            _context.Entry(value).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-            } catch(DbUpdateConcurrencyException){
-                var issue = _context.PainPoints.FindAsync(id);
-                if (issue == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
+            return await _painpointManager.UpdatePainPoint(id, value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Boolean>> Delete(int id)
+        public async void Delete(int id)
         {
-            var issue = await _context.PainPoints.FindAsync(id);
-            if (issue == null)
-            {
-                return NotFound();
-            }
-            _context.PainPoints.Remove(issue);
-            await _context.SaveChangesAsync();
-            return true;
+            PainPoint result = await _painpointEngine.GetPainPoint(id);
+            await _painpointManager.Delete(result);
         }
     }
 }

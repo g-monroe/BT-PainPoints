@@ -2,14 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BTSuggestions.Core.Interfaces.Managers
 {
     public interface IPainPointManager
     {
-        IEnumerable<PainPoint> GetPainPoints();
-        PainPoint AddNewPainPoint(string title, int type, string summary, string annotation, string status, User user,
-            int userId, string companyName, string companyContact, string companyLocation, string industryType, DateTime createdOn);
-        PainPoint UpdatePainPoint(int painPointId, string title, string summary, string annotation, string status);
+        Task<IEnumerable<PainPoint>> GetPainPoints();
+        Task<PainPoint> AddNewPainPoint(PainPoint value);
+        Task<PainPoint> UpdatePainPoint(int painPointId, PainPoint value);
+        void PostSeed();
+        Task Delete(PainPoint entity);
     }
 }

@@ -4,6 +4,7 @@ using BTSuggestions.Core.Interfaces.Managers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BTSuggestions.Managers
 {
@@ -15,22 +16,28 @@ namespace BTSuggestions.Managers
             _painPointEngine = painPointEngine;
         }
 
-        public PainPoint AddNewPainPoint(string title, int type, string summary, string annotation, string status, User user, int userId,
-            string companyName, string companyContact, string companyLocation, string industryType, DateTime createdOn)
+        public async Task<PainPoint> AddNewPainPoint(PainPoint value)
         {
-            return _painPointEngine.CreatePainPoint(title, type, summary, annotation, status, user, userId, companyName, companyContact,
-                companyLocation, industryType, createdOn);
+            return await _painPointEngine.CreatePainPoint(value);
         }
 
-        public IEnumerable<PainPoint> GetPainPoints()
+        public async Task<IEnumerable<PainPoint>> GetPainPoints()
         {
-            return _painPointEngine.GetPainPoints();
+            return await _painPointEngine.GetPainPoints();
         }
 
-        public PainPoint UpdatePainPoint(int painPointId, string title, string summary, string annotation, string status)
+        public async Task<PainPoint> UpdatePainPoint(int painPointId, PainPoint value)
         {
-            var painPoint = _painPointEngine.GetPainPoint(painPointId);
-            return _painPointEngine.UpdatePainPoint(painPoint, title, summary, annotation, status);
+            var painPoint = await _painPointEngine.GetPainPoint(painPointId);
+            return await _painPointEngine.UpdatePainPoint(painPoint, value);
+        }
+        public void PostSeed()
+        {
+            _painPointEngine.PostSeed();
+        }
+        public Task Delete(PainPoint value)
+        {
+            return  _painPointEngine.Delete(value);
         }
     }
 }

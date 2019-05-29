@@ -4,6 +4,7 @@ using BTSuggestions.Core.Interfaces.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BTSuggestions.Engines
 {
@@ -15,50 +16,64 @@ namespace BTSuggestions.Engines
             __painPointHandler = painPointHandler;
         }
 
-        public PainPoint CreatePainPoint(string title, int type, string summary, string annotation,
-            string status, User user, int userId, string companyName, string companyConntact,
-            string companyLocation, string industryType, DateTime createdOn)
+        public async Task<PainPoint> CreatePainPoint(PainPoint value)
         {
-            var painPoint = new PainPoint
-            {
-                Title = title,
-                Type = type,
-                Summary = summary,
-                Annontation = annotation,
-                Status = status,
-                User = user,
-                UserId = userId,
-                CompanyName = companyName,
-                CompanyContact = companyConntact,
-                CompanyLocation = companyLocation,
-                IndustryType = industryType,
-                CreatedOn = createdOn
-            };
-            __painPointHandler.Insert(painPoint);
-            __painPointHandler.SaveChanges();
+           await __painPointHandler.Insert(value);
+           await __painPointHandler.SaveChanges();
 
+            return value;
+        }
+
+        public Task<IEnumerable<Comment>> GetComments(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<PainPoint> GetPainPoint(int id)
+        {
+            var painPoint = await __painPointHandler.GetById(id);
             return painPoint;
         }
 
-        public PainPoint GetPainPoint(int id)
+        public async Task<IEnumerable<PainPoint>> GetPainPoints()
         {
-            var painPoint = __painPointHandler.GetById(id);
-            return painPoint;
+            return await __painPointHandler.GetAll();
         }
 
-        public IEnumerable<PainPoint> GetPainPoints()
+        public async Task<string> GetSummary(int id)
         {
-            return __painPointHandler.GetAll();
+            return await __painPointHandler.GetSummary(id);
         }
 
-        public PainPoint UpdatePainPoint(PainPoint painPoint, string title, string summary, string annotations, string status)
+        public async Task<string> GetTitle(int id)
         {
-            painPoint.Title = title;
-            painPoint.Summary = summary;
-            painPoint.Annontation = annotations;
-            painPoint.Status = status;
+            return await __painPointHandler.GetTitle(id);
+        }
 
+        public async Task<User> GetUser(int id)
+        {
+            return await __painPointHandler.GetUser(id);
+        }
+
+        public void PostSeed()
+        {
+            __painPointHandler.PostSeed();
+        }
+
+        public async Task<PainPoint> UpdatePainPoint(PainPoint painPoint, PainPoint newPain)
+        {
+            PainPoint result = await __painPointHandler.GetById(painPoint.Id);
+            result.Title = newPain.Title;
+            result.Summary = newPain.Summary;
+            result.Annontation = newPain.Annontation;
+            result.Status = newPain.Status;
+            await __painPointHandler.Update(result);
             return painPoint;
+        }
+        public Task Delete(PainPoint entity)
+        {
+             __painPointHandler.Delete(entity);
+            return Task.CompletedTask;
         }
     }
 }
