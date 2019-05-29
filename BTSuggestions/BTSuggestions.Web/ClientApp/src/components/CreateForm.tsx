@@ -4,7 +4,8 @@ import * as yup from 'yup';
 import { painPointList } from '../types/dropdownValues/painPointTypes';
 import { industryList } from '../types/dropdownValues/industryTypes';
 import { withFormik, InjectedFormikProps, Form } from 'formik';
-import CreateFormEntity from '../entity/CreateFormEntity';
+import CreateFormEntity, { IssueEntity } from '../entity/CreateFormEntity';
+import { CommentHandler } from '../utilities/commentHandler';
 
 const { Content } = Layout;
 const FormItem = AntForm.Item;
@@ -130,6 +131,7 @@ export default withFormik<ICreateFormProps, ICreateFormState>({
     validationSchema: yupValidation,
     handleSubmit: (values, props) => {
         console.log(values);
+        CommentHandler;
         alert("You have submitted an issue");
     },
     displayName: 'Create Issue Form'
