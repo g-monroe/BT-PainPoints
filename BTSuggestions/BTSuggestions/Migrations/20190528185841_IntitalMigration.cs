@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BTSuggestions.Web.Migrations
 {
-    public partial class Intial : Migration
+    public partial class IntitalMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,10 +27,10 @@ namespace BTSuggestions.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PainPoints",
+                name: "Issues",
                 columns: table => new
                 {
-                    PainPointId = table.Column<int>(nullable: false)
+                    IssueId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(maxLength: 150, nullable: false),
                     Summary = table.Column<string>(maxLength: 1500, nullable: false),
@@ -45,9 +45,9 @@ namespace BTSuggestions.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PainPoints", x => x.PainPointId);
+                    table.PrimaryKey("PK_Issues", x => x.IssueId);
                     table.ForeignKey(
-                        name: "FK_PainPoints_Users_UserId",
+                        name: "FK_Issues_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
@@ -60,7 +60,7 @@ namespace BTSuggestions.Web.Migrations
                 {
                     CommentId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PainPointId = table.Column<int>(nullable: false),
+                    IssueId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     CommentText = table.Column<string>(maxLength: 1500, nullable: false),
                     Status = table.Column<string>(maxLength: 80, nullable: false),
@@ -70,10 +70,10 @@ namespace BTSuggestions.Web.Migrations
                 {
                     table.PrimaryKey("PK_Comments", x => x.CommentId);
                     table.ForeignKey(
-                        name: "FK_Comments_PainPoints_PainPointId",
-                        column: x => x.PainPointId,
-                        principalTable: "PainPoints",
-                        principalColumn: "PainPointId",
+                        name: "FK_Comments_Issues_IssueId",
+                        column: x => x.IssueId,
+                        principalTable: "Issues",
+                        principalColumn: "IssueId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Comments_Users_UserId",
@@ -84,9 +84,9 @@ namespace BTSuggestions.Web.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_PainPointId",
+                name: "IX_Comments_IssueId",
                 table: "Comments",
-                column: "PainPointId");
+                column: "IssueId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_UserId",
@@ -94,8 +94,8 @@ namespace BTSuggestions.Web.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PainPoints_UserId",
-                table: "PainPoints",
+                name: "IX_Issues_UserId",
+                table: "Issues",
                 column: "UserId");
         }
 
@@ -105,7 +105,7 @@ namespace BTSuggestions.Web.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "PainPoints");
+                name: "Issues");
 
             migrationBuilder.DropTable(
                 name: "Users");

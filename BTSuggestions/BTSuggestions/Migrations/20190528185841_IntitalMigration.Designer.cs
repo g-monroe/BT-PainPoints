@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTSuggestions.Web.Migrations
 {
     [DbContext(typeof(BTSuggestionContext))]
-    [Migration("20190528205941_Intial")]
-    partial class Intial
+    [Migration("20190528185841_IntitalMigration")]
+    partial class IntitalMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -33,7 +33,7 @@ namespace BTSuggestions.Web.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
-                    b.Property<int>("PainPointId");
+                    b.Property<int>("IssueId");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -43,16 +43,16 @@ namespace BTSuggestions.Web.Migrations
 
                     b.HasKey("CommentId");
 
-                    b.HasIndex("PainPointId");
+                    b.HasIndex("IssueId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("BTSuggestions.Core.Entities.PainPoint", b =>
+            modelBuilder.Entity("BTSuggestions.Core.Entities.Issue", b =>
                 {
-                    b.Property<int>("PainPointId")
+                    b.Property<int>("IssueId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -83,11 +83,11 @@ namespace BTSuggestions.Web.Migrations
 
                     b.Property<int>("UserId");
 
-                    b.HasKey("PainPointId");
+                    b.HasKey("IssueId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PainPoints");
+                    b.ToTable("Issues");
                 });
 
             modelBuilder.Entity("BTSuggestions.Core.Entities.User", b =>
@@ -124,9 +124,9 @@ namespace BTSuggestions.Web.Migrations
 
             modelBuilder.Entity("BTSuggestions.Core.Entities.Comment", b =>
                 {
-                    b.HasOne("BTSuggestions.Core.Entities.PainPoint", "PainPoint")
+                    b.HasOne("BTSuggestions.Core.Entities.Issue", "Issue")
                         .WithMany()
-                        .HasForeignKey("PainPointId")
+                        .HasForeignKey("IssueId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BTSuggestions.Core.Entities.User", "User")
@@ -135,7 +135,7 @@ namespace BTSuggestions.Web.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("BTSuggestions.Core.Entities.PainPoint", b =>
+            modelBuilder.Entity("BTSuggestions.Core.Entities.Issue", b =>
                 {
                     b.HasOne("BTSuggestions.Core.Entities.User", "User")
                         .WithMany()

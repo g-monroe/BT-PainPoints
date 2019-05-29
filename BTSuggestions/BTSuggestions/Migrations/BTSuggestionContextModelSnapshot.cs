@@ -31,9 +31,7 @@ namespace BTSuggestions.Web.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
-                    b.Property<int>("Id");
-
-                    b.Property<int>("PainPointId");
+                    b.Property<int>("IssueId");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -43,16 +41,16 @@ namespace BTSuggestions.Web.Migrations
 
                     b.HasKey("CommentId");
 
-                    b.HasIndex("PainPointId");
+                    b.HasIndex("IssueId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("BTSuggestions.Core.Entities.PainPoint", b =>
+            modelBuilder.Entity("BTSuggestions.Core.Entities.Issue", b =>
                 {
-                    b.Property<int>("PainPointId")
+                    b.Property<int>("IssueId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -67,11 +65,7 @@ namespace BTSuggestions.Web.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
-                    b.Property<int>("Id");
-
                     b.Property<string>("IndustryType");
-
-                    b.Property<int>("PriorityLevel");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -85,15 +79,13 @@ namespace BTSuggestions.Web.Migrations
                         .IsRequired()
                         .HasMaxLength(150);
 
-                    b.Property<int>("Type");
-
                     b.Property<int>("UserId");
 
-                    b.HasKey("PainPointId");
+                    b.HasKey("IssueId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PainPoints");
+                    b.ToTable("Issues");
                 });
 
             modelBuilder.Entity("BTSuggestions.Core.Entities.User", b =>
@@ -109,8 +101,6 @@ namespace BTSuggestions.Web.Migrations
                     b.Property<string>("Firstname")
                         .IsRequired()
                         .HasMaxLength(80);
-
-                    b.Property<int>("Id");
 
                     b.Property<string>("Lastname")
                         .IsRequired()
@@ -132,9 +122,9 @@ namespace BTSuggestions.Web.Migrations
 
             modelBuilder.Entity("BTSuggestions.Core.Entities.Comment", b =>
                 {
-                    b.HasOne("BTSuggestions.Core.Entities.PainPoint", "PainPoint")
+                    b.HasOne("BTSuggestions.Core.Entities.Issue", "Issue")
                         .WithMany()
-                        .HasForeignKey("PainPointId")
+                        .HasForeignKey("IssueId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BTSuggestions.Core.Entities.User", "User")
@@ -143,7 +133,7 @@ namespace BTSuggestions.Web.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("BTSuggestions.Core.Entities.PainPoint", b =>
+            modelBuilder.Entity("BTSuggestions.Core.Entities.Issue", b =>
                 {
                     b.HasOne("BTSuggestions.Core.Entities.User", "User")
                         .WithMany()
