@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BTSuggestions.Core.Interfaces.DataAccessHandlers;
+using BTSuggestions.Core.Interfaces.Engines;
+using BTSuggestions.Core.Interfaces.Managers;
+using BTSuggestions.DataAccessHandlers;
+using BTSuggestions.Engines;
+using BTSuggestions.Managers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,7 +42,7 @@ namespace BTSuggestions
             services.AddDbContext<DataAccessHandlers.BTSuggestionContext>(options =>
             {
                 options.UseSqlServer(Configuration["DefaultConnection"],
-                                     b => b.MigrationsAssembly("BTSuggestions.Web"));
+                                     b => b.MigrationsAssembly("BTSuggestions.DataAccessHandlers"));
                 options.EnableSensitiveDataLogging(true);
             });
             services.AddCors(options =>
@@ -44,6 +50,19 @@ namespace BTSuggestions
                 options.AddPolicy("MyPolicy",
                                   builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
+
+            // Managers
+            services.AddTransient<ICommentManager, CommentManager>();
+            services.AddTransient<IPainPointManager, PainPointManager>();
+            services.AddTransient<IUserManager, UserManager>();
+            // Engines
+            services.AddTransient<ICommentEngine, CommentEngine>();
+            services.AddTransient<IPainPointEngine, PainPointEngine>();
+            services.AddTransient<IUserEngine, UserEngine>();
+            // Handlers
+            services.AddTransient<ICommentHandler, CommentHandler>();
+            services.AddTransient<IPainPointHandler, PainPointHandler>();
+            services.AddTransient<IUserManager, UserManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
