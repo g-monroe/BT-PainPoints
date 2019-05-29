@@ -4,6 +4,7 @@ using BTSuggestions.Core.Interfaces.Managers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BTSuggestions.Managers
 {
@@ -15,20 +16,28 @@ namespace BTSuggestions.Managers
             _userEngine = userEngine;
         }
 
-        public User AddNewUser(string userEmail, string username, string firstName, string lastName, string password, int privilage)
+        public async Task<User> AddNewUser(User newUser)
         {
-            return _userEngine.CreateUserEntity(userEmail, username, firstName, lastName, password, privilage);
+            return await _userEngine.CreateUserEntity(newUser);
         }
 
-        public IEnumerable<User> GetUsers()
+        public async Task<User> GetUser(int id)
         {
-            return _userEngine.GetUsers();
+            return await _userEngine.GetUser(id);
         }
 
-        public User UpdateUser(int userId, string userEmail, string username, string firstName, string lastName, string password, int privilage)
+        public async Task<IEnumerable<User>> GetUsers()
         {
-            var user = _userEngine.GetUser(userId);
-            return _userEngine.UpdateUser(user, userEmail, username, firstName, lastName, password, privilage);
+            return await _userEngine.GetUsers();
+        }
+        public Task Delete(User user)
+        {
+            return _userEngine.Delete(user);
+        }
+        public async Task<User> UpdateUser(int userId, string userEmail, string username, string firstName, string lastName, string password, int privilage)
+        {
+            var user = await _userEngine.GetUser(userId);
+            return await _userEngine.UpdateUser(user, userEmail, username, firstName, lastName, password, privilage);
         }
     }
 }

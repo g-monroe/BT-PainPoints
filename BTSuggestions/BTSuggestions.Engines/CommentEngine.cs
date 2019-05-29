@@ -4,6 +4,7 @@ using BTSuggestions.Core.Interfaces.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BTSuggestions.Engines
 {
@@ -37,7 +38,7 @@ namespace BTSuggestions.Engines
             return comment;
         }
 
-        public IEnumerable<Comment> GetComments()
+        public async Task<IEnumerable<Comment>> GetComments()
         {
             return _commentHandler.GetAll();
         }

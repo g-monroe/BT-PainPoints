@@ -20,137 +20,96 @@ namespace BTSuggestions.Controllers
         /// handle differently.
         /// - Gavin
         /// </summary>
-        private readonly DataAccessHandlers.BTSuggestionContext _context;
+        private readonly Managers.UserManager _manager;
+        private Engines.UserEngine _engine;
 
-        public UserController(DataAccessHandlers.BTSuggestionContext context)
+        public UserController(Managers.UserManager manager, Engines.UserEngine engine)
         {
-            _context = context;
+            _manager = manager;
+            _engine = engine;
         }
         // GET api/user
         [HttpGet]
-        public ActionResult<IEnumerable<User>> Get()
+        public async Task<ActionResult<IEnumerable<User>>> Get()
         {
-            return _context.Users.ToList();
+            var result = await _manager.GetUsers();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result.ToList();
         }
 
         // GET api/user/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var result = await _manager.GetUser(id);
+            if (result == null)
             {
                 return NotFound();
             }
-            return user;
+            return result;
         }
         // GET api/user/5/firstname
         [HttpGet("{id}/firstname")]
         public async Task<ActionResult<string>> GetFirstname(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null || user == null)
-            {
-                return NotFound();
-            }
-            
-            return user.Firstname;
+            return await _engine.GetFirstname(id);
         }
         // GET api/user/5/lastname
         [HttpGet("{id}/lastname")]
         public async Task<ActionResult<string>> GetLastname(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null || user == null)
-            {
-                return NotFound();
-            }
-
-            return user.Lastname;
+            return await _engine.GetLastname(id);
         }
         // GET api/user/5/email
         [HttpGet("{id}/email")]
         public async Task<ActionResult<string>> GetEmail(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null || user == null)
-            {
-                return NotFound();
-            }
-
-            return user.Email;
+            return await _engine.GetEmail(id);
         }
         // GET api/user/5/username
         [HttpGet("{id}/username")]
         public async Task<ActionResult<string>> GetUsername(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null || user == null)
-            {
-                return NotFound();
-            }
-
-            return user.Username;
+            return await _engine.GetUsername(id);
         }
         // GET api/user/5/privilege
         [HttpGet("{id}/privilege")]
         public async Task<ActionResult<int>> GetPrivilege(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null || user == null)
-            {
-                return NotFound();
-            }
-
-            return user.Privilege;
+            return await _engine.GetPrivilege(id);
         }
         // POST api/user
         [HttpPost]
-        public async Task<ActionResult<int>> PostUser(User value)
+        public async Task<ActionResult<User>> PostUser(User value)
         {
-            _context.Users.Add(value);
-            var result = await _context.SaveChangesAsync();
-            return result;
+            return await _manager.AddNewUser(value);
         }
 
         // PUT api/user/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User value)
+        public async Task<ActionResult<User>> PutUser(int id, User value)
         {
             if (id != value.UserId)
             {
                 return BadRequest();
             }
-            _context.Entry(value).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-            } catch(DbUpdateConcurrencyException){
-                var issue = _context.Users.FindAsync(id);
-                if (issue == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
+            User result = await _manager.UpdateUser(id, value.Email, value.Username, value.Firstname, value.Lastname, value.Password, value.Privilege);
+            return result;
         }
 
         // DELETE api/users/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Boolean>> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var result = await _manager.GetUser(id);
+            if (result == null)
             {
                 return NotFound();
             }
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-            return true;
+            return _manager.Delete(result);
         }
     }
 }

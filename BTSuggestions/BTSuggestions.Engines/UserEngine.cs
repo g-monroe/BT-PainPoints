@@ -4,6 +4,7 @@ using BTSuggestions.Core.Interfaces.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BTSuggestions.Engines
 {
@@ -15,35 +16,52 @@ namespace BTSuggestions.Engines
             _userHandler = userHandler;
         }
 
-        public User CreateUserEntity(string email, string username, string firstName, string lastName, string password, int privilege)
+        public async Task<User> CreateUserEntity(User newUser)
         {
-            var user = new User
-            {
-                Email = email,
-                Username = username,
-                Firstname = firstName,
-                Lastname = lastName,
-                Password = password,
-                Privilege = privilege
-            };
-            _userHandler.Insert(user);
-            _userHandler.SaveChanges();
 
+           await _userHandler.Insert(newUser);
+           await _userHandler.SaveChanges();
+
+            return newUser;
+        }
+
+        public async Task<string> GetEmail(int id)
+        {
+            return await _userHandler.GetEmail(id);
+        }
+
+        public async Task<string> GetFirstname(int id)
+        {
+            return await _userHandler.GetFirstname(id);
+        }
+
+        public async Task<string> GetLastname(int id)
+        {
+            return await _userHandler.GetLastname(id);
+        }
+
+        public async Task<int> GetPrivilege(int id)
+        {
+            return await _userHandler.GetPrivilege(id);
+        }
+
+        public async Task<User> GetUser(int id)
+        {
+            var user = await _userHandler.GetById(id);
             return user;
         }
 
-        public User GetUser(int id)
+        public Task<string> GetUsername(int id)
         {
-            var user = _userHandler.GetById(id);
-            return user;
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetUsers()
+        public async Task<IEnumerable<User>> GetUsers()
         {
-            return _userHandler.GetAll();
+            return await _userHandler.GetAll();
         }
 
-        public User UpdateUser(User user, string email, string firstName, string lastName, string password, int privilege)
+        public async Task<User> UpdateUser(User user, string email, string firstName, string lastName, string password, int privilege)
         {
             user.Email = email;
             user.Firstname = firstName;
@@ -52,6 +70,11 @@ namespace BTSuggestions.Engines
             user.Privilege = privilege;
 
             return user;
+        }
+        public Task Delete(User user)
+        {
+            return _userHandler.Delete(user);
+
         }
     }
 }

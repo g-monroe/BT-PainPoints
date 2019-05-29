@@ -2,13 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BTSuggestions.Core.Interfaces.Managers
 {
     public interface IUserManager
     {
-        IEnumerable<User> GetUsers();
-        User AddNewUser(string userEmail, string username, string firstName, string lastName, string password, int privilage);
-        User UpdateUser(int userId, string userEmail, string username, string firstName, string lastName, string password, int privilage);
+        Task<IEnumerable<User>> GetUsers();
+        Task<User> AddNewUser(User newUSer);
+        Task<User> UpdateUser(int userId, string userEmail, string username, string firstName, string lastName, string password, int privilage);
+        Task<User> GetUser(int id);
+        Task Delete(User user);
     }
 }
