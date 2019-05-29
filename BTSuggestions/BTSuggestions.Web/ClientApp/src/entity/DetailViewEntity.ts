@@ -1,4 +1,4 @@
-export class DetailViewEntity {
+export default class DetailViewEntity {
     painPointId: number;
     painPointType: string;
     painPointTitle: string;

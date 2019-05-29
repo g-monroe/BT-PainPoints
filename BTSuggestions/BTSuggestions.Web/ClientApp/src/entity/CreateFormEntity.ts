@@ -1,4 +1,4 @@
-export class CreateFormEntity {
+export default class CreateFormEntity {
     painPointId: number;
     painPointType: string;
     painPointTitle: string;

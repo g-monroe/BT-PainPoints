@@ -10,6 +10,6 @@ export class CommentHandler implements ICommentHandler{
         return APIHandler(`/api/comments/${id}`, {
             method: 'GET',
             responseType: CreateFormEntity
-        })
+        });
     }
 }

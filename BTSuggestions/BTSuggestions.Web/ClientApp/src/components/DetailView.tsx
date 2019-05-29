@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import '../styles/App.css';
-import { Layout, Divider, Comment, Tooltip } from 'antd';
+import { Layout, Divider, Comment, Tooltip, Input, Button } from 'antd';
 import DetailViewEntity from '../entity/DetailViewEntity';
 import moment from 'moment';
 
@@ -53,6 +53,8 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
                     <h3>Personal Notes: {this.props.data.painPointAnnotation}</h3>
                     <Divider>Comments</Divider>
                     {this.renderComments(this.props.data.comments)}
+                    <Input placeholder="Type Comments Here..." />
+                    <Button htmlType="submit">Submit</Button>
                 </Content>
                 <Sider style={{ background: '#fff' }}>
                     <h1>Submitted By:</h1>
