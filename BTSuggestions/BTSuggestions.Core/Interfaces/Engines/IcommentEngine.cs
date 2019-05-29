@@ -9,7 +9,7 @@ namespace BTSuggestions.Core.Interfaces.Engines
     {
         IEnumerable<Comment> GetComments();
         Comment GetComment(int id);
-        Comment CreateCommentEntity(int painPointId, int userId, string commentText, int status, DateTime createdOn);
+        Comment CreateCommentEntity(int painPointId, int userId, string commentText, string status, DateTime createdOn);
         Comment UpdateComment(Comment comment, string commentText, DateTime createdOn);
         // Comment DeleteComent(Comment comment);
     }

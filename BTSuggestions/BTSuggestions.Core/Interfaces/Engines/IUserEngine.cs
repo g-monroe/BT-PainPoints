@@ -10,6 +10,6 @@ namespace BTSuggestions.Core.Interfaces.Engines
         IEnumerable<User> GetUsers();
         User GetUser(int id);
         User CreateUserEntity(string email, string username, string firstName, string lastName, string password, int privilege);
-        User UpdateUser(string email, string username, string firstName, string lastName, string password, int privilege);
+        User UpdateUser(User user, string email, string username, string firstName, string lastName, string password, int privilege);
     }
 }

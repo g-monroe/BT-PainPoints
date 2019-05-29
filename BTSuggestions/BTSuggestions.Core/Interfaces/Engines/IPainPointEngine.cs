@@ -9,8 +9,9 @@ namespace BTSuggestions.Core.Interfaces.Engines
     {
         IEnumerable<PainPoint> GetPainPoints();
         PainPoint GetPainPoint(int id);
-        PainPoint CreatePainPointEntity(string title, string summary, string annotation, int status, User user, int userId,
-            string companyName, string companyContact, string companyLocation, string industryType, DateTime createdOn);
-        PainPoint UpdatePainPoint(string title, string summary, string annotation, int status, int painPointId);
+        PainPoint CreatePainPoint(string title, int type, string summary, string annotation,
+            string status, User user, int userId, string companyName, string companyConntact,
+            string companyLocation, string industryType, DateTime createdOn);
+        PainPoint UpdatePainPoint(PainPoint painPoint, string title, string summary, string comments, string status);
     }
 }
