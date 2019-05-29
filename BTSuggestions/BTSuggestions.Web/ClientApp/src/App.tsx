@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import { Link, BrowserRouter, Route } from 'react-router-dom';
 import CreateForm from '../src/components/CreateForm';
 import blankTemplate from '../src/types/blankTemplate.api.json';
+import PainPointPage from '../src/components/PainPointPage';
 
 export default class App extends React.Component {
     displayName = App.name
@@ -15,11 +16,11 @@ export default class App extends React.Component {
                 <style>{css}</style>
                 <BrowserRouter>
                     <nav>
-                        <Link to="/home" className="navLinks">View Issues</Link>
-                        <Link to="/create" className="navLinks">Create New Issue</Link>
-                        <Link to="/admin" className="navLinks">Manage Issues</Link>
+                        <Link to="/home" className="navLinks" style = {{padding:15,margin:15}}>View Issues</Link>
+                        <Link to="/create" className="navLinks" style = {{padding:15,margin:15}}>Create New Issue</Link>
+                        <Link to="/admin" className="navLinks" style = {{padding:15,margin:15}}>Manage Issues</Link>
                     </nav>
-                    <Route path="/home"></Route>
+                    <Route path="/home" exact render={(props) => <PainPointPage/>}></Route>
                     <Route path="/create" exact render={(props) => <CreateForm data={blankTemplate}/>}></Route>
                     <Route path="/admin"></Route>
                 </BrowserRouter>
