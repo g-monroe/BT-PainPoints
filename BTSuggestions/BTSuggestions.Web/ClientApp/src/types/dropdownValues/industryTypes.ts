@@ -1,7 +1,4 @@
-export class SelectOption{
-    id: number;
-    name: string;
-}
+import {SelectOption} from './SelectOption';
 
 export const industryList: SelectOption[] = [
     {id: 1, name: "Housing"},
