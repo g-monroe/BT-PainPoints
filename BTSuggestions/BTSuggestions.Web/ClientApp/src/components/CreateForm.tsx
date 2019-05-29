@@ -8,7 +8,6 @@ import CreateFormEntity from '../entity/CreateFormEntity';
 
 const { Content } = Layout;
 const FormItem = AntForm.Item;
-const SelectOption = Select.Option;
 
 interface ICreateFormProps{
     data: CreateFormEntity; //TODO: Update to match entity form
@@ -78,35 +77,35 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
             <Layout>
                 <Content>
                     <Form onSubmitCapture={handleSubmit}>
-                        <FormItem label="painPointTitle" validateStatus={this.getValidationStatus(errors.painPointTitle)}>
+                        <FormItem label="Issue Title" validateStatus={this.getValidationStatus(errors.painPointTitle)}>
                             <Input id="painPointTitle" placeholder="Title" value={values.painPointTitle} onChange={handleChange}/>
                         </FormItem>
-                        <FormItem label="painPointSummary" required validateStatus={this.getValidationStatus(errors.painPointSummary)}>
+                        <FormItem label="Issue Summary" required validateStatus={this.getValidationStatus(errors.painPointSummary)}>
                             <Input id="painPointSummary" placeholder="Description of Problem" value={values.painPointSummary} onChange={handleChange} minLength={3}/>
                         </FormItem>
-                        <FormItem label="painPointAnnotation" validateStatus={this.getValidationStatus(errors.painPointAnnotation)}>
+                        <FormItem label="Issue Annotation" validateStatus={this.getValidationStatus(errors.painPointAnnotation)}>
                             <Input id="painPointAnnotation" placeholder="Personal Notes about Problem" value={values.painPointAnnotation} onChange={handleChange} minLength={3}/>
                         </FormItem>
-                        <FormItem label="painPointType" validateStatus={this.getValidationStatus(errors.painPointType)}>
-                            {/* <Select id="painPointType" onChange={x => setFieldValue("painPointType", x)} value={values.painPointType}>{painPointList.map(p => <SelectOption key={p.id} value={p.id}>{p.name}</SelectOption>)}></Select> */}
+                        <FormItem label="Issue Type" validateStatus={this.getValidationStatus(errors.painPointType)}>
+                            <Select id="painPointType" onChange={x => setFieldValue("painPointType", x)} value={values.painPointType}>{painPointList.map(p => <Select.Option key={p.id} value={p.id}>{p.name}</Select.Option>)}</Select>
                         </FormItem>
-                        <FormItem label="painPointSeverity" validateStatus={this.getValidationStatus(errors.painPointSeverity)}>
+                        <FormItem label="Issue Severity" validateStatus={this.getValidationStatus(errors.painPointSeverity)}>
                             <Slider id="painPointSeveritySlide" min={0} max={5} onChange={this.slideChange} value={typeof inputValue === 'number' ? inputValue : 0} />
                             <InputNumber id="painPointSeverityVal" min={0} max={5} value={inputValue} onChange={this.slideChange}/>
                         </FormItem>
-                        <FormItem label="companyContact" validateStatus={this.getValidationStatus(errors.companyContact)}>
+                        <FormItem label="Company Contact" validateStatus={this.getValidationStatus(errors.companyContact)}>
                             <Input id="companyContact" placeholder="Company Contact Name" onChange={handleChange} value={values.companyContact}/>
                         </FormItem>
-                        <FormItem label="companyName" validateStatus={this.getValidationStatus(errors.companyName)}>
+                        <FormItem label="Company Name" validateStatus={this.getValidationStatus(errors.companyName)}>
                             <Input id="companyName" placeholder="Company Name" onChange={handleChange} value={values.companyName}/>
                         </FormItem>
-                        <FormItem label="companyLocation" validateStatus={this.getValidationStatus(errors.companyLocation)}>
+                        <FormItem label="Company Location" validateStatus={this.getValidationStatus(errors.companyLocation)}>
                             <Input id="companyLocation" placeholder="Company Location" onChange={handleChange} value={values.companyLocation}/>
                         </FormItem>
-                        <FormItem label="industryType" validateStatus={this.getValidationStatus(errors.industryType)}>
-                            {/* <Select id="industryType" onChange={x => setFieldValue("industryType", x)} value={values.industryType}>{industryList.map(i => <SelectOption key={i.id} value={i.id}>{i.name}</SelectOption>)}></Select> */}
+                        <FormItem label="Industry Type" validateStatus={this.getValidationStatus(errors.industryType)}>
+                            <Select id="industryType" onChange={x => setFieldValue("industryType", x)} value={values.industryType}>{industryList.map(i => <Select.Option key={i.id} value={i.id}>{i.name}</Select.Option>)}</Select>
                         </FormItem>
-                        <FormItem label="submit">
+                        <FormItem label="Submit">
                             <Button id="submit" htmlType="submit">Submit Problem</Button>
                         </FormItem>
                     </Form>
