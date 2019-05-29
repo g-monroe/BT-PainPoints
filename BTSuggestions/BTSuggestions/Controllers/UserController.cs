@@ -21,7 +21,7 @@ namespace BTSuggestions.Controllers
         /// - Gavin
         /// </summary>
         private readonly Managers.UserManager _manager;
-        private Engines.UserEngine _engine;
+        private readonly Engines.UserEngine _engine;
 
         public UserController(Managers.UserManager manager, Engines.UserEngine engine)
         {
@@ -102,14 +102,15 @@ namespace BTSuggestions.Controllers
 
         // DELETE api/users/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult<Task>> Delete(int id)
         {
             var result = await _manager.GetUser(id);
             if (result == null)
             {
                 return NotFound();
             }
-            return _manager.Delete(result);
+            var re = _manager.Delete(result);
+            return re;
         }
     }
 }

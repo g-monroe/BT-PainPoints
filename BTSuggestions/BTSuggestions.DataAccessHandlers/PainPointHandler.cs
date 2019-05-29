@@ -1,6 +1,5 @@
 ﻿using BTSuggestions.Core.Entities;
 using BTSuggestions.Core.Interfaces.DataAccessHandlers;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace BTSuggestions.DataAccessHandlers
 {
     public class PainPointHandler : BaseHandler<PainPoint>, IPainPointHandler
     {
-        private new BTSuggestionContext _context;
+        private readonly new BTSuggestionContext _context;
         public PainPointHandler(BTSuggestionContext context) : base(context)
         {
             _context = context;

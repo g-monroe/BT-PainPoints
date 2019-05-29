@@ -9,7 +9,7 @@ namespace BTSuggestions.DataAccessHandlers
 {
     public class CommentHandler : BaseHandler<Comment>, ICommentHandler
     {
-        private new BTSuggestionContext _context;
+        private readonly new BTSuggestionContext _context;
         public CommentHandler(BTSuggestionContext context) : base(context)
         {
             _context = context;

@@ -37,7 +37,7 @@ namespace BTSuggestions.Managers
         public async Task<User> UpdateUser(int userId, string userEmail, string username, string firstName, string lastName, string password, int privilage)
         {
             var user = await _userEngine.GetUser(userId);
-            return await _userEngine.UpdateUser(user, userEmail, username, firstName, lastName, password, privilage);
+            return await _userEngine.UpdateUser(user, userEmail, firstName, lastName, password, privilage);
         }
     }
 }

@@ -9,10 +9,8 @@ namespace BTSuggestions.DataAccessHandlers
 {
     public class UserHandler : BaseHandler<User>, IUserHandler
     {
-        private new BTSuggestionContext _context;
         public UserHandler(BTSuggestionContext context) : base(context)
         {
-            _context = context;
         }
 
         public async Task<string> GetEmail(int id)
