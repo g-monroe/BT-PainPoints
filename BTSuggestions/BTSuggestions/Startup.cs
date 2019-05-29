@@ -36,7 +36,7 @@ namespace BTSuggestions
             services.AddDbContext<DataAccessHandlers.BTSuggestionContext>(options =>
             {
                 options.UseSqlServer(Configuration["DefaultConnection"],
-                                     b => b.MigrationsAssembly("BTSuggestions.Web"));
+                                     b => b.MigrationsAssembly("BTSuggestions.DataAccessHandlers"));
                 options.EnableSensitiveDataLogging(true);
             });
             services.AddCors(options =>
