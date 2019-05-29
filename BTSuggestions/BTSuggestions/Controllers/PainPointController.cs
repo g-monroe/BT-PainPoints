@@ -49,7 +49,12 @@ namespace BTSuggestions.Controllers
         [HttpGet("{id}/comments")]
         public async Task<ActionResult<IEnumerable<Comment>>> GetComments(int id)
         {
-            return await _painpointEngine.GetComments(id);
+            var result = await _painpointEngine.GetComments(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result.ToList();
         }
         // GET api/painpoint/5/user
         [HttpGet("{id}/user")]
