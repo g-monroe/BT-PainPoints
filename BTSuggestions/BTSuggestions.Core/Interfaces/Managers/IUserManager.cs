@@ -10,7 +10,7 @@ namespace BTSuggestions.Core.Interfaces.Managers
     {
         Task<IEnumerable<User>> GetUsers();
         Task<User> AddNewUser(User newUSer);
-        Task<User> UpdateUser(int userId, string userEmail, string username, string firstName, string lastName, string password, int privilage);
+        Task<User> UpdateUser(int userId, string userEmail, string firstName, string lastName, string password, int privilage);
         Task<User> GetUser(int id);
         Task Delete(User user);
     }

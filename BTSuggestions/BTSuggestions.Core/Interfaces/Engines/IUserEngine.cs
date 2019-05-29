@@ -11,7 +11,7 @@ namespace BTSuggestions.Core.Interfaces.Engines
         Task<IEnumerable<User>> GetUsers();
         Task<User> GetUser(int id);
         Task<User> CreateUserEntity(User newUser);
-        Task<User> UpdateUser(User user, string email, string username, string firstName, string lastName, string password, int privilege);
+        Task<User> UpdateUser(User user, string email, string firstName, string lastName, string password, int privilege);
         Task<int> GetPrivilege(int id);
         Task<string> GetUsername(int id);
         Task<string> GetEmail(int id);

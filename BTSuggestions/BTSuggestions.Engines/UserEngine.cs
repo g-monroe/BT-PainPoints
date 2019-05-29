@@ -69,6 +69,8 @@ namespace BTSuggestions.Engines
             user.Password = password;
             user.Privilege = privilege;
 
+            await _userHandler.Update(user);
+
             return user;
         }
         public Task Delete(User user)
