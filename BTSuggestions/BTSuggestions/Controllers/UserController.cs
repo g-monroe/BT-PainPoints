@@ -96,7 +96,7 @@ namespace BTSuggestions.Controllers
             {
                 return BadRequest();
             }
-            User result = await _manager.UpdateUser(id, value.Email, value.Username, value.Firstname, value.Lastname, value.Password, value.Privilege);
+            User result = await _manager.UpdateUser(id, value.Email, value.Firstname, value.Lastname, value.Password, value.Privilege);
             return result;
         }
 

@@ -32,15 +32,15 @@ namespace BTSuggestions.Engines
             return comment;
         }
 
-        public Comment GetComment(int id)
+        public async Task<Comment> GetComment(int id)
         {
-            var comment = _commentHandler.GetById(id);
+            var comment = await _commentHandler.GetById(id);
             return comment;
         }
 
         public async Task<IEnumerable<Comment>> GetComments()
         {
-            return _commentHandler.GetAll();
+            return await _commentHandler.GetAll();
         }
 
         public Comment UpdateComment(Comment comment, string commentText, DateTime createdOn)

@@ -34,10 +34,12 @@ namespace BTSuggestions.Managers
         {
             return _userEngine.Delete(user);
         }
-        public async Task<User> UpdateUser(int userId, string userEmail, string username, string firstName, string lastName, string password, int privilage)
+        public async Task<User> UpdateUser(int userId, string userEmail, string firstName, string lastName, string password, int privilage)
         {
             var user = await _userEngine.GetUser(userId);
             return await _userEngine.UpdateUser(user, userEmail, firstName, lastName, password, privilage);
         }
+
+        
     }
 }
