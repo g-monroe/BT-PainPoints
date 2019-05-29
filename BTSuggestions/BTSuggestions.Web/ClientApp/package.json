@@ -11,6 +11,7 @@
     "@types/yup": "^0.26.13",
     "antd": "^3.19.1",
     "formik": "^1.5.7",
+    "moments": "0.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
