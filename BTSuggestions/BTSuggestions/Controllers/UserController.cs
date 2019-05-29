@@ -63,31 +63,52 @@ namespace BTSuggestions.Controllers
         [HttpGet("{id}/lastname")]
         public async Task<ActionResult<string>> GetLastname(int id)
         {
-            return await _engine.GetLastname(id);
+            var result = await _engine.GetLastname(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result;
         }
         // GET api/user/5/email
         [HttpGet("{id}/email")]
         public async Task<ActionResult<string>> GetEmail(int id)
         {
-            return await _engine.GetEmail(id);
+            var result = await _engine.GetEmail(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result;
         }
         // GET api/user/5/username
         [HttpGet("{id}/username")]
         public async Task<ActionResult<string>> GetUsername(int id)
         {
-            return await _engine.GetUsername(id);
+            var result = await _engine.GetUsername(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result;
         }
         // GET api/user/5/privilege
         [HttpGet("{id}/privilege")]
         public async Task<ActionResult<int>> GetPrivilege(int id)
         {
-            return await _engine.GetPrivilege(id);
+            var result = await _engine.GetPrivilege(id);
+            return result;
         }
         // POST api/user
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User value)
         {
-            return await _manager.AddNewUser(value);
+            var result = await _manager.AddNewUser(value);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result;
         }
 
         // PUT api/user/5

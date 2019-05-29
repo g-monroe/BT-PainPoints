@@ -72,13 +72,25 @@ namespace BTSuggestions.Controllers
         [HttpGet("{id}/summary")]
         public async Task<ActionResult<string>> GetSummary(int id)
         {
-            return await _painpointEngine.GetSummary(id);
+
+            var result = await _painpointEngine.GetSummary(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result;
         }
         // POST api/painpoint
         [HttpPost]
         public async Task<ActionResult<PainPoint>> PostPainPoint(PainPoint value)
         {
-            return await _painpointManager.AddNewPainPoint(value);
+
+            var result = await _painpointManager.AddNewPainPoint(value);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result;
         }
         [HttpPost("seed")]
         public void PostSeed()
@@ -89,15 +101,29 @@ namespace BTSuggestions.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<PainPoint>> PutPainPoint(int id, PainPoint value)
         {
-            return await _painpointManager.UpdatePainPoint(id, value);
+            if (id != value.Id)
+            {
+                return NotFound();
+            }
+            var result = await _painpointManager.UpdatePainPoint(id, value);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result;
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public async void Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             PainPoint result = await _painpointEngine.GetPainPoint(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
             await _painpointManager.Delete(result);
+            return Ok();
         }
     }
 }
