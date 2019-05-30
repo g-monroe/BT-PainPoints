@@ -1,10 +1,11 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import '../styles/App.css';
-import { Layout, Button} from 'antd';
+import { Layout, Button, Table, Icon, Select} from 'antd';
 import AdminViewEntity from '../entity/AdminViewEntity';
+import { statusList } from '../types/dropdownValues/statusTypes';
 
-const { Content, Sider } = Layout;
+const { Content} = Layout;
 
 interface IAdminViewProps {
     data: AdminViewEntity;
@@ -31,6 +32,61 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
     static defaultProps = {
     };
 
+    columns = [
+        {
+            title: 'Issue Title',
+            dataIndex: 'painPointTitle',
+            //fixed: "left",
+            render: (text: string) => <a href="/home/:id">{text}</a>
+        }, 
+        {
+            title: 'Issue Description',
+            dataIndex: 'painPointSummary'
+        },
+        {
+            title: 'Issue Annotation',
+            dataIndex: 'painPointAnnotation'
+        },
+        {
+            title: 'Issue Type',
+            dataIndex: 'painPointType'
+        },
+        {
+            title: 'Issue Severity',
+            dataIndex: 'painPointSeverity'
+        },
+        {
+            title: 'Company Name',
+            dataIndex: 'companyName'
+        },
+        {
+            title: 'Industry Type',
+            dataIndex: 'industryType'
+        },
+        {
+            title: 'Date Posted',
+            dataIndex: 'datetime'
+        },
+        {
+            title: 'Issue Status',
+            dataIndex: 'painPointStatus',
+            // fixed: "right",
+            render: () =>  <Select>{statusList.map((s:any) => <Select.Option key={s.id} value={s.id}>{s.name}</Select.Option>)}</Select>
+        },
+        {
+            title: 'Edit Issue',
+            dataIndex: 'painPointSummary',
+            //fixed: "right",
+            render: () => <Icon type="edit" />
+        },
+    ]
+
+    rowSelection = {
+        getCheckboxProps: (record: string )=> ({
+            name: record
+        })
+    };
+
     render() {
         const css = "../src/styles/App.css";
         return (
@@ -39,8 +95,8 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
                     {css}
                 </style>
                 <Content>
-                    <h2>Issue table will be displayed here</h2>
-                    <h3>Intentionally left blank until list component is finished</h3>
+                    <h2>There should probably be a title here</h2>
+                    <Table rowSelection={this.rowSelection} columns={this.columns} dataSource={this.props.data.issues} scroll={{x : 1300}}/>
                     <Button>Create Group</Button>
                     <Button>Delete</Button>
                 </Content>

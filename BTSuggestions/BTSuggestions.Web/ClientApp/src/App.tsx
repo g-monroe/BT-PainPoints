@@ -5,7 +5,7 @@ import { Link, BrowserRouter, Route } from 'react-router-dom';
 import CreateForm from '../src/components/CreateForm';
 import DetailView from '../src/components/DetailView';
 import AdminView from '../src/components/AdminView';
-import adminData from '../src/types/adminData.api.json';
+import adminData from '../src/types/tableTest.api.json';
 import blankTemplate from '../src/types/blankTemplate.api.json';
 import testData from '../src/types/testData.api.json';
 
