@@ -12,9 +12,11 @@ namespace BTSuggestions.Managers.Extensions
     {
         public static UserResponseList UserToListResponse(this IEnumerable<User> me)
         {
-            var resp = new UserResponseList();
-            resp.TotalResults = me.Count();
-            resp.UsersList = me.Select(x => x.UserToListItem()).ToList();
+            var resp = new UserResponseList
+            {
+                TotalResults = me.Count(),
+                UsersList = me.Select(x => x.UserToListItem()).ToList()
+            };
             return resp;
         }
         public static UserResponse UserToListItem(this User me)

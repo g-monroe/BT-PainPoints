@@ -1,4 +1,5 @@
 ﻿using BTSuggestions.Core.Entities;
+using BTSuggestions.Core.Interfaces.DataAccessHandlers;
 using BTSuggestions.Managers.RequestObjects;
 using BTSuggestions.Managers.ResponseObjects;
 using System;
@@ -12,18 +13,22 @@ namespace BTSuggestions.Managers.Extensions
     {
         public static PainPointResponseList PainPointToListResponse(this IEnumerable<PainPoint> me)
         {
-            var resp = new PainPointResponseList();
-            resp.TotalResults = me.Count();
-            resp.PainPointsList = me.Select(x => x.PainPointToListItem()).ToList();
+            var resp = new PainPointResponseList
+            {
+                TotalResults = me.Count(),
+                PainPointsList = me.Select(x => x.PainPointToListItem()).ToList()
+            };
             return resp;
         }
         public static PainPointResponse PainPointToListItem(this PainPoint me)
         {
+            //Add Types in
             return new PainPointResponse()
             {
                 User = me.User,
                 PriorityLevel = me.PriorityLevel,
                 UserId = me.UserId,
+                Type = me.Type,
                 Annotation = me.Annotation,
                 ComapnyLocation = me.CompanyLocation,
                 CompanyContact = me.CompanyContact,
@@ -44,6 +49,7 @@ namespace BTSuggestions.Managers.Extensions
             }
             updating.User = me.User;
             updating.PriorityLevel = me.PriorityLevel;
+            updating.Type = me.Type;
             updating.UserId = me.UserId;
             updating.Annotation = me.Annotation;
             updating.CompanyLocation = me.CompanyLocation;

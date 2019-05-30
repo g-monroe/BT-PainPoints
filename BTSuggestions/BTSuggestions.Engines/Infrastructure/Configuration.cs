@@ -10,6 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<ICommentEngine, CommentEngine>();
             services.AddTransient<IUserEngine, UserEngine>();
             services.AddTransient<IPainPointEngine, PainPointEngine>();
+            services.AddTransient<ITypeEngine, TypeEngine>();
             return services;
         }
     }

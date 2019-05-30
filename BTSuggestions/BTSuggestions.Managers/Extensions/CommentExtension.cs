@@ -12,9 +12,11 @@ namespace BTSuggestions.Managers.Extensions
     {
         public static CommentResponseList CommentToListResponse(this IEnumerable<Comment> me)
         {
-            var resp = new CommentResponseList();
-            resp.TotalResults = me.Count();
-            resp.Comments = me.Select(x => x.CommentToListItem()).ToList();
+            var resp = new CommentResponseList
+            {
+                TotalResults = me.Count(),
+                CommentsList = me.Select(x => x.CommentToListItem()).ToList()
+            };
             return resp;
         }
         public static CommentResponse CommentToListItem(this Comment me)
