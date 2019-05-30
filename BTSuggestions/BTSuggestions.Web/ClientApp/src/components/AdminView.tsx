@@ -35,44 +35,54 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
             title: 'Issue Title',
             dataIndex: 'painPointTitle',
             fixed: true,
+            //align: 'center',
             render: (text: string) => <a href="/home/:id">{text}</a>
         }, 
         {
-            title: 'Issue Description',
+            title: 'Description',
             dataIndex: 'painPointSummary'
         },
         {
-            title: 'Issue Annotation',
-            dataIndex: 'painPointAnnotation'
+            title: 'Annotation',
+            dataIndex: 'painPointAnnotation',
+            width: 200
         },
         {
             title: 'Issue Type',
-            dataIndex: 'painPointType'
+            dataIndex: 'painPointType',
+            //align: 'center'
         },
         {
-            title: 'Issue Severity',
-            dataIndex: 'painPointSeverity'
+            title: 'Severity',
+            dataIndex: 'painPointSeverity',
+            //align: 'center'
         },
         {
             title: 'Company Name',
-            dataIndex: 'companyName'
+            dataIndex: 'companyName',
+            //align: 'center'
         },
         {
             title: 'Industry Type',
-            dataIndex: 'industryType'
+            dataIndex: 'industryType',
+            //align: 'center'
         },
         {
             title: 'Date Posted',
-            dataIndex: 'datetime'
+            dataIndex: 'datetime',
+            //display: 'center'
         },
         {
             title: 'Issue Status',
             dataIndex: 'painPointStatus',
-            render: () =>  <Select>{statusList.map((s:any) => <Select.Option key={s.id} value={s.id}>{s.name}</Select.Option>)}</Select>
+            //align:'center',
+            width: 200,
+            render: () =>  <Select defaultValue="None Selected">{statusList.map((s:any) => <Select.Option key={s.id} value={s.id}>{s.name}</Select.Option>)}</Select>
         },
         {
-            title: 'Edit Issue',
+            title: 'Edit',
             dataIndex: 'painPointSummary',
+            width: 25,
             render: () => <Icon type="edit" />
         },
     ]
