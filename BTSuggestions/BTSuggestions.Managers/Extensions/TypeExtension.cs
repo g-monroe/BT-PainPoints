@@ -25,8 +25,6 @@ namespace BTSuggestions.Managers.Extensions
             {
                 TypeId = me.Id,
                 Name = me.Name,
-                PainPoint = me.PainPoint,
-                PainPointId = me.PainPointId
 
             };
         }
@@ -38,8 +36,6 @@ namespace BTSuggestions.Managers.Extensions
             }
             updating.Id = me.TypeId;
             updating.Name = me.Name;
-            updating.PainPoint = me.PainPoint;
-            updating.PainPointId = me.PainPointId;
             return updating;
         }
     }

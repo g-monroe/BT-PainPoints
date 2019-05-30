@@ -17,8 +17,8 @@ namespace BTSuggestions.DataAccessHandlers
 
         public async Task<IList<TypeEntity>> GetTypesByPainPointId(int id)
         {
-            var results = await _context.Types.Where(s => s.PainPointId== id).ToListAsync();
-            return results;
+            //var results = await _context.Types.Where(s => s.PainPointId== id).ToListAsync();
+            return null;
         }
     }
 }

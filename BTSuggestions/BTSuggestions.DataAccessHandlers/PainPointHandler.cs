@@ -141,10 +141,21 @@ namespace BTSuggestions.DataAccessHandlers
                     Status = "Responded"
                 },
             };
+            var newTest = new List<PainPointTypeEntity>()
+            {
+                new PainPointTypeEntity
+                {
+                    PainPoint = newPain,
+                    PainPointId = newPain.Id,
+                    Type = newTypes[0],
+                    TypeId = newTypes[0].Id
+                },
+            };
             _context.Types.AddRange(newTypes);
             _context.Users.AddRange(newUsers);
             _context.PainPoints.AddRange(newPains);
             _context.Comments.AddRange(newComments);
+            _context.PainPointTypes.AddRange(newTest);
             _context.SaveChanges();
         }
     }

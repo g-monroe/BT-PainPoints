@@ -106,7 +106,7 @@ namespace BTSuggestions.Web.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("PainPointTypeEntity");
+                    b.ToTable("PainPointTypes");
                 });
 
             modelBuilder.Entity("BTSuggestions.Core.Entities.TypeEntity", b =>
@@ -119,11 +119,7 @@ namespace BTSuggestions.Web.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<int>("PainPointId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PainPointId");
 
                     b.ToTable("Types");
                 });
@@ -191,14 +187,6 @@ namespace BTSuggestions.Web.Migrations
                     b.HasOne("BTSuggestions.Core.Entities.TypeEntity", "Type")
                         .WithMany("TypeEntities")
                         .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("BTSuggestions.Core.Entities.TypeEntity", b =>
-                {
-                    b.HasOne("BTSuggestions.Core.Entities.PainPointEntity", "PainPoint")
-                        .WithMany()
-                        .HasForeignKey("PainPointId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618

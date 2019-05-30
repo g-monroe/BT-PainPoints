@@ -26,10 +26,11 @@ namespace BTSuggestions.Core.Entities
         [Required]
         public string Status { get; set; }
         [Required]
+        [JsonIgnore]
         public virtual UserEntity User { get; set; }
         [Required]
         [ForeignKey("UserId")]
-        public int UserId { get; set; }
+        public int UserId { get; set; } //ForiegnKey to UserId
         [Required]
         public int PriorityLevel { get; set; }
 #nullable enable
@@ -43,6 +44,8 @@ namespace BTSuggestions.Core.Entities
         [Required]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy h:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime CreatedOn { get; set; }
+
+        //Strictly for creating the handles for Type to PainPoint
         public IList<PainPointTypeEntity> TypeEnties { get; set; }
 
         public IEnumerable<string> Types
