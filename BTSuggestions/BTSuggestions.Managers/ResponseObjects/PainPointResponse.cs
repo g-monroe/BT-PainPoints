@@ -9,6 +9,7 @@ namespace BTSuggestions.Managers.ResponseObjects
     {
         public int PainPointId { get; set; }
         public string Title { get; set; }
+        public IList<TypeEntity> Type { get; set; }
         public string Summary { get; set; }
         public string Annotation { get; set; }
         public string Status { get; set; }

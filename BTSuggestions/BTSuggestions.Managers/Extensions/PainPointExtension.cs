@@ -10,14 +10,14 @@ namespace BTSuggestions.Managers.Extensions
 {
     public static class PainPointExtension
     {
-        public static PainPointResponseList ToListResponse(this IEnumerable<PainPoint> me)
+        public static PainPointResponseList PainPointToListResponse(this IEnumerable<PainPoint> me)
         {
             var resp = new PainPointResponseList();
             resp.TotalResults = me.Count();
-            resp.PainPointsList = me.Select(x => x.ToListItem()).ToList();
+            resp.PainPointsList = me.Select(x => x.PainPointToListItem()).ToList();
             return resp;
         }
-        public static PainPointResponse ToListItem(this PainPoint me)
+        public static PainPointResponse PainPointToListItem(this PainPoint me)
         {
             return new PainPointResponse()
             {
@@ -36,7 +36,7 @@ namespace BTSuggestions.Managers.Extensions
                 Status = me.Status
             };
         }
-        public static PainPoint ToDbItem(this PainPointRequest me, PainPoint updating = null)
+        public static PainPoint PainPointToDbItem(this PainPointRequest me, PainPoint updating = null)
         {
             if (updating == null)
             {

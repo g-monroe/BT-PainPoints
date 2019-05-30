@@ -13,7 +13,7 @@ namespace BTSuggestions.Core.Entities
         [Required]
         public string Title { get; set; }
         [Required]
-        public int Type { get; set; }
+        public IList<TypeEntity> Type { get; set; }
         [MaxLength(1500)]
         [MinLength(2)]
         [Required]

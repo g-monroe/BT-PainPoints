@@ -10,14 +10,14 @@ namespace BTSuggestions.Managers.Extensions
 {
     public static class UserExtension
     {
-        public static UserResponseList ToListResponse(this IEnumerable<User> me)
+        public static UserResponseList UserToListResponse(this IEnumerable<User> me)
         {
             var resp = new UserResponseList();
             resp.TotalResults = me.Count();
-            resp.UsersList = me.Select(x => x.ToListItem()).ToList();
+            resp.UsersList = me.Select(x => x.UserToListItem()).ToList();
             return resp;
         }
-        public static UserResponse ToListItem(this User me)
+        public static UserResponse UserToListItem(this User me)
         {
             return new UserResponse()
             {
@@ -30,7 +30,7 @@ namespace BTSuggestions.Managers.Extensions
                 Privilege = me.Privilege
             };
         }
-        public static User ToDbItem(this UserRequest me, User updating = null)
+        public static User UserToDbItem(this UserRequest me, User updating = null)
         {
             if (updating == null)
             {

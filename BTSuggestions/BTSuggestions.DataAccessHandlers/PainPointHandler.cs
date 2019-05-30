@@ -72,6 +72,20 @@ namespace BTSuggestions.DataAccessHandlers
                 Privilege = 69,
                 Email = "johnwickboi@gmail.com"
             };
+            var newTypes = new List<TypeEntity> {
+                new TypeEntity
+                {
+                    Name = "Bug"
+                },
+                new TypeEntity
+                {
+                    Name = "UI"
+                },
+                new TypeEntity
+                {
+                    Name = "Billing"
+                }
+            };
             var newUser2 = new User
             {
                 Username = "robinwick",
@@ -94,7 +108,7 @@ namespace BTSuggestions.DataAccessHandlers
                 CompanyLocation = "Kansas",
                 CompanyName = "BeeKiller",
                 IndustryType = "Ninja",
-                Type = 3,
+                Type = newTypes,
                 PriorityLevel = 99
             };
             var newPain2 = new PainPoint
@@ -109,7 +123,7 @@ namespace BTSuggestions.DataAccessHandlers
                 CompanyLocation = "Iowa",
                 CompanyName = "FlyLover",
                 IndustryType = "Wow'er",
-                Type = 2,
+                Type = newTypes,
                 PriorityLevel = 98
             };
             var newPains = new List<PainPoint>() { newPain, newPain2 };
@@ -126,10 +140,11 @@ namespace BTSuggestions.DataAccessHandlers
                     Status = "Responded"
                 },
             };
+            _context.Types.AddRange(newTypes);
             _context.Users.AddRange(newUsers);
             _context.PainPoints.AddRange(newPains);
             _context.Comments.AddRange(newComments);
-             _context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }

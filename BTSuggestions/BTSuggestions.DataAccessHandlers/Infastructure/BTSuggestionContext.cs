@@ -20,6 +20,7 @@ namespace BTSuggestions.DataAccessHandlers
         public DbSet<PainPoint> PainPoints { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<TypeEntity> Types { get; set; } 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
