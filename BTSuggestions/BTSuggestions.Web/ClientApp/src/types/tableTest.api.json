@@ -1,3 +1,21 @@
 {
-    "issues": ["Test", "Test"]
+    "issues": [{
+        "painPointTitle": "Test Issue",
+        "painPointSummary": "This is a test of the issues list",
+        "painPointType": "Bug",
+        "painPointAnnotation": "I am personally offended by the issue listed above",
+        "painPointSeverity" : 1,
+        "companyName": "Buildertrend",
+        "industryType": "Small Business",
+        "comments": "What is this suppose to say?"
+    },{
+        "painPointTitle": "Second Test Issue",
+        "painPointSummary": "This is a test of the issues list",
+        "painPointType": "Bug",
+        "painPointAnnotation": "I am personally offended by the issue listed above",
+        "painPointSeverity" : 3,
+        "companyName": "Buildertrend",
+        "industryType": "Small Business",
+        "comments": "What is this suppose to say?"
+    }]
 }

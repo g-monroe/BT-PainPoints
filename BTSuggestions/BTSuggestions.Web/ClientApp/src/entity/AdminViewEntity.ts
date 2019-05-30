@@ -1,5 +1,5 @@
 export default class AdminViewEntity {
-    issues: string[]
+    issues: any[]
 
     constructor(JSONData: any) {
         this.issues = JSONData.issues;

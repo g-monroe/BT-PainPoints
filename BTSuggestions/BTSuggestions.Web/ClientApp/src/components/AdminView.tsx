@@ -19,8 +19,6 @@ interface IAdminViewState {
     painPointSeverity: number,
 
     companyName?: string,
-    companyContact?: string,
-    companyLocation?: string,
     industryType?: string,
     comments?: string
 
@@ -36,7 +34,7 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
         {
             title: 'Issue Title',
             dataIndex: 'painPointTitle',
-            //fixed: "left",
+            fixed: true,
             render: (text: string) => <a href="/home/:id">{text}</a>
         }, 
         {
@@ -70,13 +68,11 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
         {
             title: 'Issue Status',
             dataIndex: 'painPointStatus',
-            // fixed: "right",
             render: () =>  <Select>{statusList.map((s:any) => <Select.Option key={s.id} value={s.id}>{s.name}</Select.Option>)}</Select>
         },
         {
             title: 'Edit Issue',
             dataIndex: 'painPointSummary',
-            //fixed: "right",
             render: () => <Icon type="edit" />
         },
     ]
