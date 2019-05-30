@@ -131,7 +131,7 @@ export default withFormik<ICreateFormProps, ICreateFormState>({
     validationSchema: yupValidation,
     handleSubmit: (values, props) => {
         console.log(values);
-        CommentHandler;
+        
         alert("You have submitted an issue");
     },
     displayName: 'Create Issue Form'
