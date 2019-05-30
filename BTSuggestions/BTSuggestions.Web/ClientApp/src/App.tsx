@@ -4,8 +4,10 @@ import "antd/dist/antd.css";
 import { Link, BrowserRouter, Route } from 'react-router-dom';
 import CreateForm from '../src/components/CreateForm';
 import DetailView from '../src/components/DetailView';
+import AdminView from '../src/components/AdminView';
 import blankTemplate from '../src/types/blankTemplate.api.json';
 import testData from '../src/types/testData.api.json';
+import tableData from '../src/types/tableTest.api.json';
 
 
 export default class App extends React.Component {
@@ -24,7 +26,7 @@ export default class App extends React.Component {
                     </nav>
                     <Route path="/create" exact render={(props) => <CreateForm data={blankTemplate} />}/>
                     <Route path="/home/:id" exact render={(props) => <DetailView data={testData}/>}/>
-                    <Route path="/admin"></Route>
+                    <Route path="/admin" exact render={(props) => <AdminView data={tableData}/>}/>
                 </BrowserRouter>
             </>
         );
