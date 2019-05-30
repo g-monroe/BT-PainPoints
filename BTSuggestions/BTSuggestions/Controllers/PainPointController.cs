@@ -36,7 +36,7 @@ namespace BTSuggestions.Controllers
         [HttpGet]
         public async Task<Managers.ResponseObjects.PainPointResponseList> Get()
         {
-            var pps = await _painpointManager.GetPainPoints();
+            var pps = await _painpointManager.GetAllIncludes();
             var typs = await _typeEngine.GetTypesByPainPointId(10);
             var resp = new Managers.ResponseObjects.PainPointResponseList
             {
@@ -46,7 +46,7 @@ namespace BTSuggestions.Controllers
                     User = me.User,
                     PriorityLevel = me.PriorityLevel,
                     UserId = me.UserId,
-                    Type = typs,
+                    Type = me.Types,
                     Annotation = me.Annotation,
                     ComapnyLocation = me.CompanyLocation,
                     CompanyContact = me.CompanyContact,

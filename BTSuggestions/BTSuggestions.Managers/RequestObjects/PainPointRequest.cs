@@ -11,7 +11,7 @@ namespace BTSuggestions.Managers.RequestObjects
         public string Title { get; set; }
         public string Summary { get; set; }
         public string Annotation { get; set; }
-        public IList<TypeEntity> Type { get; set; }
+        public IEnumerable<string> Type { get; set; }
         public string Status { get; set; }
         public int PriorityLevel { get; set; }
         public UserEntity User { get; set; }

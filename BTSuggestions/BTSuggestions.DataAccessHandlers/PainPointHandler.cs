@@ -62,8 +62,7 @@ namespace BTSuggestions.DataAccessHandlers
         }
         public async Task<IEnumerable<PainPointEntity>> GetAllIncludes()
         {
-            var results = await _context.PainPoints.Include(s => s.TypeEnties).ThenInclude(x => x.Type).ToListAsync();
-            return results;
+            return await _context.PainPoints.Include(s => s.TypeEnties).ThenInclude(x => x.Type).ToListAsync();
         }
         public void PostSeed()
         {
