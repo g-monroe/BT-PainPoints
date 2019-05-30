@@ -26,15 +26,18 @@ namespace BTSuggestions.Controllers
         /// - Gavin
         /// </summary>
         private readonly IPainPointManager _painpointManager;
-        public PainPointController(IPainPointManager painPointManager)
+        private readonly ITypeEngine _typeEngine;
+        public PainPointController(IPainPointManager painPointManager, ITypeEngine typeEngine)
         {
             _painpointManager = painPointManager;
+            _typeEngine = typeEngine;
         }
         // GET api/painpoint
         [HttpGet]
         public async Task<Managers.ResponseObjects.PainPointResponseList> Get()
         {
             var pps = await _painpointManager.GetPainPoints();
+            var typs = await _typeEngine.GetTypesByPainPointId(10);
             var resp = new Managers.ResponseObjects.PainPointResponseList
             {
                 TotalResults = pps.Count(),
@@ -43,7 +46,7 @@ namespace BTSuggestions.Controllers
                     User = me.User,
                     PriorityLevel = me.PriorityLevel,
                     UserId = me.UserId,
-                    Type = me.Type,
+                    Type = typs,
                     Annotation = me.Annotation,
                     ComapnyLocation = me.CompanyLocation,
                     CompanyContact = me.CompanyContact,

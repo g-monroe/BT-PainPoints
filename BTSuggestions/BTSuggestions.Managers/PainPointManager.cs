@@ -25,7 +25,10 @@ namespace BTSuggestions.Managers
         {
             return await _painPointEngine.GetPainPoints();
         }
-
+         public async Task<IEnumerable<PainPointEntity>> GetAllIncludes()
+        {
+            return await _painPointEngine.GetAllIncludes();
+        }
         public async Task<PainPointEntity> UpdatePainPoint(int painPointId, PainPointEntity value)
         {
             var painPoint = await _painPointEngine.GetPainPoint(painPointId);

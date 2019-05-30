@@ -19,7 +19,7 @@ namespace BTSuggestions.DataAccessHandlers
 
         public async Task<IEnumerable<CommentEntity>> GetComments(int id)
         {
-            var issue = await _context.Comments.Where(s => s.PainPointId == id).ToListAsync();
+            var issue = await _context.Comments.Where(s => s.PainPointId == id).Include(x =>x.User).ToListAsync();
             if (issue == null)
             {
                 return null;
@@ -60,7 +60,11 @@ namespace BTSuggestions.DataAccessHandlers
 
             return user;
         }
-
+        public async Task<IEnumerable<PainPointEntity>> GetAllIncludes()
+        {
+            var results = await _context.PainPoints.Include(s => s.TypeEnties).ThenInclude(x => x.Type).ToListAsync();
+            return results;
+        }
         public void PostSeed()
         {
             var newUser = new UserEntity
@@ -108,7 +112,6 @@ namespace BTSuggestions.DataAccessHandlers
                 CompanyLocation = "Kansas",
                 CompanyName = "BeeKiller",
                 IndustryType = "Ninja",
-                Type = newTypes,
                 PriorityLevel = 99
             };
             var newPain2 = new PainPointEntity
@@ -123,7 +126,6 @@ namespace BTSuggestions.DataAccessHandlers
                 CompanyLocation = "Iowa",
                 CompanyName = "FlyLover",
                 IndustryType = "Wow'er",
-                Type = newTypes,
                 PriorityLevel = 98
             };
             var newPains = new List<PainPointEntity>() { newPain, newPain2 };

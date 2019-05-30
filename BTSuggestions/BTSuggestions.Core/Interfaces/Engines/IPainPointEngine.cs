@@ -17,6 +17,7 @@ namespace BTSuggestions.Core.Interfaces.Engines
         Task<string> GetTitle(int id);
         Task<UserEntity> GetUser(int id);
         void PostSeed();
+        Task<IEnumerable<PainPointEntity>> GetAllIncludes();
         Task Delete(PainPointEntity entity);
     }
 }

@@ -28,7 +28,6 @@ namespace BTSuggestions.Managers.Extensions
                 User = me.User,
                 PriorityLevel = me.PriorityLevel,
                 UserId = me.UserId,
-                Type = me.Type,
                 Annotation = me.Annotation,
                 ComapnyLocation = me.CompanyLocation,
                 CompanyContact = me.CompanyContact,
@@ -49,7 +48,6 @@ namespace BTSuggestions.Managers.Extensions
             }
             updating.User = me.User;
             updating.PriorityLevel = me.PriorityLevel;
-            updating.Type = me.Type;
             updating.UserId = me.UserId;
             updating.Annotation = me.Annotation;
             updating.CompanyLocation = me.CompanyLocation;

@@ -60,7 +60,10 @@ namespace BTSuggestions.Engines
         {
             __painPointHandler.PostSeed();
         }
-
+        public async Task<IEnumerable<PainPointEntity>> GetAllIncludes()
+        {
+            return await __painPointHandler.GetAllIncludes();
+        }
         public async Task<PainPointEntity> UpdatePainPoint(PainPointEntity painPoint, PainPointEntity newPain)
         {
             PainPointEntity result = await __painPointHandler.GetById(painPoint.Id);

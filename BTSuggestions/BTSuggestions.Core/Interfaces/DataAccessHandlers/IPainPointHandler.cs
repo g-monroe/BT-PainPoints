@@ -12,6 +12,7 @@ namespace BTSuggestions.Core.Interfaces.DataAccessHandlers
         Task<UserEntity> GetUser(int id);
         Task<string> GetTitle(int id);
         Task<string> GetSummary(int id);
+        Task<IEnumerable<PainPointEntity>> GetAllIncludes();
         void PostSeed();
     }
 }
