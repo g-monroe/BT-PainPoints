@@ -68,7 +68,7 @@ namespace BTSuggestions.Controllers
         }
         // GET api/painpoint/5/comments
         [HttpGet("{id}/comments")]
-        public async Task<ActionResult<IEnumerable<Comment>>> GetComments(int id)
+        public async Task<ActionResult<IEnumerable<CommentEntity>>> GetComments(int id)
         {
             var result = await _painpointManager.GetComments(id);
             if (result == null)

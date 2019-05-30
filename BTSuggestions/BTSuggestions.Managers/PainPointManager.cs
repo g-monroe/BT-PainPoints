@@ -40,7 +40,7 @@ namespace BTSuggestions.Managers
             return  _painPointEngine.Delete(value);
         }
 
-        public async Task<IEnumerable<Comment>> GetComments(int id)
+        public async Task<IEnumerable<CommentEntity>> GetComments(int id)
         {
             return await _painPointEngine.GetComments(id);
         }

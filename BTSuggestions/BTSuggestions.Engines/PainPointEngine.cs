@@ -24,7 +24,7 @@ namespace BTSuggestions.Engines
             return value;
         }
 
-        public async Task<IEnumerable<Comment>> GetComments(int id)
+        public async Task<IEnumerable<CommentEntity>> GetComments(int id)
         {
             var result = await __painPointHandler.GetComments(id);
             return result;

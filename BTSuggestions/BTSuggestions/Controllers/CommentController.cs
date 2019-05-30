@@ -28,14 +28,14 @@ namespace BTSuggestions.Controllers
         }
         // GET api/comments
         [HttpGet]
-        public ActionResult<IEnumerable<Comment>> Get()
+        public ActionResult<IEnumerable<CommentEntity>> Get()
         {
             return _context.Comments.ToList();
         }
 
         // GET api/comment/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Comment>> Get(int id)
+        public async Task<ActionResult<CommentEntity>> Get(int id)
         {
             var comment = await _context.Comments.FindAsync(id);
             if (comment == null)
@@ -96,7 +96,7 @@ namespace BTSuggestions.Controllers
         }
         // POST api/comment
         [HttpPost]
-        public async Task<ActionResult<int>> PostComment(Comment value)
+        public async Task<ActionResult<int>> PostComment(CommentEntity value)
         {
             _context.Comments.Add(value);
             var result = await _context.SaveChangesAsync();
@@ -105,7 +105,7 @@ namespace BTSuggestions.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutComment(int id, Comment value)
+        public async Task<IActionResult> PutComment(int id, CommentEntity value)
         {
             if (id != value.Id)
             {

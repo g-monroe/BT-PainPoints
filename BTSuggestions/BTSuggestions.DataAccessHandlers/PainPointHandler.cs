@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace BTSuggestions.DataAccessHandlers
 {
-    public class PainPointHandler : BaseHandler<PainPoint>, IPainPointHandler
+    public class PainPointHandler : BaseHandler<PainPointEntity>, IPainPointHandler
     {
      
         public PainPointHandler(BTSuggestionContext context) : base(context)
         {
         }
 
-        public async Task<IEnumerable<Comment>> GetComments(int id)
+        public async Task<IEnumerable<CommentEntity>> GetComments(int id)
         {
             var issue = await _context.Comments.Where(s => s.PainPointId == id).ToListAsync();
             if (issue == null)
@@ -49,7 +49,7 @@ namespace BTSuggestions.DataAccessHandlers
             return issue.Title;
         }
 
-        public async Task<User> GetUser(int id)
+        public async Task<UserEntity> GetUser(int id)
         {
             var issue = await GetById(id);
             var user = await _context.Users.FindAsync(issue.UserId);
@@ -63,7 +63,7 @@ namespace BTSuggestions.DataAccessHandlers
 
         public void PostSeed()
         {
-            var newUser = new User
+            var newUser = new UserEntity
             {
                 Username = "johnwick",
                 Firstname = "John",
@@ -86,7 +86,7 @@ namespace BTSuggestions.DataAccessHandlers
                     Name = "Billing"
                 }
             };
-            var newUser2 = new User
+            var newUser2 = new UserEntity
             {
                 Username = "robinwick",
                 Firstname = "Robin",
@@ -95,8 +95,8 @@ namespace BTSuggestions.DataAccessHandlers
                 Privilege = 67,
                 Email = "johnwickman@gmail.com"
             };
-            var newUsers = new List<User>() { newUser, newUser2 };
-            var newPain = new PainPoint
+            var newUsers = new List<UserEntity>() { newUser, newUser2 };
+            var newPain = new PainPointEntity
             {
                 Title = "This is test",
                 Summary = "This is the summary of the descripted Pain Point.",
@@ -111,7 +111,7 @@ namespace BTSuggestions.DataAccessHandlers
                 Type = newTypes,
                 PriorityLevel = 99
             };
-            var newPain2 = new PainPoint
+            var newPain2 = new PainPointEntity
             {
                 Title = "A new test. This is test",
                 Summary = "Wow this is cool. This is the summary of the descripted Pain Point.",
@@ -126,11 +126,11 @@ namespace BTSuggestions.DataAccessHandlers
                 Type = newTypes,
                 PriorityLevel = 98
             };
-            var newPains = new List<PainPoint>() { newPain, newPain2 };
+            var newPains = new List<PainPointEntity>() { newPain, newPain2 };
 
-            var newComments = new List<Comment>()
+            var newComments = new List<CommentEntity>()
             {
-                new Comment
+                new CommentEntity
                 {
                     User = newUser2,
                     UserId = newUser2.Id,

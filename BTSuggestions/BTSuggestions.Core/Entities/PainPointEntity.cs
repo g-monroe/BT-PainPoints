@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BTSuggestions.Core.Entities
 {
-    public class PainPoint : BaseEntity
+    public class PainPointEntity : BaseEntity
     {
         [MaxLength(150)]
         [MinLength(2)]
@@ -26,7 +26,7 @@ namespace BTSuggestions.Core.Entities
         [Required]
         public string Status { get; set; }
         [Required]
-        public virtual User User { get; set; }
+        public virtual UserEntity User { get; set; }
         [Required]
         [ForeignKey("UserId")]
         public int UserId { get; set; }

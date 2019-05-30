@@ -10,7 +10,7 @@ namespace BTSuggestions.Managers.Extensions
 {
     public static class CommentExtension
     {
-        public static CommentResponseList CommentToListResponse(this IEnumerable<Comment> me)
+        public static CommentResponseList CommentToListResponse(this IEnumerable<CommentEntity> me)
         {
             var resp = new CommentResponseList
             {
@@ -19,7 +19,7 @@ namespace BTSuggestions.Managers.Extensions
             };
             return resp;
         }
-        public static CommentResponse CommentToListItem(this Comment me)
+        public static CommentResponse CommentToListItem(this CommentEntity me)
         {
             return new CommentResponse()
             {
@@ -33,11 +33,11 @@ namespace BTSuggestions.Managers.Extensions
                 Status = me.Status
             };
         }
-        public static Comment CommentToDbItem(this CommentRequest me, Comment updating = null)
+        public static CommentEntity CommentToDbItem(this CommentRequest me, CommentEntity updating = null)
         {
             if (updating == null)
             {
-                updating = new Comment();
+                updating = new CommentEntity();
             }
             updating.User = me.User;
             updating.Id = me.CommentId;

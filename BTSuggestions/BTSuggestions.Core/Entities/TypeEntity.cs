@@ -14,7 +14,7 @@ namespace BTSuggestions.Core.Entities
         public string Name { get; set; }
 
         [Required]
-        public virtual PainPoint PainPoint { get; set; }
+        public virtual PainPointEntity PainPoint { get; set; }
 
         [Required]
         [ForeignKey("PainPointId")]

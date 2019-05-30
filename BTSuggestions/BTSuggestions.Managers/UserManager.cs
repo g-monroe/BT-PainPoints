@@ -16,25 +16,25 @@ namespace BTSuggestions.Managers
             _userEngine = userEngine;
         }
 
-        public async Task<User> AddNewUser(User newUser)
+        public async Task<UserEntity> AddNewUser(UserEntity newUser)
         {
             return await _userEngine.CreateUserEntity(newUser);
         }
 
-        public async Task<User> GetUser(int id)
+        public async Task<UserEntity> GetUser(int id)
         {
             return await _userEngine.GetUser(id);
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<UserEntity>> GetUsers()
         {
             return await _userEngine.GetUsers();
         }
-        public Task Delete(User user)
+        public Task Delete(UserEntity user)
         {
             return _userEngine.Delete(user);
         }
-        public async Task<User> UpdateUser(int userId, string userEmail, string firstName, string lastName, string password, int privilage)
+        public async Task<UserEntity> UpdateUser(int userId, string userEmail, string firstName, string lastName, string password, int privilage)
         {
             var user = await _userEngine.GetUser(userId);
             return await _userEngine.UpdateUser(user, userEmail, firstName, lastName, password, privilage);

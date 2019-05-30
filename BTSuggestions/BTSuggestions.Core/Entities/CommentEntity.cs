@@ -6,14 +6,14 @@ using System.Text;
 
 namespace BTSuggestions.Core.Entities
 {
-    public class Comment : BaseEntity
+    public class CommentEntity : BaseEntity
     {
         [Required]
-        public virtual PainPoint PainPoint { get; set; }
+        public virtual PainPointEntity PainPoint { get; set; }
         [Required]
         public int PainPointId { get; set; }
         [Required]
-        public virtual User User { get; set; }
+        public virtual UserEntity User { get; set; }
         [Required]
         public int UserId { get; set; }
         [Required]

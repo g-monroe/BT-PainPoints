@@ -16,7 +16,7 @@ namespace BTSuggestions.Engines
             _userHandler = userHandler;
         }
 
-        public async Task<User> CreateUserEntity(User newUser)
+        public async Task<UserEntity> CreateUserEntity(UserEntity newUser)
         {
 
            await _userHandler.Insert(newUser);
@@ -45,7 +45,7 @@ namespace BTSuggestions.Engines
             return await _userHandler.GetPrivilege(id);
         }
 
-        public async Task<User> GetUser(int id)
+        public async Task<UserEntity> GetUser(int id)
         {
             var user = await _userHandler.GetById(id);
             return user;
@@ -56,12 +56,12 @@ namespace BTSuggestions.Engines
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<UserEntity>> GetUsers()
         {
             return await _userHandler.GetAll();
         }
 
-        public async Task<User> UpdateUser(User user, string email, string firstName, string lastName, string password, int privilege)
+        public async Task<UserEntity> UpdateUser(UserEntity user, string email, string firstName, string lastName, string password, int privilege)
         {
             user.Email = email;
             user.Firstname = firstName;
@@ -71,7 +71,7 @@ namespace BTSuggestions.Engines
             await _userHandler.Update(user);
             return user;
         }
-        public Task Delete(User user)
+        public Task Delete(UserEntity user)
         {
             return _userHandler.Delete(user);
 

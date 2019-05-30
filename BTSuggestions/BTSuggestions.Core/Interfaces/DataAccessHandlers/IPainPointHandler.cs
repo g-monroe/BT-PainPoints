@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BTSuggestions.Core.Interfaces.DataAccessHandlers
 {
-    public interface IPainPointHandler : IBaseHandler<PainPoint>
+    public interface IPainPointHandler : IBaseHandler<PainPointEntity>
     {
-        Task<IEnumerable<Comment>> GetComments(int id);
-        Task<User> GetUser(int id);
+        Task<IEnumerable<CommentEntity>> GetComments(int id);
+        Task<UserEntity> GetUser(int id);
         Task<string> GetTitle(int id);
         Task<string> GetSummary(int id);
         void PostSeed();

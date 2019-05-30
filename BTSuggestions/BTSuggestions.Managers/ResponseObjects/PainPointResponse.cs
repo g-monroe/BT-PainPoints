@@ -14,7 +14,7 @@ namespace BTSuggestions.Managers.ResponseObjects
         public string Annotation { get; set; }
         public string Status { get; set; }
         public int PriorityLevel { get; set; }
-        public User User { get; set; }
+        public UserEntity User { get; set; }
         public int UserId { get; set; }
         public string CompanyName { get; set; }
         public string CompanyContact { get; set; }

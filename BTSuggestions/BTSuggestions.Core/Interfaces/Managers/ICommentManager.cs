@@ -8,8 +8,8 @@ namespace BTSuggestions.Core.Interfaces.Managers
 {
     public interface ICommentManager
     {
-        Task<IEnumerable<Comment>> GetComments();
-        Task<Comment> AddNewComment(int userId, int PainPointId, string commentText, string status, DateTime createdOn);
-        Task<Comment> UpdateComment(int commentId, string commentText, DateTime createdOn);
+        Task<IEnumerable<CommentEntity>> GetComments();
+        Task<CommentEntity> AddNewComment(int userId, int PainPointId, string commentText, string status, DateTime createdOn);
+        Task<CommentEntity> UpdateComment(int commentId, string commentText, DateTime createdOn);
     }
 }

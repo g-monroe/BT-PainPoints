@@ -16,17 +16,17 @@ namespace BTSuggestions.Managers
             _commentEngine = commentEngine;
         }
 
-        public async Task<Comment> AddNewComment(int userId, int PainPointId, string commentText, string status, DateTime createdOn)
+        public async Task<CommentEntity> AddNewComment(int userId, int PainPointId, string commentText, string status, DateTime createdOn)
         {
             return await _commentEngine.CreateCommentEntity(PainPointId, userId, commentText, status, createdOn);
         }
 
-        public async Task<IEnumerable<Comment>> GetComments()
+        public async Task<IEnumerable<CommentEntity>> GetComments()
         {
             return await _commentEngine.GetComments();
         }
 
-        public async Task<Comment> UpdateComment(int commentId, string commentText, DateTime createdOn)
+        public async Task<CommentEntity> UpdateComment(int commentId, string commentText, DateTime createdOn)
         {
             var comment = await _commentEngine.GetComment(commentId);
             return await _commentEngine.UpdateComment(comment, commentText, createdOn);

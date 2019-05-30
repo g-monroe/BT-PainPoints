@@ -10,7 +10,7 @@ namespace BTSuggestions.Managers.Extensions
 {
     public static class UserExtension
     {
-        public static UserResponseList UserToListResponse(this IEnumerable<User> me)
+        public static UserResponseList UserToListResponse(this IEnumerable<UserEntity> me)
         {
             var resp = new UserResponseList
             {
@@ -19,7 +19,7 @@ namespace BTSuggestions.Managers.Extensions
             };
             return resp;
         }
-        public static UserResponse UserToListItem(this User me)
+        public static UserResponse UserToListItem(this UserEntity me)
         {
             return new UserResponse()
             {
@@ -32,11 +32,11 @@ namespace BTSuggestions.Managers.Extensions
                 Privilege = me.Privilege
             };
         }
-        public static User UserToDbItem(this UserRequest me, User updating = null)
+        public static UserEntity UserToDbItem(this UserRequest me, UserEntity updating = null)
         {
             if (updating == null)
             {
-                updating = new User();
+                updating = new UserEntity();
             }
             updating.Id = me.UserId;
             updating.Email = me.Email;

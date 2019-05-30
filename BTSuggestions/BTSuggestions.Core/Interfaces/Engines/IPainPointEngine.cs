@@ -12,7 +12,7 @@ namespace BTSuggestions.Core.Interfaces.Engines
         Task<PainPointEntity> GetPainPoint(int id);
         Task<PainPointEntity> CreatePainPoint(PainPointEntity value);
         Task<PainPointEntity> UpdatePainPoint(PainPointEntity painPoint, PainPointEntity newValue);
-        Task<IEnumerable<Comment>> GetComments(int id);
+        Task<IEnumerable<CommentEntity>> GetComments(int id);
         Task<string> GetSummary(int id);
         Task<string> GetTitle(int id);
         Task<UserEntity> GetUser(int id);

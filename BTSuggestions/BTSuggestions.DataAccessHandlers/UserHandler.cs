@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BTSuggestions.DataAccessHandlers
 {
-    public class UserHandler : BaseHandler<User>, IUserHandler
+    public class UserHandler : BaseHandler<UserEntity>, IUserHandler
     {
         public UserHandler(BTSuggestionContext context) : base(context)
         {

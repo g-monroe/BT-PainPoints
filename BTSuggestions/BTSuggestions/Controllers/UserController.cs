@@ -32,7 +32,7 @@ namespace BTSuggestions.Controllers
         }
         // GET api/user
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> Get()
+        public async Task<ActionResult<IEnumerable<UserEntity>>> Get()
         {
             var result = await _manager.GetUsers();
             if (result == null)
@@ -44,7 +44,7 @@ namespace BTSuggestions.Controllers
 
         // GET api/user/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Get(int id)
+        public async Task<ActionResult<UserEntity>> Get(int id)
         {
             var result = await _manager.GetUser(id);
             if (result == null)
@@ -101,7 +101,7 @@ namespace BTSuggestions.Controllers
         }
         // POST api/user
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User value)
+        public async Task<ActionResult<UserEntity>> PostUser(UserEntity value)
         {
             var result = await _manager.AddNewUser(value);
             if (result == null)
@@ -113,13 +113,13 @@ namespace BTSuggestions.Controllers
 
         // PUT api/user/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<User>> PutUser(int id, User value)
+        public async Task<ActionResult<UserEntity>> PutUser(int id, UserEntity value)
         {
             if (id != value.Id)
             {
                 return BadRequest();
             }
-            User result = await _manager.UpdateUser(id, value.Email, value.Firstname, value.Lastname, value.Password, value.Privilege);
+            UserEntity result = await _manager.UpdateUser(id, value.Email, value.Firstname, value.Lastname, value.Password, value.Privilege);
             return result;
         }
 

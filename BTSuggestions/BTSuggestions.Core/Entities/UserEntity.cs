@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BTSuggestions.Core.Entities
 {
-    public class User : BaseEntity
+    public class UserEntity : BaseEntity
     {
         [Required]
         [MaxLength(120)]

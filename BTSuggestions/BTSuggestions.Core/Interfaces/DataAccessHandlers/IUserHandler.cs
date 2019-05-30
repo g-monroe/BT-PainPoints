@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BTSuggestions.Core.Interfaces.DataAccessHandlers
 {
-    public interface IUserHandler : IBaseHandler<User>
+    public interface IUserHandler : IBaseHandler<UserEntity>
     {
         Task<int> GetPrivilege(int id);
         Task<string> GetUsername(int id);

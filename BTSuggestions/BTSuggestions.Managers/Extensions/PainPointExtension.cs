@@ -11,7 +11,7 @@ namespace BTSuggestions.Managers.Extensions
 {
     public static class PainPointExtension
     {
-        public static PainPointResponseList PainPointToListResponse(this IEnumerable<PainPoint> me)
+        public static PainPointResponseList PainPointToListResponse(this IEnumerable<PainPointEntity> me)
         {
             var resp = new PainPointResponseList
             {

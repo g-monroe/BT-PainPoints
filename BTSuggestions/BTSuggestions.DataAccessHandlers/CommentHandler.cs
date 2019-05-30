@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BTSuggestions.DataAccessHandlers
 {
-    public class CommentHandler : BaseHandler<Comment>, ICommentHandler
+    public class CommentHandler : BaseHandler<CommentEntity>, ICommentHandler
     {
         private readonly new BTSuggestionContext _context;
         public CommentHandler(BTSuggestionContext context) : base(context)
@@ -15,7 +15,7 @@ namespace BTSuggestions.DataAccessHandlers
             _context = context;
         }
 
-        public async Task<PainPoint> GetPainPoint(int id)
+        public async Task<PainPointEntity> GetPainPoint(int id)
         {
             var comment = await GetById(id);
             var pain = await _context.PainPoints.FindAsync(comment.PainPointId);
@@ -49,7 +49,7 @@ namespace BTSuggestions.DataAccessHandlers
             return comment.CommentText;
         }
 
-        public async Task<User> GetUser(int id)
+        public async Task<UserEntity> GetUser(int id)
         {
             var comment = await GetById(id);
             var user = await _context.Users.FindAsync(comment.UserId);
