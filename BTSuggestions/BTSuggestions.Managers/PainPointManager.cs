@@ -67,6 +67,21 @@ namespace BTSuggestions.Managers
             var painPoint = await _painPointEngine.GetPainPoint(id);
             return painPoint;
         }
-
+        public async Task<PainPointEntity> GetIncludes(int id)
+        {
+            return await _painPointEngine.GetIncludes(id);
+        }
+        public async Task<IEnumerable<PainPointEntity>> GetOrderByPriority()
+        {
+            return await _painPointEngine.GetOrderByPriority();
+        }
+        public async Task<IEnumerable<PainPointEntity>> GetByPriority(int level)
+        {
+            return await _painPointEngine.GetByPriority(level);
+        }
+        public async Task<IEnumerable<PainPointTypeEntity>> GetOrderByPriorityType(string typename)
+        {
+            return await _painPointEngine.GetOrderByPriorityType(typename);
+        }
     }
 }

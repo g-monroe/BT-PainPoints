@@ -67,8 +67,41 @@ namespace BTSuggestions.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<PainPointEntity>> Get(int id)
         {
-            return await _painpointManager.GetPainPoint(id);
+            return  await _painpointManager.GetIncludes(id);
         }
+        // GET api/painpoint/priority
+        [HttpGet("priority")]
+        public async Task<ActionResult<IEnumerable<PainPointEntity>>> GetOrderByPriority()
+        {
+            var result = await _painpointManager.GetOrderByPriority();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result.ToList();
+        }
+        // GET api/painpoint/priority
+        [HttpGet("priority/{id}")]
+        public async Task<ActionResult<IEnumerable<PainPointEntity>>> GetByPriority(int id)
+        {
+            var result = await _painpointManager.GetByPriority(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result.ToList();
+        }
+        [HttpGet("priority/types/{id}")]
+        public async Task<ActionResult<IEnumerable<PainPointTypeEntity>>> GetByPriorityType(string id)
+        {
+            var result = await _painpointManager.GetOrderByPriorityType(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result.ToList();
+        }
+
         // GET api/painpoint/5/comments
         [HttpGet("{id}/comments")]
         public async Task<ActionResult<IEnumerable<CommentEntity>>> GetComments(int id)
@@ -86,6 +119,7 @@ namespace BTSuggestions.Controllers
         {
             return await _painpointManager.GetUser(id);
         }
+
         // GET api/painpoint/5/title
         [HttpGet("{id}/title")]
         public async Task<ActionResult<string>> GetTitle(int id)

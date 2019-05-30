@@ -79,5 +79,21 @@ namespace BTSuggestions.Engines
              __painPointHandler.Delete(entity);
             return Task.CompletedTask;
         }
+        public async Task<PainPointEntity> GetIncludes(int id)
+        {
+            return await __painPointHandler.GetIncludes(id);
+        }
+        public async Task<IEnumerable<PainPointEntity>> GetOrderByPriority()
+        {
+            return await __painPointHandler.GetOrderByPriority();
+        }
+        public async Task<IEnumerable<PainPointEntity>> GetByPriority(int level)
+        {
+            return await __painPointHandler.GetByPriority(level);
+        }
+        public async Task<IEnumerable<PainPointTypeEntity>> GetOrderByPriorityType(string typename)
+        {
+            return await __painPointHandler.GetOrderByPriorityType(typename);
+        }
     }
 }

@@ -64,6 +64,22 @@ namespace BTSuggestions.DataAccessHandlers
         {
             return await _context.PainPoints.Include(s => s.TypeEnties).ThenInclude(x => x.Type).ToListAsync();
         }
+        public async Task<PainPointEntity> GetIncludes(int id)
+        {
+            return  await _context.PainPoints.Include(s => s.TypeEnties).ThenInclude(x => x.Type).FirstAsync(x => x.Id == id);
+        }
+        public async Task<IEnumerable<PainPointEntity>> GetOrderByPriority()
+        {
+            return await _context.PainPoints.OrderBy(x => x.PriorityLevel).Include(s => s.TypeEnties).ThenInclude(x => x.Type).ToListAsync();
+        }
+        public async Task<IEnumerable<PainPointEntity>> GetByPriority(int level)
+        {
+            return await _context.PainPoints.Where(x => x.PriorityLevel == level).Include(s => s.TypeEnties).ThenInclude(x => x.Type).ToListAsync();
+        }
+        public async Task<IEnumerable<PainPointTypeEntity>> GetOrderByPriorityType(string typename)
+        {
+            return await _context.PainPointTypes.Where(u => u.Type.Name == typename).Include(z => z.PainPoint).ToListAsync();
+        }
         public void PostSeed()
         {
             var newUser = new UserEntity

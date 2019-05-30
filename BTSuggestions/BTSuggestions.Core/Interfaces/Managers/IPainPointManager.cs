@@ -17,6 +17,10 @@ namespace BTSuggestions.Core.Interfaces.Managers
         Task<string> GetSummary(int id);
         Task<string> GetTitle(int id);
         Task<UserEntity> GetUser(int id);
+        Task<PainPointEntity> GetIncludes(int id);
+        Task<IEnumerable<PainPointEntity>> GetOrderByPriority();
+        Task<IEnumerable<PainPointEntity>> GetByPriority(int level);
+        Task<IEnumerable<PainPointTypeEntity>> GetOrderByPriorityType(string typename);
         void PostSeed();
         Task Delete(PainPointEntity entity);
     }
