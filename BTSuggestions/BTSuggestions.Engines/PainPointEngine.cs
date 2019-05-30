@@ -16,7 +16,7 @@ namespace BTSuggestions.Engines
             __painPointHandler = painPointHandler;
         }
 
-        public async Task<PainPoint> CreatePainPoint(PainPoint value)
+        public async Task<PainPointEntity> CreatePainPoint(PainPointEntity value)
         {
            await __painPointHandler.Insert(value);
            await __painPointHandler.SaveChanges();
@@ -30,13 +30,13 @@ namespace BTSuggestions.Engines
             return result;
         }
 
-        public async Task<PainPoint> GetPainPoint(int id)
+        public async Task<PainPointEntity> GetPainPoint(int id)
         {
             var painPoint = await __painPointHandler.GetById(id);
             return painPoint;
         }
 
-        public async Task<IEnumerable<PainPoint>> GetPainPoints()
+        public async Task<IEnumerable<PainPointEntity>> GetPainPoints()
         {
             return await __painPointHandler.GetAll();
         }
@@ -51,7 +51,7 @@ namespace BTSuggestions.Engines
             return await __painPointHandler.GetTitle(id);
         }
 
-        public async Task<User> GetUser(int id)
+        public async Task<UserEntity> GetUser(int id)
         {
             return await __painPointHandler.GetUser(id);
         }
@@ -61,9 +61,9 @@ namespace BTSuggestions.Engines
             __painPointHandler.PostSeed();
         }
 
-        public async Task<PainPoint> UpdatePainPoint(PainPoint painPoint, PainPoint newPain)
+        public async Task<PainPointEntity> UpdatePainPoint(PainPointEntity painPoint, PainPointEntity newPain)
         {
-            PainPoint result = await __painPointHandler.GetById(painPoint.Id);
+            PainPointEntity result = await __painPointHandler.GetById(painPoint.Id);
             result.Title = newPain.Title;
             result.Summary = newPain.Summary;
             result.Annotation = newPain.Annotation;
@@ -71,7 +71,7 @@ namespace BTSuggestions.Engines
             await __painPointHandler.Update(result);
             return painPoint;
         }
-        public Task Delete(PainPoint entity)
+        public Task Delete(PainPointEntity entity)
         {
              __painPointHandler.Delete(entity);
             return Task.CompletedTask;

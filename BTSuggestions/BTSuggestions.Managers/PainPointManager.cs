@@ -16,17 +16,17 @@ namespace BTSuggestions.Managers
             _painPointEngine = painPointEngine;
         }
 
-        public async Task<PainPoint> AddNewPainPoint(PainPoint value)
+        public async Task<PainPointEntity> AddNewPainPoint(PainPointEntity value)
         {
             return await _painPointEngine.CreatePainPoint(value);
         }
 
-        public async Task<IEnumerable<PainPoint>> GetPainPoints()
+        public async Task<IEnumerable<PainPointEntity>> GetPainPoints()
         {
             return await _painPointEngine.GetPainPoints();
         }
 
-        public async Task<PainPoint> UpdatePainPoint(int painPointId, PainPoint value)
+        public async Task<PainPointEntity> UpdatePainPoint(int painPointId, PainPointEntity value)
         {
             var painPoint = await _painPointEngine.GetPainPoint(painPointId);
             return await _painPointEngine.UpdatePainPoint(painPoint, value);
@@ -35,9 +35,35 @@ namespace BTSuggestions.Managers
         {
             _painPointEngine.PostSeed();
         }
-        public Task Delete(PainPoint value)
+        public Task Delete(PainPointEntity value)
         {
             return  _painPointEngine.Delete(value);
         }
+
+        public async Task<IEnumerable<Comment>> GetComments(int id)
+        {
+            return await _painPointEngine.GetComments(id);
+        }
+
+        public async Task<string> GetSummary(int id)
+        {
+            return await _painPointEngine.GetSummary(id);
+        }
+
+        public async Task<string> GetTitle(int id)
+        {
+            return await _painPointEngine.GetTitle(id);
+        }
+
+        public async Task<UserEntity> GetUser(int id)
+        {
+            return await _painPointEngine.GetUser(id);
+        }
+        public async Task<PainPointEntity> GetPainPoint(int id)
+        {
+            var painPoint = await _painPointEngine.GetPainPoint(id);
+            return painPoint;
+        }
+
     }
 }

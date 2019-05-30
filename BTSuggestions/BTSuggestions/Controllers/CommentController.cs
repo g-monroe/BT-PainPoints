@@ -46,7 +46,7 @@ namespace BTSuggestions.Controllers
         }
         // GET api/comment/5/user
         [HttpGet("{id}/user")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<UserEntity>> GetUser(int id)
         {
             var comment = await _context.Comments.FindAsync(id);
             var user = await _context.Users.FindAsync(comment.UserId);
@@ -59,7 +59,7 @@ namespace BTSuggestions.Controllers
         }
         // GET api/comment/5/painpoint
         [HttpGet("{id}/painpoint")]
-        public async Task<ActionResult<PainPoint>> GetPainPoint(int id)
+        public async Task<ActionResult<PainPointEntity>> GetPainPoint(int id)
         {
             var comment = await _context.Comments.FindAsync(id);
             var pain = await _context.PainPoints.FindAsync(comment.PainPointId);
@@ -131,7 +131,7 @@ namespace BTSuggestions.Controllers
 
         // DELETE api/comments/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Boolean>> Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
             var comment = await _context.Comments.FindAsync(id);
             if (comment == null)

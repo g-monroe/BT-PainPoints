@@ -8,15 +8,15 @@ namespace BTSuggestions.Core.Interfaces.Engines
 {
     public interface IPainPointEngine
     {
-        Task<IEnumerable<PainPoint>> GetPainPoints();
-        Task<PainPoint> GetPainPoint(int id);
-        Task<PainPoint> CreatePainPoint(PainPoint value);
-        Task<PainPoint> UpdatePainPoint(PainPoint painPoint, PainPoint newValue);
+        Task<IEnumerable<PainPointEntity>> GetPainPoints();
+        Task<PainPointEntity> GetPainPoint(int id);
+        Task<PainPointEntity> CreatePainPoint(PainPointEntity value);
+        Task<PainPointEntity> UpdatePainPoint(PainPointEntity painPoint, PainPointEntity newValue);
         Task<IEnumerable<Comment>> GetComments(int id);
         Task<string> GetSummary(int id);
         Task<string> GetTitle(int id);
-        Task<User> GetUser(int id);
+        Task<UserEntity> GetUser(int id);
         void PostSeed();
-        Task Delete(PainPoint entity);
+        Task Delete(PainPointEntity entity);
     }
 }

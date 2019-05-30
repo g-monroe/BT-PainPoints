@@ -26,11 +26,9 @@ namespace BTSuggestions.Controllers
         /// - Gavin
         /// </summary>
         private readonly IPainPointManager _painpointManager;
-        private readonly IPainPointEngine _painpointEngine;
-        public PainPointController(IPainPointManager painPointManager, IPainPointEngine painPointEngine)
+        public PainPointController(IPainPointManager painPointManager)
         {
             _painpointManager = painPointManager;
-            _painpointEngine = painPointEngine;
         }
         // GET api/painpoint
         [HttpGet]
@@ -64,15 +62,15 @@ namespace BTSuggestions.Controllers
 
         // GET api/painpoint/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PainPoint>> Get(int id)
+        public async Task<ActionResult<PainPointEntity>> Get(int id)
         {
-            return await _painpointEngine.GetPainPoint(id);
+            return await _painpointManager.GetPainPoint(id);
         }
         // GET api/painpoint/5/comments
         [HttpGet("{id}/comments")]
         public async Task<ActionResult<IEnumerable<Comment>>> GetComments(int id)
         {
-            var result = await _painpointEngine.GetComments(id);
+            var result = await _painpointManager.GetComments(id);
             if (result == null)
             {
                 return NotFound();
@@ -81,22 +79,22 @@ namespace BTSuggestions.Controllers
         }
         // GET api/painpoint/5/user
         [HttpGet("{id}/user")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<UserEntity>> GetUser(int id)
         {
-            return await _painpointEngine.GetUser(id);
+            return await _painpointManager.GetUser(id);
         }
         // GET api/painpoint/5/title
         [HttpGet("{id}/title")]
         public async Task<ActionResult<string>> GetTitle(int id)
         {
-            return await _painpointEngine.GetTitle(id);
+            return await _painpointManager.GetTitle(id);
         }
         // GET api/painpoint/5/title
         [HttpGet("{id}/summary")]
         public async Task<ActionResult<string>> GetSummary(int id)
         {
 
-            var result = await _painpointEngine.GetSummary(id);
+            var result = await _painpointManager.GetSummary(id);
             if (result == null)
             {
                 return NotFound();
@@ -105,7 +103,7 @@ namespace BTSuggestions.Controllers
         }
         // POST api/painpoint
         [HttpPost]
-        public async Task<ActionResult<PainPoint>> PostPainPoint(PainPoint value)
+        public async Task<ActionResult<PainPointEntity>> PostPainPoint(PainPointEntity value)
         {
 
             var result = await _painpointManager.AddNewPainPoint(value);
@@ -122,7 +120,7 @@ namespace BTSuggestions.Controllers
         }
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<PainPoint>> PutPainPoint(int id, PainPoint value)
+        public async Task<ActionResult<PainPointEntity>> PutPainPoint(int id, PainPointEntity value)
         {
             if (id != value.Id)
             {
@@ -140,7 +138,7 @@ namespace BTSuggestions.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            PainPoint result = await _painpointEngine.GetPainPoint(id);
+            PainPointEntity result = await _painpointManager.GetPainPoint(id);
             if (result == null)
             {
                 return NotFound();

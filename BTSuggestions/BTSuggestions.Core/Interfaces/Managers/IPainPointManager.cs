@@ -8,10 +8,16 @@ namespace BTSuggestions.Core.Interfaces.Managers
 {
     public interface IPainPointManager
     {
-        Task<IEnumerable<PainPoint>> GetPainPoints();
-        Task<PainPoint> AddNewPainPoint(PainPoint value);
-        Task<PainPoint> UpdatePainPoint(int painPointId, PainPoint value);
+        Task<IEnumerable<PainPointEntity>> GetPainPoints();
+        Task<PainPointEntity> AddNewPainPoint(PainPointEntity value);
+        Task<PainPointEntity> UpdatePainPoint(int painPointId, PainPointEntity value);
+        Task<IEnumerable<Comment>> GetComments(int id);
+       Task<PainPointEntity> GetPainPoint(int id);
+
+        Task<string> GetSummary(int id);
+        Task<string> GetTitle(int id);
+        Task<UserEntity> GetUser(int id);
         void PostSeed();
-        Task Delete(PainPoint entity);
+        Task Delete(PainPointEntity entity);
     }
 }

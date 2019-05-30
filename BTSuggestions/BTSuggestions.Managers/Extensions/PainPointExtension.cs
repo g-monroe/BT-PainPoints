@@ -20,7 +20,7 @@ namespace BTSuggestions.Managers.Extensions
             };
             return resp;
         }
-        public static PainPointResponse PainPointToListItem(this PainPoint me)
+        public static PainPointResponse PainPointToListItem(this PainPointEntity me)
         {
             //Add Types in
             return new PainPointResponse()
@@ -41,11 +41,11 @@ namespace BTSuggestions.Managers.Extensions
                 Status = me.Status
             };
         }
-        public static PainPoint PainPointToDbItem(this PainPointRequest me, PainPoint updating = null)
+        public static PainPointEntity PainPointToDbItem(this PainPointRequest me, PainPointEntity updating = null)
         {
             if (updating == null)
             {
-                updating = new PainPoint();
+                updating = new PainPointEntity();
             }
             updating.User = me.User;
             updating.PriorityLevel = me.PriorityLevel;
