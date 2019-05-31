@@ -1,21 +1,20 @@
 import React from "react";
 import "antd/dist/antd.css";
-
 import { SelectOptionWithEntityAndSpan } from "../types/dropdownValues/columnNameTypes";
-
 import { Button, Menu, Dropdown, Icon } from "antd";
 import { ClickParam } from "antd/lib/menu";
-import CustomColumnData from "./CustomColumnData"
+import CustomColumnData from "./CustomColumnData";
 
-interface ICustomColumnProps {
+export interface ICustomColumnProps {
   menuList: SelectOptionWithEntityAndSpan[]
   data: any[]
   columnNumber: number
-  changeSpan: (span:number, columnNumber: number) => void;
+  changeSpan: (props:ICustomColumnProps, id: number) => void;
+  columnLabel: SelectOptionWithEntityAndSpan
 }
 
 interface ICustomColumnState {  
-  columnLabel: SelectOptionWithEntityAndSpan
+  
 }
 
 const getDropDown = (props: ICustomColumnProps, handleMenuOnChange: (e: ClickParam, id: number) => void) => {
@@ -48,25 +47,15 @@ export default class CustomColumn extends React.Component<ICustomColumnProps, IC
     
   };
 
-  constructor(props:ICustomColumnProps){
-    super(props);
-    const { changeSpan,menuList,columnNumber } = this.props;
-    changeSpan(menuList[0].span,columnNumber);
-  }
-
   handleMenuOnChange = (e: ClickParam, id: number) => {
-    console.log(this.handleMenuOnChange);
-    let { columnLabel } = this.state;
-    const { menuList,changeSpan,columnNumber } = this.props;
-    columnLabel = menuList[id];
-    changeSpan(columnLabel.span, columnNumber);
-    this.setState({ columnLabel });
+    console.log(this.handleMenuOnChange);    
+    const { columnLabel,columnNumber, changeSpan } = this.props;
+    changeSpan(this.props, id);
   };
 
   render() {
-    const dropDown = getDropDown(this.props, this.handleMenuOnChange);
-    const { columnLabel } = this.state;
-    const { data } = this.props;
+    const dropDown = getDropDown(this.props, this.handleMenuOnChange);    
+    const { data, columnLabel } = this.props;
     console.log(dropDown);
     return (
       <>
