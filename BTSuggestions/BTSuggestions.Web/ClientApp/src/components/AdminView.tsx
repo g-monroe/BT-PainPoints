@@ -4,6 +4,8 @@ import '../styles/App.css';
 import { Layout, Button, Table, Icon, Select} from 'antd';
 import AdminViewEntity from '../entity/AdminViewEntity';
 import { statusList } from '../types/dropdownValues/statusTypes';
+import { APIHandler } from '../utilities/apiHandler';
+import PainPointEntity from '../entity/PainPointEntity';
 
 const { Content} = Layout;
 
