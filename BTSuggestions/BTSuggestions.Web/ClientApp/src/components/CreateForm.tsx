@@ -6,6 +6,7 @@ import { industryList } from '../types/dropdownValues/industryTypes';
 import { withFormik, InjectedFormikProps, Form } from 'formik';
 import CreateFormEntity from '../entity/CreateFormEntity';
 import { APIHandler } from '../utilities/apiHandler';
+import TestingDbEntity from '../entity/TestingDbEntity';
 
 const { Content } = Layout;
 const FormItem = AntForm.Item;
@@ -65,13 +66,6 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
     };
 
     render() {
-        APIHandler(`/api/painpoint/1`, {
-            method: 'GET',
-            responseType: CreateFormEntity
-        }).then(function(r:any) {
-            console.log(r);
-        });
-
         const { values, handleSubmit, errors, handleChange, setFieldValue } = this.props;
         const css = "../src/styles/App.css";
         const { inputValue } = this.state;
@@ -138,7 +132,13 @@ export default withFormik<ICreateFormProps, ICreateFormState>({
     validationSchema: yupValidation,
     handleSubmit: (values) => {
         console.log(values);
-        
+        APIHandler(`/api/painpoint/1`, {
+            method: 'GET',
+            responseType: TestingDbEntity
+        }).then(function(r:any) {
+            console.log(r);
+        });
+
         alert("You have submitted an issue");
     },
     displayName: 'Create Issue Form'
