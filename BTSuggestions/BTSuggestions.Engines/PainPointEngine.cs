@@ -91,9 +91,9 @@ namespace BTSuggestions.Engines
         {
             return await __painPointHandler.GetByPriority(level);
         }
-        public async Task<IEnumerable<PainPointTypeEntity>> GetOrderByPriorityType(string typename)
+        public IEnumerable<PainPointEntity> GetOrderByPriorityType(string typeName)
         {
-            return await __painPointHandler.GetOrderByPriorityType(typename);
+            return __painPointHandler.GetOrderByPriorityType(typeName);
         }
     }
 }

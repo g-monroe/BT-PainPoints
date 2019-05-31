@@ -9,7 +9,7 @@ namespace BTSuggestions.Core.Entities
         public int PainPointID { get; set; }
         public PainPointEntity PainPoint { get; set; }
         public string TaggedDescription { get; set; }
-        public int Score { get; set; } 
+        public int Score { get; set; }
 
     }
 }
