@@ -1,0 +1,16 @@
+.rightAlign{ 
+  position: absolute;
+  right: 16px;
+     
+}
+
+.footer {  
+  position: fixed;
+  bottom: 0px;
+  background-color:lightgray;
+  line-height: 64px;
+  width: 100%;
+  z-index: 2;
+  visibility: true;
+}
+
