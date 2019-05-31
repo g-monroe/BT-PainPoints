@@ -43,12 +43,12 @@ namespace BTSuggestions.Engines
             return await _commentHandler.GetAll();
         }
 
-        public Task<PainPointEntity> GetPainPoint(int id)
+        public async Task<PainPointEntity> GetPainPoint(int id)
         {
-            throw new NotImplementedException();
+            return await _commentHandler.GetPainPoint(id);
         }
 
-        public Task<string> GetStatus(int id)
+        public async Task<string> GetStatus(int id)
         {
             return await _commentHandler.GetStatus(id);
         }

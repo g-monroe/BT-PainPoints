@@ -125,21 +125,20 @@ namespace BTSuggestions.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutComment(int id, CommentEntity value)
+        public async Task<ActionResult<CommentEntity>> PutComment(int id, CommentEntity value)
         {
             if (id != value.Id)
             {
                 return BadRequest();
             }
-            var result = _commentManager.UpdateComment(id, value.CommentText, value.CreatedOn);
-
+            var result = await _commentManager.UpdateComment(id, value.CommentText, value.CreatedOn);
+            
             var issue = _commentManager.GetComment(id);
             if (issue == null)
             {
                 return NotFound();
             }
-
-            return NoContent();
+            return result;
         }
 
         //TODO: delete comment
