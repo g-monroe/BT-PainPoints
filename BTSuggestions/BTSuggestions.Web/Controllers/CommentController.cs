@@ -20,24 +20,29 @@ namespace BTSuggestions.Controllers
         /// handle differently.
         /// - Gavin
         /// </summary>
-        private readonly DataAccessHandlers.BTSuggestionContext _context;
+        private readonly Managers.CommentManager _commentManager;
 
-        public CommentController(DataAccessHandlers.BTSuggestionContext context)
+        public CommentController(Managers.CommentManager commentManager)
         {
-            _context = context;
+            _commentManager = commentManager;
         }
         // GET api/comments
         [HttpGet]
-        public ActionResult<IEnumerable<CommentEntity>> Get()
+        public async Task<ActionResult<IEnumerable<CommentEntity>>> Get()
         {
-            return _context.Comments.ToList();
+            var result = await _commentManager.GetComments();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result.ToList();
         }
 
         // GET api/comment/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CommentEntity>> Get(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
+            var comment = await _commentManager.GetComment(id);
             if (comment == null)
             {
                 return NotFound();
@@ -48,9 +53,8 @@ namespace BTSuggestions.Controllers
         [HttpGet("{id}/user")]
         public async Task<ActionResult<UserEntity>> GetUser(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
-            var user = await _context.Users.FindAsync(comment.UserId);
-            if (comment == null || user == null)
+            var user= await _commentManager.GetUser(id);
+            if (user == null)
             {
                 return NotFound();
             }

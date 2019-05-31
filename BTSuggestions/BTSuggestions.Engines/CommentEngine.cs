@@ -43,6 +43,26 @@ namespace BTSuggestions.Engines
             return await _commentHandler.GetAll();
         }
 
+        public Task<PainPointEntity> GetPainPoint(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> GetStatus(int id)
+        {
+            return await _commentHandler.GetStatus(id);
+        }
+
+        public async Task<string> GetText(int id)
+        {
+            return await _commentHandler.GetText(id);
+        }
+
+        public async Task<UserEntity> GetUser(int id)
+        {
+            return await _commentHandler.GetUser(id);
+        }
+
         public async Task<CommentEntity> UpdateComment(CommentEntity comment, string commentText, DateTime createdOn)
         {
             comment.CommentText = commentText;

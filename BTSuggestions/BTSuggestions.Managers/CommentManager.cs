@@ -25,7 +25,14 @@ namespace BTSuggestions.Managers
         {
             return await _commentEngine.GetComments();
         }
-
+        public async Task<CommentEntity> GetComment(int id)
+        {
+            return await _commentEngine.GetComment(id);
+        }
+        public async Task<UserEntity> GetUser(int id)
+        {
+            return await _commentEngine.GetUser(id);
+        }
         public async Task<CommentEntity> UpdateComment(int commentId, string commentText, DateTime createdOn)
         {
             var comment = await _commentEngine.GetComment(commentId);
