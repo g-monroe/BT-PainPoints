@@ -20,12 +20,30 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
     static defaultProps = {
     };
 
+    state = {
+        newComment: ''
+    };
+
     renderComments = (comments: string[]) => {
         const { companyContact } = this.props.data;
         return comments.map((comment, index) => (
             <Comment key={index} author={companyContact} content={comment} datetime={
                 <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}><span>{moment().fromNow()}</span></Tooltip>} />))
     };
+
+    handleSubmit = () => {
+        if (!this.state.newComment) {
+            return;
+        }
+        console.log(this.state.newComment);
+        
+    };
+
+    handleChange = (e : any) => {
+        this.setState(
+            { newComment: e.target.value },
+        )
+    }
 
     render() {
         const css = "../src/styles/App.css";
@@ -41,8 +59,8 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
                     <h3>Personal Notes: {this.props.data.painPointAnnotation}</h3>
                     <Divider>Comments</Divider>
                         {this.renderComments(this.props.data.comments)}
-                    <Input placeholder="New Comment" />
-                    <Button>Submit Comment</Button>
+                    <Input placeholder="New Comment" value={this.state.newComment} onChange={this.handleChange}/>
+                    <Button onClick={this.handleSubmit}>Submit Comment</Button>
                 </Content>
                 <Sider style={{ background: '#fff' }} >
                     <h1>Submitted By:</h1>

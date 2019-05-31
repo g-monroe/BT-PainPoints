@@ -2,7 +2,7 @@
 import React from "react";
 import "antd/dist/antd.css";
 import CustomColumn from "./CustomColumn"
-import { columnNameList } from '../types/dropdownValues/columnNameTypes';
+import { columnNameList } from '../types/dropdownValues/ColumnNameTypes';
 import { Button, Col } from "antd";
 import PainPointEntity from '../entity/PainPointEntity';
 import fakeDataImport from '../types/painPointTestDataArray.api.json';

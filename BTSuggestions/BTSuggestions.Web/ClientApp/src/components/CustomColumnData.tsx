@@ -2,7 +2,7 @@
 import React from "react";
 import "antd/dist/antd.css";
 import { Button, Menu, List } from "antd";
-import { SelectOptionWithEntity } from "../types/dropdownValues/columnNameTypes"
+import { SelectOptionWithEntity } from "../types/dropdownValues/ColumnNameTypes"
 
 interface ICustomColumnDataProps{
   data: any[];

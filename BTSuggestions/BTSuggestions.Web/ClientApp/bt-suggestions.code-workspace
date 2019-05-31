@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "C:\\Code\\land-sharks\\BTSuggestions\\BTSuggestions.Web\\ClientApp"
+		},
+		{
+			"path": "C:\\Code\\land-sharks\\BTSuggestions\\BTSuggestions.Web\\.vscode"
+		},
+		{
+			"path": "C:\\Code\\land-sharks\\BTSuggestions\\BTSuggestions.Web\\bin"
+		},
+		{
+			"path": "C:\\Code\\land-sharks\\BTSuggestions\\BTSuggestions.Web\\Controllers"
+		},
+		{
+			"path": "C:\\Code\\land-sharks\\BTSuggestions\\BTSuggestions.Web\\obj"
+		},
+		{
+			"path": "C:\\Code\\land-sharks\\BTSuggestions\\BTSuggestions.Web\\Pages"
+		},
+		{
+			"path": "C:\\Code\\land-sharks\\BTSuggestions\\BTSuggestions.Web\\Properties"
+		}
+	],
+	"settings": {}
+}
