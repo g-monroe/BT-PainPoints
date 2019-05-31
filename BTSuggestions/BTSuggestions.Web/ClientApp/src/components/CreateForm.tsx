@@ -5,6 +5,7 @@ import { painPointList } from '../types/dropdownValues/painPointTypes';
 import { industryList } from '../types/dropdownValues/industryTypes';
 import { withFormik, InjectedFormikProps, Form } from 'formik';
 import CreateFormEntity from '../entity/CreateFormEntity';
+import { APIHandler } from '../utilities/apiHandler';
 
 const { Content } = Layout;
 const FormItem = AntForm.Item;
@@ -14,7 +15,7 @@ interface ICreateFormProps{
 }
 
 interface ICreateFormState{
-    painPointType: string,
+    painPointType: string[],
     painPointTitle: string,
     painPointSummary: string,
     painPointAnnotation?: string,
@@ -30,7 +31,7 @@ interface ICreateFormState{
 }
 
 const yupValidation = yup.object().shape<ICreateFormState>({
-    painPointType: yup.string().required().label('Issue Type'),
+    painPointType: yup.array<string>(),
     painPointTitle: yup.string().min(2).max(150).required().label('Issue Title'),
     painPointSummary: yup.string().min(2).max(1500).required().label('Issue Summmary'),
     painPointSeverity: yup.number().min(0).max(10).required().label('Issue Severity'),
@@ -64,6 +65,13 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
     };
 
     render() {
+        APIHandler(`/api/painpoint/1`, {
+            method: 'GET',
+            responseType: CreateFormEntity
+        }).then(function(r:any) {
+            console.log(r);
+        });
+
         const { values, handleSubmit, errors, handleChange, setFieldValue } = this.props;
         const css = "../src/styles/App.css";
         const { inputValue } = this.state;
