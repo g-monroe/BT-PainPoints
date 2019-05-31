@@ -11,7 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTSuggestions.Managers", "B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTSuggestions.DataAccessHandlers", "BTSuggestions.DataAccessHandlers\BTSuggestions.DataAccessHandlers.csproj", "{1C57CB0F-1EC2-4FEB-A9EE-359300DE261F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTSuggestions.Web", "BTSuggestions.Web\BTSuggestions.Web.csproj", "{F0E584BC-8BAF-41A5-9F3F-E12FA8B628DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTSuggestions.Web", "BTSuggestions.Web\BTSuggestions.Web.csproj", "{F0E584BC-8BAF-41A5-9F3F-E12FA8B628DF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1C57CB0F-1EC2-4FEB-A9EE-359300DE261F} = {1C57CB0F-1EC2-4FEB-A9EE-359300DE261F}
+		{5FA29595-6AFA-43F5-B3E3-2CD8898AA38E} = {5FA29595-6AFA-43F5-B3E3-2CD8898AA38E}
+		{84FE189D-F13A-4C7B-B1D3-D6C8CAE356E1} = {84FE189D-F13A-4C7B-B1D3-D6C8CAE356E1}
+		{80A3B5DF-85C6-4AE1-B24A-69C5CC1655F1} = {80A3B5DF-85C6-4AE1-B24A-69C5CC1655F1}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
