@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace BTSuggestions.Managers
 {
     public class KeywordManager : IKeywordManager
-    {
+    {,
         private readonly IKeywordEngine _keywordEngine;
         public KeywordManager(IKeywordEngine keywordEngine)
         {
