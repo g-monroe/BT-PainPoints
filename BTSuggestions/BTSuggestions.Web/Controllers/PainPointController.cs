@@ -155,6 +155,8 @@ namespace BTSuggestions.Controllers
 
             return resp;
         }
+
+        //TODO: Remove task to remove warning. Does not need to be async.
         [HttpGet("priority/types/{typeName}")]
         public async Task<ActionResult<PainPointResponseList>> GetOrderByPriorityType(string typeName)
         {
