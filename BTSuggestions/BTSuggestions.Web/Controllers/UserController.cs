@@ -54,14 +54,24 @@ namespace BTSuggestions.Controllers
 
         // GET api/user/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserEntity>> Get(int id)
+        public async Task<ActionResult<UserResponse>> Get(int id)
         {
-            var result = await _manager.GetUser(id);
-            if (result == null)
+            var me = await _manager.GetUser(id);
+            var resp = new UserResponse
+            {
+                UserId = me.Id,
+                Username = me.Username,
+                FirstName = me.Firstname,
+                LastName = me.Lastname,
+                Email = me.Email,
+                Password = me.Password,
+                Privilege = me.Privilege
+            };
+            if (me == null)
             {
                 return NotFound();
             }
-            return result;
+            return resp;
         }
         // GET api/user/5/firstname
         [HttpGet("{id}/firstname")]
