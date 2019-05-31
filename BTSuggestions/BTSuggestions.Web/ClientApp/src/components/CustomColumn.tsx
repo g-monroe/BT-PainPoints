@@ -1,6 +1,6 @@
 import React from "react";
 import "antd/dist/antd.css";
-import { SelectOptionWithEntity } from "../types/dropdownValues/columnNameTypes";
+import { SelectOptionWithEntity } from "../types/dropdownValues/ColumnNameTypes";
 import { Button, Menu, Dropdown, Icon } from "antd";
 import { ClickParam } from "antd/lib/menu";
 import CustomColumnData from "./CustomColumnData"
