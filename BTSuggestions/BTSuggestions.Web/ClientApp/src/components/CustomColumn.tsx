@@ -14,11 +14,10 @@ export interface ICustomColumnProps {
 }
 
 interface ICustomColumnState {  
-  
+  columnLabel: SelectOptionWithEntityAndSpan
 }
 
-const getDropDown = (props: ICustomColumnProps, handleMenuOnChange: (e: ClickParam, id: number) => void) => {
-  console.log(props);
+const getDropDown = (props: ICustomColumnProps, handleMenuOnChange: (e: ClickParam, id: number) => void) => { 
   const { menuList } = props;
   const dropDownMenu = (menuList.map((d, index) => (
     <Menu.Item key={index} onClick={e => handleMenuOnChange(e, index)}>
@@ -47,16 +46,15 @@ export default class CustomColumn extends React.Component<ICustomColumnProps, IC
     
   };
 
-  handleMenuOnChange = (e: ClickParam, id: number) => {
-    console.log(this.handleMenuOnChange);    
+  handleMenuOnChange = (e: ClickParam, id: number) => {      
     const { columnLabel,columnNumber, changeSpan } = this.props;
     changeSpan(this.props, id);
   };
 
   render() {
     const dropDown = getDropDown(this.props, this.handleMenuOnChange);    
-    const { data, columnLabel } = this.props;
-    console.log(dropDown);
+    const { data } = this.props;
+    const { columnLabel } = this.state;
     return (
       <>
         <Dropdown overlay={dropDown} trigger={['click']}>

@@ -64,8 +64,8 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
 
   handleAddOnClick = (e?: any) => {
     console.log("handleAddOnClick");
-    let { customColumnArray } = this.state;
-    customColumnArray.push
+    let customColumnArray = [...this.state.customColumnArray];
+    const newColumn =
       (new CustomColumn(
         {
           menuList: columnNameList,
@@ -73,8 +73,11 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
           columnNumber: customColumnArray.length,
           changeSpan: this.handleChangeSpan,
           columnLabel: this.props.menuList[0]
-        }))
+        }));
+        customColumnArray.push(newColumn);
+        this.handleChangeSpan(newColumn.props,0);       
     this.setState({ customColumnArray });
+    
   }
 
   handlePageChange = (page: number, pageSize?: number) => {
@@ -93,15 +96,15 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
     return columnIndex;
   }
 
-  render() {
-    console.log(this.props.menuList);
-    const { customColumnArray: CustomColumnArray, itemsPerPage, currentPage } = this.state;
+  render() {    
+    const { customColumnArray, itemsPerPage, currentPage } = this.state;
+    console.log(customColumnArray);
     const { data } = this.props;
     let columnIndex = this.getColumnIndex();   
     return (
       <>
         {
-          CustomColumnArray.slice(columnIndex, columnIndex + itemsPerPage[currentPage - 1]).map((c, index) =>
+          customColumnArray.slice(columnIndex, columnIndex + itemsPerPage[currentPage - 1]).map((c, index) =>
             <Col key={index} span={c.props.columnLabel.span}>
               <CustomColumn key={index} menuList={c.props.menuList} data={data}
                 changeSpan={c.props.changeSpan} columnNumber={c.props.columnNumber} columnLabel={c.props.columnLabel} />

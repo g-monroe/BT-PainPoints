@@ -2,6 +2,7 @@ import React from "react";
 import "antd/dist/antd.css";
 import { Button, Menu } from "antd";
 import CustomColumns from "./CustomColumns"
+import PainPointEntity from "../entity/PainPointEntity";
 
 
 
@@ -9,8 +10,10 @@ interface IPainPointPageProps{
   
 }
 
-interface IPainPointPageState{  
- 
+interface IPainPointPageState{
+  isFetching: boolean  
+  customColumnIdArray : number[]
+  data : PainPointEntity[]
 }
 
 
@@ -19,9 +22,33 @@ export default class PainPointPage extends React.Component<IPainPointPageProps,I
   static defaultProps = {
 
   };
-  state: IPainPointPageState = {    
-   
+  
+  state: IPainPointPageState = {
+    isFetching = false,
+    customColumnIdArray: [],  
+    data: []
   };
+
+  componentDidMount {
+    
+  }
+
+  getData = () => {
+    this.setState({isFetching: true});
+  }
+
+  deleteColumn = (columnNumber: number) => {
+    //TODO
+  }
+
+  addColumn = (columnHeaderId: number) => {
+    //TODO
+  }
+
+  changeColumn = (columnNumber: number, columnHeaderId: number) => {
+    //TODO
+  }
+
 
   render () {
 
