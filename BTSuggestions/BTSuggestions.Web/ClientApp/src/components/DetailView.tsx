@@ -4,9 +4,8 @@ import '../styles/App.css';
 import { Layout, Divider, Comment, Tooltip, Button, Input} from 'antd';
 import DetailViewEntity from '../entity/DetailViewEntity';
 import moment from 'moment';
-import { APIHandler } from '../utilities/apiHandler';
-import { CommentEntity } from '../entity/CommentEntity';
-import { painPointList } from '../types/dropdownValues/painPointTypes';
+//import { APIHandler } from '../utilities/apiHandler';
+//import { CommentEntity } from '../entity/CommentEntity';
 
 const { Content, Sider } = Layout;
 
@@ -38,12 +37,17 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
         if (!this.state.newComment) {
             return;
         }
-        APIHandler(`/home/$id`, {
+        this.props.data.comments = [...this.props.data.comments, this.state.newComment];
+        this.setState(
+            { newComment: ' ' }
+        )
+        console.log(this.props.data.comments);
+        /* APIHandler(`/home/$id`, {
             method: 'POST',
             responseType: CommentEntity
         }).then(function(r:any) {
             console.log(r);
-        });
+        }); */
     };
 
     handleChange = (e : any) => {
