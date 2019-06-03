@@ -58,6 +58,8 @@ namespace BTSuggestions.Core.Entities
 
         public PainPointEntity()
         {
+            Status = "";
+            User = new UserEntity();
            TypeEntities= new List<PainPointTypeEntity>();
         }
     }

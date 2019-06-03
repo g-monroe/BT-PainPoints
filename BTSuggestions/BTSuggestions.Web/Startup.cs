@@ -50,7 +50,6 @@ namespace BTSuggestions
                 options.AddPolicy("MyPolicy",
                                   builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
-
             services.AddEngines();
             services.AddManagers();
             services.AddHandlers();

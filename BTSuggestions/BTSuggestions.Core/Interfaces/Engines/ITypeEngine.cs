@@ -8,6 +8,5 @@ namespace BTSuggestions.Core.Interfaces.Engines
 {
     public interface ITypeEngine
     {
-        Task<IList<TypeEntity>> GetTypesByPainPointId(int id);
     }
 }
