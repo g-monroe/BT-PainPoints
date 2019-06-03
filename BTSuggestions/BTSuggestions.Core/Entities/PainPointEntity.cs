@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace BTSuggestions.Core.Entities
 {
+    [DataContract(IsReference = true)]
+    [JsonObject(IsReference = false)]
     public class PainPointEntity : BaseEntity
     {
         [MaxLength(150)]

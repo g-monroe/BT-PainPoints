@@ -37,7 +37,7 @@ namespace BTSuggestions
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                     .AddJsonOptions(opt =>
                     {
-                        opt.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+                        opt.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.None;
                     });
             services.AddDbContext<BTSuggestionContext>(options =>
             {
