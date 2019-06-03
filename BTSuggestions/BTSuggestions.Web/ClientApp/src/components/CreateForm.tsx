@@ -5,6 +5,8 @@ import { painPointList } from '../types/dropdownValues/painPointTypes';
 import { industryList } from '../types/dropdownValues/industryTypes';
 import { withFormik, InjectedFormikProps, Form } from 'formik';
 import CreateFormEntity from '../entity/CreateFormEntity';
+import { APIHandler } from '../utilities/apiHandler';
+import TestingDbEntity from '../entity/TestingDbEntity';
 
 const { Content } = Layout;
 const FormItem = AntForm.Item;
@@ -14,7 +16,7 @@ interface ICreateFormProps{
 }
 
 interface ICreateFormState{
-    painPointType: string,
+    painPointType: string[],
     painPointTitle: string,
     painPointSummary: string,
     painPointAnnotation?: string,
@@ -30,7 +32,7 @@ interface ICreateFormState{
 }
 
 const yupValidation = yup.object().shape<ICreateFormState>({
-    painPointType: yup.string().required().label('Issue Type'),
+    painPointType: yup.array<string>(),
     painPointTitle: yup.string().min(2).max(150).required().label('Issue Title'),
     painPointSummary: yup.string().min(2).max(1500).required().label('Issue Summmary'),
     painPointSeverity: yup.number().min(0).max(10).required().label('Issue Severity'),
@@ -130,7 +132,13 @@ export default withFormik<ICreateFormProps, ICreateFormState>({
     validationSchema: yupValidation,
     handleSubmit: (values) => {
         console.log(values);
-        
+        APIHandler(`/api/painpoint/1`, {
+            method: 'GET',
+            responseType: TestingDbEntity
+        }).then(function(r:any) {
+            console.log(r);
+        });
+
         alert("You have submitted an issue");
     },
     displayName: 'Create Issue Form'

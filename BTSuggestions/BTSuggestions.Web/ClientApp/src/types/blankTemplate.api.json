@@ -1,6 +1,6 @@
 {
     "painPointId": 1,
-    "painPointType": "",
+    "painPointType": [""],
     "painPointTitle": "",
     "painPointSummary": "",
     "painPointAnnotation": "",

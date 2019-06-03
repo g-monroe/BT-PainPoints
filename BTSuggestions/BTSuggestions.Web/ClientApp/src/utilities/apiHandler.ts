@@ -73,7 +73,7 @@ export async function APIHandler<T>(url: string, props: APIHandlerProps<T>): Pro
             break;
 
         default:
-            throw `APIHandler does not support the method type "${props.method}"`;
+          //  throw `APIHandler does not support the method type "${props.method}"`;
     }
 
 

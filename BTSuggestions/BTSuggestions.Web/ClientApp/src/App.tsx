@@ -11,7 +11,6 @@ import tableData from '../src/types/tableTest.api.json';
 import CustomColumns from '../src/components/CustomColumns'
 
 
-
 export default class App extends React.Component {
     displayName = App.name
 

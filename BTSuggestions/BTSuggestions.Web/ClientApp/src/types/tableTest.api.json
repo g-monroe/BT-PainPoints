@@ -10,9 +10,9 @@
         "comments": "What is this suppose to say?"
     },{
         "painPointTitle": "Second Test Issue",
-        "painPointSummary": "This is a test of the issues list",
+        "painPointSummary": "Diff",
         "painPointType": "Bug",
-        "painPointAnnotation": "I am personally offended by the issue listed above",
+        "painPointAnnotation": "Ahhh",
         "painPointSeverity" : 3,
         "companyName": "Buildertrend",
         "industryType": "Small Business",
