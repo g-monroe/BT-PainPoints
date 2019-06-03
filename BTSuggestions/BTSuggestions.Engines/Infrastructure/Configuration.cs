@@ -11,6 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<IUserEngine, UserEngine>();
             services.AddTransient<IPainPointEngine, PainPointEngine>();
             services.AddTransient<ITypeEngine, TypeEngine>();
+            services.AddTransient<IContentEngine, ContentEngine>();
             return services;
         }
     }

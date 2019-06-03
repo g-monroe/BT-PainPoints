@@ -10,15 +10,12 @@ namespace BTSuggestions.Engines
 {
     public class TypeEngine : ITypeEngine
     {
+        
         private readonly ITypeHandler _typeHandler;
         public TypeEngine(ITypeHandler typeHandler)
         {
             _typeHandler = typeHandler;
         }
 
-        public async Task<IList<TypeEntity>> GetTypesByPainPointId(int id)
-        {
-            return await _typeHandler.GetTypesByPainPointId(id);
-        }
     }
 }
