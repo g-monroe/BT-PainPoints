@@ -1,7 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import { Button, Input, Col, Row, Icon, message } from 'antd';
 import * as yup from 'yup';
-import { async } from 'q';
 
 interface ILoginState {
     username: string,

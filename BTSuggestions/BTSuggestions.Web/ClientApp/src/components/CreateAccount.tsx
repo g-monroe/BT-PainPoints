@@ -1,5 +1,6 @@
 import React from 'react';
-import { Input, Button } from 'antd';
+import { Input, Button, message } from 'antd';
+import * as yup from 'yup';
 
 interface ICreateAccountProps {
     newUser: (username: string) => void
@@ -15,8 +16,30 @@ interface ICreateAccountState {
     passwordConfirm: string
 }
 
+//TODO: work on fixing this to make sure that it lines up with what we want.
+const yupValidation = yup.object().shape<ICreateAccountState>({
+    email: yup.string().required(),
+    emailConfirm: yup.string().matches(this.state.email).required(),
+    firstName: yup.string().required(),
+    lastName: yup.string().required(),
+    username: yup.string().max(30).required(),
+    password: yup.string().min(10).required(),
+    passwordConfirm: yup.string().min(10).required()
+})
+
 export default class CreateAccount extends React.Component {
+    // Default state so that the verification fucntion will work correctly.
+    state = {
+        email: "",
+        emailConfirm: "",
+        firstName: "",
+        lastName: "",
+        username: "",
+        password: "",
+        passwordConfirm: ""
+    }
     
+    // Handlers for the state changes
     handleEmailChange = (event: any) => {
         this.setState({
             email: event.target.value
@@ -58,6 +81,29 @@ export default class CreateAccount extends React.Component {
             passwordConfirm: event.target.value
         });
     }
+
+    // Handler for the button clicks
+    handleCreateAccountClick = () => {
+        yupValidation.validate({
+            email: this.state.email,
+            emailConfirmation: this.state.emailConfirm,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            username: this.state.username,
+            password: this.state.password,
+            passwordConfirm: this.state.passwordConfirm
+        }).then((isValid) => {
+            if (isValid){
+                message.success('Created Account Successfully.', 7);
+            }else {
+                message.error('Account Creation Failed', 10);
+            }
+        })
+    }
+
+    handleCancleCreateClick = () => {
+        // Go back to parent.
+    }
     
     render() {
         return <>
@@ -68,7 +114,8 @@ export default class CreateAccount extends React.Component {
             <Input placeholder='Username' onChange={this.handleUsernameChange} />
             <Input placeholder='Password' onChange={this.handlePasswordChange} />
             <Input placeholder='Confirm Password' onChange={this.handlePasswordConfirmChange} />
-            <Button type='primary'>Create Account</Button>
+            <Button type='primary' onClick={this.handleCreateAccountClick}>Create Account</Button>
+            <Button type='danger' onClick={this.handleCancleCreateClick}>Cancle Create</Button>
         </>
     }
 }
