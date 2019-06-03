@@ -9,11 +9,20 @@ import blankTemplate from '../src/types/blankTemplate.api.json';
 import testData from '../src/types/testData.api.json';
 import tableData from '../src/types/tableTest.api.json';
 import CustomColumns from '../src/components/CustomColumns'
+import LoginPage from '../src/components/LoginPage';
 
-
+interface IPainPointState {
+    username: string
+}
 
 export default class App extends React.Component {
     displayName = App.name
+
+    handleLoginRequest = (name: string) => {
+        this.setState({
+            username: name
+        });
+    }
 
     render() {
         const css = "../src/App.css";
@@ -21,7 +30,8 @@ export default class App extends React.Component {
             <>
             
                 <style>{css}</style>
-                <BrowserRouter>
+                <LoginPage newUsername={this.handleLoginRequest}/>
+                {/* <BrowserRouter>
                     <nav>
                         <Link to="/home" className="navLinks" style = {{padding:15,margin:15}}>View Issues</Link>
                         <Link to="/create" className="navLinks" style = {{padding:15,margin:15}}>Create New Issue</Link>
@@ -31,7 +41,7 @@ export default class App extends React.Component {
                     <Route path="/create" exact render={(props) => <CreateForm data={blankTemplate} />}/>
                     <Route path="/home/:id" exact render={(props) => <DetailView data={testData}/>}/>
                     <Route path="/admin" exact render={(props) => <AdminView data={tableData}/>}/>
-                </BrowserRouter>
+                </BrowserRouter> */}
                 
             </>
         );
