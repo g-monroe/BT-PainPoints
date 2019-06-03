@@ -39,6 +39,9 @@ namespace BTSuggestions.Managers
             return await _commentEngine.UpdateComment(comment, commentText, createdOn);
         }
 
-   
+        public async Task<Task> DeleteComent(CommentEntity comment)
+        {
+            return await _commentEngine.DeleteComent(comment);
+        }
     }
 }
