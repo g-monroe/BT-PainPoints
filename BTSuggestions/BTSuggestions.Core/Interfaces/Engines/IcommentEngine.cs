@@ -12,6 +12,10 @@ namespace BTSuggestions.Core.Interfaces.Engines
         Task<CommentEntity> GetComment(int id);
         Task<CommentEntity> CreateCommentEntity(int painPointId, int userId, string commentText, string status, DateTime createdOn);
         Task<CommentEntity> UpdateComment(CommentEntity comment, string commentText, DateTime createdOn);
+        Task<UserEntity> GetUser(int id);
+        Task<PainPointEntity> GetPainPoint(int id);
+        Task<string> GetStatus(int id);
+        Task<string> GetText(int id);
         // Comment DeleteComent(Comment comment);
     }
 }
