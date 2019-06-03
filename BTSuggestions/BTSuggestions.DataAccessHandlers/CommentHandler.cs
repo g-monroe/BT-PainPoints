@@ -27,7 +27,7 @@ namespace BTSuggestions.DataAccessHandlers
             return pain;
         }
 
-        public async Task<string> GetSatus(int id)
+        public async Task<string> GetStatus(int id)
         {
             var comment = await GetById(id);
             if (comment == null)
@@ -60,5 +60,6 @@ namespace BTSuggestions.DataAccessHandlers
 
             return user;
         }
+
     }
 }

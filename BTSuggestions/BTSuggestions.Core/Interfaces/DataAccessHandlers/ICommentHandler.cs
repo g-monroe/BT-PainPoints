@@ -8,7 +8,7 @@ namespace BTSuggestions.Core.Interfaces.DataAccessHandlers
 {
     public interface ICommentHandler : IBaseHandler<CommentEntity>
     {
-        Task<string> GetSatus(int id);
+        Task<string> GetStatus(int id);
         Task<string> GetText(int id);
         Task<PainPointEntity> GetPainPoint(int id);
         Task<UserEntity> GetUser(int id);

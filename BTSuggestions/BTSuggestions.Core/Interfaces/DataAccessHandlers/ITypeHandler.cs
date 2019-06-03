@@ -8,7 +8,6 @@ namespace BTSuggestions.Core.Interfaces.DataAccessHandlers
 {
     public interface ITypeHandler : IBaseHandler<TypeEntity>
     {
-        Task<IList<TypeEntity>> GetTypesByPainPointId(int id);
 
     }
 }
