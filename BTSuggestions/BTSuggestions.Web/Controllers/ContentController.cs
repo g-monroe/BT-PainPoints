@@ -58,7 +58,7 @@ namespace BTSuggestions.Web.Controllers
             }
             return resp;
         }
-        // GET api/Content/5/firstname
+        // GET api/Content/5/User
         [HttpGet("{id}/User")]
         public async Task<ActionResult<UserEntity>> GetUser(int id)
         {
@@ -75,7 +75,7 @@ namespace BTSuggestions.Web.Controllers
             }
             return result.Content;
         }
-        // GET api/Content/5/email
+        // GET api/Content/User/5
         [HttpGet("user/{id}")]
         public async Task<ActionResult<string>> GetContentByUser(int id)
         {
