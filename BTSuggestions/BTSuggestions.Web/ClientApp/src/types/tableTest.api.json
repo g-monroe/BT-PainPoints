@@ -7,7 +7,9 @@
         "painPointSeverity" : 1,
         "companyName": "Buildertrend",
         "industryType": "Small Business",
-        "comments": "What is this suppose to say?"
+        "datetime" : "12/03/2011",
+        "comments": "What is this suppose to say?",
+        "submissionStatus": "Draft"
     },{
         "painPointTitle": "Second Test Issue",
         "painPointSummary": "Diff",
@@ -15,7 +17,9 @@
         "painPointAnnotation": "Ahhh",
         "painPointSeverity" : 3,
         "companyName": "Buildertrend",
+        "datetime": "04/08/2012",
         "industryType": "Small Business",
-        "comments": "What is this suppose to say?"
+        "comments": "What is this suppose to say?",
+        "submissionStatus": "Reviewed"
     }]
 }

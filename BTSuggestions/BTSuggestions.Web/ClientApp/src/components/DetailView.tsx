@@ -15,7 +15,6 @@ interface IDetailViewProps {
 }
 
 interface IDetailViewState {
-
 }
 
 export default class DetailView extends React.Component<IDetailViewProps, IDetailViewState>{
@@ -40,8 +39,7 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
         this.props.data.comments = [...this.props.data.comments, this.state.newComment];
         this.setState(
             { newComment: ' ' }
-        )
-        console.log(this.props.data.comments);
+        );
         /* APIHandler(`/home/$id`, {
             method: 'POST',
             responseType: CommentEntity

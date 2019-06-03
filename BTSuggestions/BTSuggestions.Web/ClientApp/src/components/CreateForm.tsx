@@ -23,10 +23,7 @@ interface ICreateFormState{
     companyName?: string,
     companyContact?: string,
     companyLocation?: string,
-    industryType?: string,
-
-    //userId?: number,
-    //userName: string
+    industryType?: string
 }
 
 const yupValidation = yup.object().shape<ICreateFormState>({
@@ -40,9 +37,6 @@ const yupValidation = yup.object().shape<ICreateFormState>({
     companyContact: yup.string().label('Company Contact'),
     companyLocation: yup.string().label('Company Location'),
     industryType: yup.string().label('Industry Type')
-
-    //userId: yup.number().required().label('User ID'),
-    //userName: yup.string().required().label('User Name')
 })
 
 class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, ICreateFormState>>{
@@ -124,8 +118,6 @@ export default withFormik<ICreateFormProps, ICreateFormState>({
         companyContact: props.data.companyContact,
         companyLocation: props.data.companyLocation,
         industryType: props.data.industryType
-        //userId: props.data.userId,
-        //userName: props.data.userName
     }),
     validationSchema: yupValidation,
     handleSubmit: (values) => {
