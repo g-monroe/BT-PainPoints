@@ -5,8 +5,6 @@ import { painPointList } from '../types/dropdownValues/painPointTypes';
 import { industryList } from '../types/dropdownValues/industryTypes';
 import { withFormik, InjectedFormikProps, Form } from 'formik';
 import CreateFormEntity from '../entity/CreateFormEntity';
-import { APIHandler } from '../utilities/apiHandler';
-import TestingDbEntity from '../entity/TestingDbEntity';
 
 const { Content } = Layout;
 const FormItem = AntForm.Item;
@@ -132,13 +130,6 @@ export default withFormik<ICreateFormProps, ICreateFormState>({
     validationSchema: yupValidation,
     handleSubmit: (values) => {
         console.log(values);
-        APIHandler(`/api/painpoint/1`, {
-            method: 'GET',
-            responseType: TestingDbEntity
-        }).then(function(r:any) {
-            console.log(r);
-        });
-
         alert("You have submitted an issue");
     },
     displayName: 'Create Issue Form'

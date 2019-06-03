@@ -4,6 +4,9 @@ import '../styles/App.css';
 import { Layout, Divider, Comment, Tooltip, Button, Input} from 'antd';
 import DetailViewEntity from '../entity/DetailViewEntity';
 import moment from 'moment';
+import { APIHandler } from '../utilities/apiHandler';
+import { CommentEntity } from '../entity/CommentEntity';
+import { painPointList } from '../types/dropdownValues/painPointTypes';
 
 const { Content, Sider } = Layout;
 
@@ -35,8 +38,12 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
         if (!this.state.newComment) {
             return;
         }
-        console.log(this.state.newComment);
-        
+        APIHandler(`/home/$id`, {
+            method: 'POST',
+            responseType: CommentEntity
+        }).then(function(r:any) {
+            console.log(r);
+        });
     };
 
     handleChange = (e : any) => {
@@ -54,7 +61,7 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
                 </style>
                 <Content>
                     <h1>Issue: {this.props.data.painPointTitle}</h1>
-                    <h2>Type: {this.props.data.painPointType}, Severity Level: {this.props.data.painPointSeverity}</h2>
+                    <h2>Type: {this.props.data.painPointType.join(",")}; &nbsp;&nbsp;&nbsp; Severity Level: {this.props.data.painPointSeverity}</h2>
                     <h3>Summary: {this.props.data.painPointSummary}</h3>
                     <h3>Personal Notes: {this.props.data.painPointAnnotation}</h3>
                     <Divider>Comments</Divider>
