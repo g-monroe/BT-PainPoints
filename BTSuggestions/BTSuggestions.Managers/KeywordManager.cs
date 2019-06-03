@@ -97,7 +97,6 @@ namespace BTSuggestions.Managers
             string[] filterWords = new string[] {"Billing", "Sales", "Button", "Page" };
             string[] inputWords = input.Split(" ");
             List<string> newInputWords = new List<string>(inputWords);
-            List<string> newWords = null;
             //Remove all popular common words
             foreach (string word in inputWords)
             {
@@ -105,15 +104,11 @@ namespace BTSuggestions.Managers
                 {
                     newInputWords.Remove(word);
                 }
-                else //If not in common words add it to list
-                {
-                    newWords.Add(word);
-                }
             }
             Dictionary<string, int> TaggedDescription = null;
-            foreach (string word in newWords)
+            foreach (string word in newInputWords)
             {
-                if (TaggedDescription.ContainsKey(word))
+                if (!TaggedDescription.ContainsKey(word))
                 {
                     int score = word.Length;
                     foreach (char c in word) {
