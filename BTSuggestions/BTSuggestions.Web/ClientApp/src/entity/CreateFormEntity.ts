@@ -1,6 +1,6 @@
 export default class CreateFormEntity {
     painPointId: number;
-    painPointType: string;
+    painPointType: string[];
     painPointTitle: string;
     painPointSummary: string;
     painPointAnnotation: string;
@@ -38,7 +38,7 @@ export default class CreateFormEntity {
 
 export class IssueEntity {
     painPointId: number;
-    painPointType: string;
+    painPointType: string[];
     painPointTitle: string;
     painPointSummary: string;
     painPointAnnotation: string;

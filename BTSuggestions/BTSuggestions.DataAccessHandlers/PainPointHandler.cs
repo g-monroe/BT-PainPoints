@@ -62,33 +62,40 @@ namespace BTSuggestions.DataAccessHandlers
         }
         public async Task<IEnumerable<PainPointEntity>> GetAllIncludes()
         {
-            return await _context.PainPoints.Include(s => s.TypeEnties).ThenInclude(x => x.Type).ToListAsync();
+            
+            return await _context.PainPoints
+                .Include(s => s.TypeEntities)
+                .ThenInclude(x => x.Type)
+                .Include(u => u.User).ToListAsync();
         }
         public async Task<PainPointEntity> GetIncludes(int id)
         {
-            return  await _context.PainPoints.Include(s => s.TypeEnties).ThenInclude(x => x.Type).FirstAsync(x => x.Id == id);
+            return  await _context.PainPoints.Include(s => s.TypeEntities).ThenInclude(x => x.Type).FirstAsync(x => x.Id == id);
         }
         public async Task<IEnumerable<PainPointEntity>> GetOrderByPriority()
         {
-            return await _context.PainPoints.OrderBy(x => x.PriorityLevel).Include(s => s.TypeEnties).ThenInclude(x => x.Type).ToListAsync();
+            return await _context.PainPoints.OrderBy(x => x.PriorityLevel).Include(s => s.TypeEntities).ThenInclude(x => x.Type).ToListAsync();
         }
         public async Task<IEnumerable<PainPointEntity>> GetByPriority(int level)
         {
-            return await _context.PainPoints.Where(x => x.PriorityLevel == level).Include(s => s.TypeEnties).ThenInclude(x => x.Type).ToListAsync();
+            return await _context.PainPoints.Where(x => x.PriorityLevel == level).Include(s => s.TypeEntities).ThenInclude(x => x.Type).ToListAsync();
         }
-        public async Task<IEnumerable<PainPointTypeEntity>> GetOrderByPriorityType(string typeName)
+        public IEnumerable<PainPointEntity> GetOrderByPriorityType(string typeName)
         {
-            return await _context.PainPointTypes.Where(u => u.Type.Name == typeName).Include(z => z.PainPoint).ToListAsync();
+            return  _context.PainPoints
+                .Include(z => z.TypeEntities)
+                .ThenInclude(x => x.Type).ToList()
+                .Where(t => t.Types.ToList().Contains(typeName)).ToList();
         }
 
         public async Task<IEnumerable<PainPointEntity>> GetByType(PainPointTypeEntity type)
         {
-            return await _context.PainPoints.Where(pp => pp.TypeEnties.Contains(type)).ToListAsync();
+            return await _context.PainPoints.Where(pp => pp.TypeEntities.Contains(type)).ToListAsync();
         }
 
         public async Task<IList<IGrouping<IList<PainPointTypeEntity>, PainPointEntity>>> GetTypeAll()
         {
-            return await _context.PainPoints.GroupBy(x => x.TypeEnties).OrderBy(pp => pp.Select(z => z.PriorityLevel)).ToListAsync();
+            return await _context.PainPoints.GroupBy(x => x.TypeEntities).OrderBy(pp => pp.Select(z => z.PriorityLevel)).ToListAsync();
         }
         public void PostSeed()
         {

@@ -26,7 +26,7 @@ namespace BTSuggestions.DataAccessHandlers
         {
             modelBuilder.Entity<PainPointTypeEntity>()
                 .HasOne<PainPointEntity>(sc => sc.PainPoint)
-                .WithMany(s => s.TypeEnties)
+                .WithMany(s => s.TypeEntities)
                 .HasForeignKey(sa => sa.PainPointId);
 
             modelBuilder.Entity<PainPointTypeEntity>()

@@ -15,7 +15,6 @@ import PainPointEntity from './entity/PainPointEntity';
 
 const fakeData: PainPointEntity[] = fakeDataImport.data.map(m => new PainPointEntity(m)).slice(0,15);
 
-
 export default class App extends React.Component {
     displayName = App.name
 

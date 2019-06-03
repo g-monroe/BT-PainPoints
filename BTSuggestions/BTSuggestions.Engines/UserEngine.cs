@@ -51,9 +51,9 @@ namespace BTSuggestions.Engines
             return user;
         }
 
-        public Task<string> GetUsername(int id)
+        public async Task<string> GetUsername(int id)
         {
-            throw new NotImplementedException();
+            return await _userHandler.GetUsername(id);
         }
 
         public async Task<IEnumerable<UserEntity>> GetUsers()

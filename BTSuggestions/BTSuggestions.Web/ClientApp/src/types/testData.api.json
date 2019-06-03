@@ -1,6 +1,6 @@
 {
     "painPointId": 2,
-    "painPointType": "Billing",
+    "painPointType": ["Billing", "Bug"],
     "painPointTitle": "Processing Steps Redundant",
     "painPointSummary": "Steps are repeated per individual bill rather than grouping them together.",
     "painPointAnnotation": "I waste a lot of time clicking through the same sequence for each bill, I feel like I should be able to do this all at once.",

@@ -46,19 +46,19 @@ namespace BTSuggestions.Core.Entities
         public DateTime CreatedOn { get; set; }
 
         //Strictly for creating the handles for Type to PainPoint
-        public IList<PainPointTypeEntity> TypeEnties { get; set; }
+        public IList<PainPointTypeEntity> TypeEntities { get; set; }
 
         public IEnumerable<string> Types
         {
             get
             {
-                return TypeEnties.Select(sa => sa.Type.Name);
+                return TypeEntities.Select(sa => sa.Type.Name);
             }
         }
 
         public PainPointEntity()
         {
-           TypeEnties= new List<PainPointTypeEntity>();
+           TypeEntities= new List<PainPointTypeEntity>();
         }
     }
 }

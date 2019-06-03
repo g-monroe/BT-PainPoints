@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BTSuggestions.Core.Entities
 {
-   public class PainPointTypeEntity : BaseEntity
+    public class PainPointTypeEntity : BaseEntity
     {
         //<<summary>
         //This is overall to link the two together looking at the Example.

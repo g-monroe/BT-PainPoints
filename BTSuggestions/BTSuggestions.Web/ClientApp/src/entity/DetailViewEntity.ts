@@ -1,6 +1,6 @@
 export default class DetailViewEntity {
     painPointId: number;
-    painPointType: string;
+    painPointType: string[];
     painPointTitle: string;
     painPointSummary: string;
     painPointAnnotation: string;
