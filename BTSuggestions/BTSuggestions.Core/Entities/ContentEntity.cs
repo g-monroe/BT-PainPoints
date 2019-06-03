@@ -11,7 +11,6 @@ namespace BTSuggestions.Core.Entities
     {
         [Required]
         public string Content { get; set; } 
-        [Required]
         [JsonIgnore]
         public virtual UserEntity User { get; set; }
         [Required]
