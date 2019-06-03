@@ -1,12 +1,12 @@
 import React from "react";
 import "antd/dist/antd.css";
-import { List } from "antd";
-import { SelectOptionWithEntity } from "../types/dropdownValues/ColumnNameTypes"
+import { Button, Menu, List } from "antd";
+import { SelectOptionWithEntityAndSpan } from "../types/dropdownValues/columnNameTypes"
 
 interface ICustomColumnDataProps{
   data: any[];
   length: number;
-  columnHeader: SelectOptionWithEntity;  
+  columnHeader: SelectOptionWithEntityAndSpan;  
 }
 
 interface ICustomColumnDataState{  
@@ -18,6 +18,7 @@ const truncateText = (text:string, length:number, ending?:string) =>
     if (!ending) {
       ending = '...';
     }
+    
     if (!text){
       return " ";
     }

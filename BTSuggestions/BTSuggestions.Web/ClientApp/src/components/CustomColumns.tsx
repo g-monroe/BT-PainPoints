@@ -1,53 +1,118 @@
 import React from "react";
 import "antd/dist/antd.css";
-import CustomColumn from "./CustomColumn"
-import { columnNameList } from '../types/dropdownValues/ColumnNameTypes';
-import { Button, Col } from "antd";
+import CustomColumn, { ICustomColumnProps } from "./CustomColumn"
+import { columnNameList, SelectOptionWithEntityAndSpan } from '../types/dropdownValues/columnNameTypes';
+import { Button, Col, Pagination, Layout } from "antd";
 import PainPointEntity from '../entity/PainPointEntity';
-import fakeDataImport from '../types/painPointTestDataArray.api.json';
 
+import "../styles/CustomColumns.css"
 
-const fakeData:PainPointEntity[] = fakeDataImport.data.map(m=>new PainPointEntity(m));
+const { Footer } = Layout;
+
 
 interface ICustomColumnsProps {
-  data?: PainPointEntity[]
+  data: PainPointEntity[]
+  menuList: SelectOptionWithEntityAndSpan[];
 }
 
 interface ICustomColumnsState {
-  CustomColumnArray: CustomColumn[]
+  customColumnArray: CustomColumn[]
+  itemsPerPage: number[];  
+  currentPage: number;
 }
 
 export default class CustomColumns extends React.Component<ICustomColumnsProps, ICustomColumnsState> {
-  static defaultProps = {
-      data: fakeData
-  };
-
-  state: ICustomColumnsState = {
-    CustomColumnArray: [new CustomColumn({ menuList: columnNameList, data: this.props.data?this.props.data:[]})]
-  };
-
-  handleAddOnClick = (e: any) => {
-    console.log("CustomColum Add On Click")
-    let { CustomColumnArray } = this.state;
-    CustomColumnArray.push(new CustomColumn({ menuList: columnNameList, data: this.props.data?this.props.data:[]}))
-    this.setState({ CustomColumnArray });
+  handleChangeSpan = (props: ICustomColumnProps, id: number) => {
+    let { itemsPerPage, customColumnArray } = this.state;
+    console.log("HandleChangeSpan--");
+    console.log(itemsPerPage);    
+    let currentSpanCount = 0;
+    let currentItemCount = 0;
+    itemsPerPage = [];
+    for (let i = 0; i < customColumnArray.length; i++) {
+      console.log("HandleChangeSpan: " + i);
+      console.log(itemsPerPage);
+      if (currentSpanCount + customColumnArray[i].props.columnLabel.span <= 23) {
+        currentSpanCount += customColumnArray[i].props.columnLabel.span;
+        currentItemCount++;
+      } else {
+        itemsPerPage.push(currentItemCount);
+        currentItemCount = 0;
+        currentSpanCount = 0;
+      }
+    }
+    itemsPerPage.push(currentItemCount);
+    console.log("HandleChangeSpan++");
+    console.log(itemsPerPage);
+    this.setState({ itemsPerPage, customColumnArray });
   }
 
-  render() {    
-    const { CustomColumnArray } = this.state;
+  static defaultProps = {
+    data: [],
+    menuList: []
+  };
+
+  state: ICustomColumnsState = {   
+    itemsPerPage: [1],   
+    currentPage: 1,
+    customColumnArray: [new CustomColumn({
+      menuList: this.props.menuList, data: this.props.data,
+      columnNumber: 0, changeSpan: this.handleChangeSpan, columnLabel: this.props.menuList[0]
+    })],
+  };
+
+
+  handleAddOnClick = (e?: any) => {
+    console.log("handleAddOnClick");
+    let { customColumnArray } = this.state;
+    customColumnArray.push
+      (new CustomColumn(
+        {
+          menuList: columnNameList,
+          data: this.props.data,
+          columnNumber: customColumnArray.length,
+          changeSpan: this.handleChangeSpan,
+          columnLabel: this.props.menuList[0]
+        }))
+    this.setState({ customColumnArray });
+  }
+
+  handlePageChange = (page: number, pageSize?: number) => {
+    console.log("PAGECHANGE: " + page);
+    let { currentPage } = this.state;
+    currentPage = page;
+    this.setState({ currentPage });
+  }
+
+  getColumnIndex = () => {
+    const { currentPage, itemsPerPage } = this.state;
+    let columnIndex = 0;
+    for (let i = 0; i < currentPage - 1; i++) {
+      columnIndex += itemsPerPage[i];
+    }
+    return columnIndex;
+  }
+
+  render() {
+    console.log(this.props.menuList);
+    const { customColumnArray: CustomColumnArray, itemsPerPage, currentPage } = this.state;
     const { data } = this.props;
-    console.log("RENDERING CUSTOM COLUMNS");
-    console.log(JSON.stringify(data));
+    let columnIndex = this.getColumnIndex();   
     return (
       <>
-        {CustomColumnArray.map((c, index) => 
-          <Col className={index.toString()} key={index} span={6}>
-        <CustomColumn key={index} menuList={c.props.menuList} data={data?data:[]} />        
-        </Col>
-        
-        )}
-        
+        {
+          CustomColumnArray.slice(columnIndex, columnIndex + itemsPerPage[currentPage - 1]).map((c, index) =>
+            <Col key={index} span={c.props.columnLabel.span}>
+              <CustomColumn key={index} menuList={c.props.menuList} data={data}
+                changeSpan={c.props.changeSpan} columnNumber={c.props.columnNumber} columnLabel={c.props.columnLabel} />
+            </Col>
+          )}
+
         <Button onClick={e => this.handleAddOnClick(e)}>+</Button>
+        <Footer className="footer">
+          <Pagination className="rightAlign" simple defaultCurrent={1} onChange={this.handlePageChange}
+            pageSize={itemsPerPage[currentPage - 1]} total={itemsPerPage[currentPage - 1] * itemsPerPage.length} /></Footer>
+
       </>
     )
   }
