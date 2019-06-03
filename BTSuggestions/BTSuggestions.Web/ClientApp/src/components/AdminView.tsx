@@ -14,21 +14,16 @@ interface IAdminViewProps {
 }
 
 interface IAdminViewState {
-    painPointType: string,
-    painPointTitle: string,
-    painPointSummary: string,
-    painPointAnnotation?: string,
-    painPointSeverity: number,
-    submissionStatus: string,
-
-    companyName?: string,
-    industryType?: string,
-    comments?: string
+    issues: any[]
 }
 
 export default class AdminView extends React.Component<IAdminViewProps, IAdminViewState>{
     static defaultProps = {
     };
+
+    state = {
+        issues: this.props.data.issues
+    }
 
     columns = [
         {
@@ -37,6 +32,11 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
             fixed: true,
             render: (text: string) => <a href="/home/:id">{text}</a>
         }, 
+        {
+            title: 'ID',
+            width: 50,
+            dataIndex: 'painPointId'
+        },
         {
             title: 'Description',
             width: 250,
@@ -86,17 +86,13 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
             title: 'Edit',
             dataIndex: 'editIndex',
             width: 25,
-            render: (index: number) => <Icon type="edit" onClick={this.handleChange} key={++index}/>
+            render: (index: number) => <Button onClick={()=>alert("Clicked!")}><Icon type="edit"></Icon></Button>
         },
     ]
 
-    handleChange = (e : any) => {
-        
-    }
-
     rowSelection = {
         getCheckboxProps: (record: string) => ({
-            name: record,
+            name: record
         })
     };
 
@@ -109,7 +105,7 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
                 </style>
                 <Content>
                     <h2>There should probably be a title here</h2>
-                    <Table rowSelection={this.rowSelection} columns={this.columns} dataSource={this.props.data.issues} scroll={{x : 1300}}/>
+                    <Table rowSelection={this.rowSelection} columns={this.columns} dataSource={this.state.issues} scroll={{ x: 1300 }}/>
                     <Button>Create Group</Button>
                     <Button>Delete</Button>
                 </Content>

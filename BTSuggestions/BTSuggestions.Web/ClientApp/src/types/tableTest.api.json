@@ -9,7 +9,8 @@
         "industryType": "Small Business",
         "datetime" : "12/03/2011",
         "comments": "What is this suppose to say?",
-        "submissionStatus": "Draft"
+        "submissionStatus": "Draft",
+        "painPointId": 4
     },{
         "painPointTitle": "Second Test Issue",
         "painPointSummary": "Diff",
@@ -20,6 +21,7 @@
         "datetime": "04/08/2012",
         "industryType": "Small Business",
         "comments": "What is this suppose to say?",
-        "submissionStatus": "Reviewed"
+        "submissionStatus": "Reviewed",
+        "painPointId": 7
     }]
 }
