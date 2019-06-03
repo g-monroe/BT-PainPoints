@@ -16,6 +16,6 @@ namespace BTSuggestions.Core.Interfaces.Engines
         Task<PainPointEntity> GetPainPoint(int id);
         Task<string> GetStatus(int id);
         Task<string> GetText(int id);
-        // Comment DeleteComent(Comment comment);
+       Task<Task> DeleteComent(CommentEntity comment);
     }
 }

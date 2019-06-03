@@ -15,7 +15,10 @@ namespace BTSuggestions.Managers
         {
             _keywordEngine = keywordEngine;
         }
-
+        private string findScore()
+        {
+            return "";
+        }
         public async Task<KeywordEntity> AddNewKeyword(KeywordEntity newKeyword)
         {
             return await _keywordEngine.AddNewKeyword(newKeyword);
