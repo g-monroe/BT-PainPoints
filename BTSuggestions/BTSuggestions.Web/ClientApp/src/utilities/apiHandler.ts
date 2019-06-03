@@ -69,9 +69,7 @@ export async function APIHandler<T>(url: string, props: APIHandlerProps<T>): Pro
             if (props.data) {
                 requestOptions.body = JSON.stringify(props.data);
             }
-
             break;
-
         default:
           //  throw `APIHandler does not support the method type "${props.method}"`;
     }

@@ -1,9 +1,11 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import '../styles/App.css';
-import { Layout, Button, Table, Icon, Select} from 'antd';
+import { Layout, Button, Table, Icon, Select, Input, InputNumber} from 'antd';
 import AdminViewEntity from '../entity/AdminViewEntity';
 import { statusList } from '../types/dropdownValues/statusTypes';
+import { painPointList } from '../types/dropdownValues/painPointTypes';
+import { industryList } from '../types/dropdownValues/industryTypes';
 
 const { Content} = Layout;
 
@@ -12,83 +14,84 @@ interface IAdminViewProps {
 }
 
 interface IAdminViewState {
-    painPointType: string,
-    painPointTitle: string,
-    painPointSummary: string,
-    painPointAnnotation?: string,
-    painPointSeverity: number,
-
-    companyName?: string,
-    industryType?: string,
-    comments?: string
-
-    //userId?: number,
-    //userName: string
+    issues: any[]
 }
 
 export default class AdminView extends React.Component<IAdminViewProps, IAdminViewState>{
     static defaultProps = {
     };
 
+    state = {
+        issues: this.props.data.issues
+    }
+
     columns = [
         {
             title: 'Issue Title',
             dataIndex: 'painPointTitle',
             fixed: true,
-            //align: 'center',
             render: (text: string) => <a href="/home/:id">{text}</a>
         }, 
         {
+            title: 'ID',
+            width: 50,
+            dataIndex: 'painPointId'
+        },
+        {
             title: 'Description',
-            dataIndex: 'painPointSummary'
+            width: 250,
+            dataIndex: 'painPointSummary',
+            render: (text: string) => <Input value={text}/>
         },
         {
             title: 'Annotation',
+            width: 250,
             dataIndex: 'painPointAnnotation',
-            width: 200
+            render: (text: string) => <Input value={text}/>
         },
         {
             title: 'Issue Type',
             dataIndex: 'painPointType',
-            //align: 'center'
+            width: 100,
+            render: (text : string) => <Select defaultValue={text}>{painPointList.map((s:any) => <Select.Option key={s.id} value={s.id}>{s.name}</Select.Option>)}</Select>
         },
         {
             title: 'Severity',
             dataIndex: 'painPointSeverity',
-            //align: 'center'
+            width: 15,
+            render: (text: number) => <InputNumber value={text}/>
         },
         {
             title: 'Company Name',
             dataIndex: 'companyName',
-            //align: 'center'
+            width: 150,
+            render: (text: string) => <Input value={text}/>
         },
         {
             title: 'Industry Type',
             dataIndex: 'industryType',
-            //align: 'center'
+            render: (text: string) => <Select defaultValue={text}>{industryList.map((s:any) => <Select.Option key={s.id} value={s.id}>{s.name}</Select.Option>)}</Select>
         },
         {
             title: 'Date Posted',
-            dataIndex: 'datetime',
-            //display: 'center'
+            dataIndex: 'datetime'
         },
         {
             title: 'Issue Status',
-            dataIndex: 'painPointStatus',
-            //align:'center',
+            dataIndex: 'submissionStatus',
             width: 200,
-            render: () =>  <Select defaultValue="None Selected">{statusList.map((s:any) => <Select.Option key={s.id} value={s.id}>{s.name}</Select.Option>)}</Select>
+            render: (text: string) => <Select defaultValue={text}>{statusList.map((s:any) => <Select.Option key={s.id} value={s.id}>{s.name}</Select.Option>)}</Select>
         },
         {
             title: 'Edit',
-            dataIndex: 'painPointSummary',
+            dataIndex: 'editIndex',
             width: 25,
-            render: () => <Icon type="edit" />
+            render: (index: number) => <Button onClick={()=>alert("Clicked!")}><Icon type="edit"></Icon></Button>
         },
     ]
 
     rowSelection = {
-        getCheckboxProps: (record: string )=> ({
+        getCheckboxProps: (record: string) => ({
             name: record
         })
     };
@@ -102,7 +105,7 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
                 </style>
                 <Content>
                     <h2>There should probably be a title here</h2>
-                    <Table rowSelection={this.rowSelection} columns={this.columns} dataSource={this.props.data.issues} scroll={{x : 1300}}/>
+                    <Table rowSelection={this.rowSelection} columns={this.columns} dataSource={this.state.issues} scroll={{ x: 1300 }}/>
                     <Button>Create Group</Button>
                     <Button>Delete</Button>
                 </Content>

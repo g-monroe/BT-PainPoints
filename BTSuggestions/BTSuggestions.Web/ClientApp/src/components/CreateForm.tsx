@@ -5,8 +5,6 @@ import { painPointList } from '../types/dropdownValues/painPointTypes';
 import { industryList } from '../types/dropdownValues/industryTypes';
 import { withFormik, InjectedFormikProps, Form } from 'formik';
 import CreateFormEntity from '../entity/CreateFormEntity';
-import { APIHandler } from '../utilities/apiHandler';
-import TestingDbEntity from '../entity/TestingDbEntity';
 
 const { Content } = Layout;
 const FormItem = AntForm.Item;
@@ -25,10 +23,7 @@ interface ICreateFormState{
     companyName?: string,
     companyContact?: string,
     companyLocation?: string,
-    industryType?: string,
-
-    //userId?: number,
-    //userName: string
+    industryType?: string
 }
 
 const yupValidation = yup.object().shape<ICreateFormState>({
@@ -42,9 +37,6 @@ const yupValidation = yup.object().shape<ICreateFormState>({
     companyContact: yup.string().label('Company Contact'),
     companyLocation: yup.string().label('Company Location'),
     industryType: yup.string().label('Industry Type')
-
-    //userId: yup.number().required().label('User ID'),
-    //userName: yup.string().required().label('User Name')
 })
 
 class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, ICreateFormState>>{
@@ -126,19 +118,10 @@ export default withFormik<ICreateFormProps, ICreateFormState>({
         companyContact: props.data.companyContact,
         companyLocation: props.data.companyLocation,
         industryType: props.data.industryType
-        //userId: props.data.userId,
-        //userName: props.data.userName
     }),
     validationSchema: yupValidation,
     handleSubmit: (values) => {
         console.log(values);
-        APIHandler(`/api/painpoint/1`, {
-            method: 'GET',
-            responseType: TestingDbEntity
-        }).then(function(r:any) {
-            console.log(r);
-        });
-
         alert("You have submitted an issue");
     },
     displayName: 'Create Issue Form'
