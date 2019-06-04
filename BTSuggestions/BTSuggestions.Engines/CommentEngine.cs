@@ -32,6 +32,12 @@ namespace BTSuggestions.Engines
             return comment;
         }
 
+        public async Task<Task> DeleteComent(CommentEntity comment)
+        {
+            await _commentHandler.Delete(comment);
+            return Task.CompletedTask;
+        }
+
         public async Task<CommentEntity> GetComment(int id)
         {
             var comment = await _commentHandler.GetById(id);

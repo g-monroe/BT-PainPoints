@@ -4,16 +4,14 @@ using BTSuggestions.DataAccessHandlers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BTSuggestions.Web.Migrations
 {
     [DbContext(typeof(BTSuggestionContext))]
-    [Migration("20190531152152_oneBigBoi")]
-    partial class oneBigBoi
+    partial class BTSuggestionContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,23 +48,22 @@ namespace BTSuggestions.Web.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("BTSuggestions.Core.Entities.KeywordEntity", b =>
+            modelBuilder.Entity("BTSuggestions.Core.Entities.ContentEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("PainPointID");
+                    b.Property<string>("Content")
+                        .IsRequired();
 
-                    b.Property<int>("Score");
-
-                    b.Property<string>("TaggedDescription");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PainPointID");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Keywords");
+                    b.ToTable("Contents");
                 });
 
             modelBuilder.Entity("BTSuggestions.Core.Entities.PainPointEntity", b =>
@@ -190,11 +187,11 @@ namespace BTSuggestions.Web.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("BTSuggestions.Core.Entities.KeywordEntity", b =>
+            modelBuilder.Entity("BTSuggestions.Core.Entities.ContentEntity", b =>
                 {
-                    b.HasOne("BTSuggestions.Core.Entities.PainPointEntity", "PainPoint")
+                    b.HasOne("BTSuggestions.Core.Entities.UserEntity", "User")
                         .WithMany()
-                        .HasForeignKey("PainPointID")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

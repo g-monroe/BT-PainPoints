@@ -10,6 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<ICommentManager, CommentManager>();
             services.AddTransient<IPainPointManager, PainPointManager>();
             services.AddTransient<IUserManager, UserManager>();
+            services.AddTransient<IContentManager, ContentManager>();
             return services;
         }
     }

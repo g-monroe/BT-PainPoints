@@ -1,0 +1,7 @@
+{"data": [
+    {"configName": "Default", "columnIds":[1,2,5,4,3]},
+    {"configName": "Todo", "columnIds":[1,3,2,4]},
+    {"configName": "Secondary", "columnIds":[1,1,1,1,1]}
+    ],
+    "currentColumnIndex": 0
+}

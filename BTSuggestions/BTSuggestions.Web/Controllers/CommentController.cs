@@ -141,7 +141,6 @@ namespace BTSuggestions.Controllers
             return result;
         }
 
-        //TODO: delete comment
         // DELETE api/comments/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> Delete(int id)
@@ -151,8 +150,7 @@ namespace BTSuggestions.Controllers
             {
                 return NotFound();
             }
-            //_commentManager.
-            //await _context.SaveChangesAsync();
+            await _commentManager.DeleteComent(comment);
             return true;
         }
     }

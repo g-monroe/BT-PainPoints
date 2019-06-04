@@ -22,6 +22,7 @@ namespace BTSuggestions.DataAccessHandlers
         public DbSet<CommentEntity> Comments { get; set; }
         public DbSet<TypeEntity> Types { get; set; }
         public DbSet<PainPointTypeEntity> PainPointTypes { get; set; }
+        public DbSet<ContentEntity> Contents { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PainPointTypeEntity>()
