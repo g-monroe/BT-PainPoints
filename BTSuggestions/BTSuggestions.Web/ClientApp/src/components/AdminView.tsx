@@ -59,14 +59,10 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
     };
 
     handleSelect = (e: any, id: number, propName: string, list: SelectOption[]) => {
-        console.log(e, e.target);
         const { issues } = this.state;
         const newIssues = issues.map(i => {
             if (i.painPointId === id) {
-                switch (e) {
-                    case (1):
-                        i[propName] = [propName];
-               }
+                i[propName] = list[e-1].name;
             }
             return i;
         })
@@ -91,7 +87,7 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
                             <td className="medColumn">Company Name</td>
                             <td className="medColumn">Industry Type</td>
                             <td className="medColumn">Date Posted</td>
-                            <td className="medColumn">Submission Status</td>
+                            <td className="medColumn">Status</td>
                             <td className="thinColumn">Save Changes</td>
                         </tr></thead>
                         <tbody>
@@ -100,12 +96,12 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
                                 <td className="thickColumn"><a href={"/home/" + i.painPointId}>{i.painPointTitle}</a></td>
                                 <td className="thickColumn"><Input key={i.painPointId + "summary"} value={i.painPointSummary} onChange={(e) => this.handleInput(e, i.painPointId, "painPointSummary")}/></td>
                                 <td className="thickColumn"><Input key={"annotation"} value={i.painPointAnnotation} onChange={(e) => this.handleInput(e, i.painPointId, "painPointAnnotation")}/></td>
-                                <td className="thickColumn"><Select key={"type"} defaultValue={i.painPointType}>{this.renderDropdowns(painPointList)}</Select></td>
+                                <td className="thickColumn"><Select key={"type"} defaultValue={i.painPointType}  onChange={(e) => this.handleSelect(e, i.painPointId, "painPointType", painPointList)}>{this.renderDropdowns(painPointList)}</Select></td>
                                 <td className="thinColumn"><InputNumber key={"severity"} value={i.painPointSeverity} min={0} max={5} onChange={(e) => this.handleNumberInput(e, i.painPointId)}/></td>
                                 <td className="medColumn"><Input key={"company"} value={i.companyName} onChange={(e) => this.handleInput(e, i.painPointId, "companyName")}/></td>
                                 <td className="medColumn"><Select key={"industry"} defaultValue={i.industryType} onChange={(e) => this.handleSelect(e, i.painPointId, "industryType", industryList)}>{this.renderDropdowns(industryList)}</Select></td>
                                 <td className="medColumn">{i.datetime}</td>
-                                <td className="medColumn"><Select key={"status"} defaultValue={i.submissionStatus}>{this.renderDropdowns(statusList)}</Select></td>
+                                <td className="medColumn"><Select key={"status"} defaultValue={i.submissionStatus}  onChange={(e) => this.handleSelect(e, i.painPointId, "submissionStatus", statusList)}>{this.renderDropdowns(statusList)}</Select></td>
                                 <td className="thinColumn"><Button onClick={() => alert("Clicked!")}><Icon type="save"></Icon></Button></td>
                             </tr>))}
                         </tbody>
