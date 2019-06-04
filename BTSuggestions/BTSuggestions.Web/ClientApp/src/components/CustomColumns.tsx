@@ -1,122 +1,80 @@
 import React from "react";
 import "antd/dist/antd.css";
 import CustomColumn, { ICustomColumnProps } from "./CustomColumn"
-import { columnNameList, SelectOptionWithEntityAndSpan } from '../types/dropdownValues/columnNameTypes';
-import { Button, Col, Pagination, Layout } from "antd";
+import { columnNameList, SelectOptionWithEntityAndWidth } from '../types/dropdownValues/columnNameTypes';
+import { Button, Col, Pagination, Layout, Table } from "antd";
 import PainPointEntity from '../entity/PainPointEntity';
-
 import "../styles/CustomColumns.css"
+import { ColumnProps } from "antd/lib/table/interface";
 
 const { Footer } = Layout;
 
 
 interface ICustomColumnsProps {
-  data: PainPointEntity[]
-  menuList: SelectOptionWithEntityAndSpan[];
+  data: PainPointEntity[];
+  menuList: SelectOptionWithEntityAndWidth[];
+  customColumnIdArray: number[];
+  changeColumn: (columnNumber: number, columnHeaderId: number) => void;
+  addColumn: (e: any) => void;
+  deleteColumn: (event:any,columnNumber: number) => void;
 }
 
-interface ICustomColumnsState {
-  customColumnArray: CustomColumn[]
-  itemsPerPage: number[];  
-  currentPage: number;
+interface ICustomColumnsState {  
+  
 }
 
 export default class CustomColumns extends React.Component<ICustomColumnsProps, ICustomColumnsState> {
-  handleChangeSpan = (props: ICustomColumnProps, id: number) => {
-    let { itemsPerPage, customColumnArray } = this.state;
-    console.log("HandleChangeSpan--");
-    console.log(itemsPerPage);    
-    let currentSpanCount = 0;
-    let currentItemCount = 0;
-    itemsPerPage = [];
-    for (let i = 0; i < customColumnArray.length; i++) {
-      console.log("HandleChangeSpan: " + i);
-      console.log(itemsPerPage);
-      if (currentSpanCount + customColumnArray[i].props.columnLabel.span <= 23) {
-        currentSpanCount += customColumnArray[i].props.columnLabel.span;
-        currentItemCount++;
-      } else {
-        itemsPerPage.push(currentItemCount);
-        currentItemCount = 0;
-        currentSpanCount = 0;
-      }
-    }
-    itemsPerPage.push(currentItemCount);
-    console.log("HandleChangeSpan++");
-    console.log(itemsPerPage);
-    this.setState({ itemsPerPage, customColumnArray });
-  }
-
   static defaultProps = {
     data: [],
     menuList: []
   };
 
   state: ICustomColumnsState = {   
-    itemsPerPage: [1],   
-    currentPage: 1,
-    customColumnArray: [new CustomColumn({
-      menuList: this.props.menuList, data: this.props.data,
-      columnNumber: 0, changeSpan: this.handleChangeSpan, columnLabel: this.props.menuList[0]
-    })],
+    
   };
 
-
-  handleAddOnClick = (e?: any) => {
-    console.log("handleAddOnClick");
-    let customColumnArray = [...this.state.customColumnArray];
-    const newColumn =
-      (new CustomColumn(
-        {
-          menuList: columnNameList,
-          data: this.props.data,
-          columnNumber: customColumnArray.length,
-          changeSpan: this.handleChangeSpan,
-          columnLabel: this.props.menuList[0]
-        }));
-        customColumnArray.push(newColumn);
-        this.handleChangeSpan(newColumn.props,0);       
-    this.setState({ customColumnArray });
+  getColumns = () => {
     
+    const { customColumnIdArray, menuList, data, changeColumn,addColumn,deleteColumn } = this.props;
+    console.log(JSON.stringify(menuList));
+    let columns:ColumnProps<PainPointEntity>[];
+    columns = [];
+    customColumnIdArray.forEach((id,index)=>{
+      columns.push({
+        key: index,
+        width: menuList[id].width,
+        title : <CustomColumn menuList={menuList} 
+        data = {data}
+        columnNumber = {index}  
+        columnLabel={menuList[id]}
+        changeColumn={changeColumn}
+        deleteColumn={deleteColumn}/>,
+        dataIndex: menuList[id].entityName
+      })
+    });
+    columns.push({
+      key: columns.length,
+      width: 50,
+      title : <AddNewButton addColumn={addColumn}/>,
+      
+    })
+    return columns;
+     
   }
 
-  handlePageChange = (page: number, pageSize?: number) => {
-    console.log("PAGECHANGE: " + page);
-    let { currentPage } = this.state;
-    currentPage = page;
-    this.setState({ currentPage });
-  }
-
-  getColumnIndex = () => {
-    const { currentPage, itemsPerPage } = this.state;
-    let columnIndex = 0;
-    for (let i = 0; i < currentPage - 1; i++) {
-      columnIndex += itemsPerPage[i];
-    }
-    return columnIndex;
-  }
-
-  render() {    
-    const { customColumnArray, itemsPerPage, currentPage } = this.state;
-    console.log(customColumnArray);
+  render() {  
+    
     const { data } = this.props;
-    let columnIndex = this.getColumnIndex();   
+    const columns = this.getColumns();   
     return (
       <>
-        {
-          customColumnArray.slice(columnIndex, columnIndex + itemsPerPage[currentPage - 1]).map((c, index) =>
-            <Col key={index} span={c.props.columnLabel.span}>
-              <CustomColumn key={index} menuList={c.props.menuList} data={data}
-                changeSpan={c.props.changeSpan} columnNumber={c.props.columnNumber} columnLabel={c.props.columnLabel} />
-            </Col>
-          )}
-
-        <Button onClick={e => this.handleAddOnClick(e)}>+</Button>
-        <Footer className="footer">
-          <Pagination className="rightAlign" simple defaultCurrent={1} onChange={this.handlePageChange}
-            pageSize={itemsPerPage[currentPage - 1]} total={itemsPerPage[currentPage - 1] * itemsPerPage.length} /></Footer>
-
+          <Table columns={columns} dataSource={data} scroll={{ x: 1300 }} />
       </>
     )
   }
 }
+
+const AddNewButton = (props:any) => {
+  return ( <div onClick={props.addColumn}>+</div> );
+   
+};

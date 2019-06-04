@@ -2,12 +2,12 @@
 import React from "react";
 import "antd/dist/antd.css";
 import { Button, Menu, List } from "antd";
-import { SelectOptionWithEntityAndSpan } from "../types/dropdownValues/columnNameTypes"
+import { SelectOptionWithEntityAndWidth } from "../types/dropdownValues/columnNameTypes"
 
 interface ICustomColumnDataProps{
   data: any[];
   length: number;
-  columnHeader: SelectOptionWithEntityAndSpan;  
+  columnHeader: SelectOptionWithEntityAndWidth;  
 }
 
 interface ICustomColumnDataState{  

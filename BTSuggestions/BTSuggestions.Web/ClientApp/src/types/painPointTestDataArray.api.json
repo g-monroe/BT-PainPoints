@@ -1,6 +1,6 @@
 {"data": [
     {"painPointType":9,"painPointSeverity":3,"description":"Other diagnostic procedures on nasal sinuses","dateCreated":"1/20/2019","status":2},
-    {"painPointType":1,"painPointSeverity":7,"description":"Removal of lesion of anterior segment of eye, not otherwise specified","highestKeyword":"Re-engineered","dateCreated":"11/23/2018","status":1},
+    {"painPointType":1,"painPointSeverity":7,"description":"Removal of lesion of anterior segment of eye, not otherwise specified. Removal of lesion of anterior segment of eye, not otherwise specified. Removal of lesion of anterior segment of eye, not otherwise specified. Removal of lesion of anterior segment of eye, not otherwise specified. Removal of lesion of anterior segment of eye, not otherwise specified. Removal of lesion of anterior segment of eye, not otherwise specified","highestKeyword":"Re-engineered","dateCreated":"11/23/2018","status":1},
     {"painPointType":4,"painPointSeverity":10,"description":"Other fetal monitoring","dateCreated":"8/2/2018","status":2},
     {"painPointType":2,"painPointSeverity":4,"highestKeyword":"portal","dateCreated":"9/9/2018","status":2},
     {"painPointType":6,"painPointSeverity":1,"description":"Destruction of chorioretinal lesion by radiation therapy","highestKeyword":"Polarised","dateCreated":"1/25/2019","status":1},

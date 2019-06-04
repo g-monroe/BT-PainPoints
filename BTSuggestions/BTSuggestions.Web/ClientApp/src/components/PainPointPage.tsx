@@ -3,7 +3,11 @@ import "antd/dist/antd.css";
 import { Button, Menu } from "antd";
 import CustomColumns from "./CustomColumns"
 import PainPointEntity from "../entity/PainPointEntity";
-
+import CustomColumnEntity from "../entity/CustomColumnEntity"
+import fakeDataImport from '../types/painPointTestDataArray.api.json';
+import fakeColumnData from '../types/painPointCustomColumns.api.json'
+import { columnNameList } from '../types/dropdownValues/columnNameTypes';
+import { SelectOptionWithEntityAndWidth } from "../types/dropdownValues/columnNameTypes";
 
 
 interface IPainPointPageProps{
@@ -11,47 +15,88 @@ interface IPainPointPageProps{
 }
 
 interface IPainPointPageState{
-  isFetching: boolean  
-  customColumnIdArray : number[]
-  data : PainPointEntity[]
+  isFetching: boolean;
+  customColumnsArray : CustomColumnEntity[];
+  currentColumnIndex: number;
+  data : PainPointEntity[];
+  menuList : SelectOptionWithEntityAndWidth[];
 }
-
-
 
 export default class PainPointPage extends React.Component<IPainPointPageProps,IPainPointPageState> {
   static defaultProps = {
 
   };
-  
+
   state: IPainPointPageState = {
-    isFetching = false,
-    customColumnIdArray: [],  
-    data: []
+    isFetching: true,
+    customColumnsArray: [],
+    currentColumnIndex: 0,  
+    data: [],
+    menuList: []
   };
 
-  componentDidMount {
-    
+  componentDidMount = () => {
+    this.getData();
   }
 
   getData = () => {
+    console.log("getData called");
     this.setState({isFetching: true});
+    console.log("is fetching true");
+    let { data, customColumnsArray, currentColumnIndex, menuList } = this.state;
+    //TODO get data and update customColumnIdArray and data with real data
+    data = fakeDataImport.data.map(m => new PainPointEntity(m)).slice(0,15);
+    customColumnsArray = fakeColumnData.data.map(m=>new CustomColumnEntity(m))
+    currentColumnIndex = fakeColumnData.currentColumnIndex;
+    menuList = columnNameList;
+    this.sortData();
+    console.log("sort data complete");
+    this.setState({isFetching: false, data, customColumnsArray, currentColumnIndex, menuList})
+    console.log("setState");
   }
 
-  deleteColumn = (columnNumber: number) => {
-    //TODO
+  sortData = () => {
+    console.log("sortData called");
   }
 
-  addColumn = (columnHeaderId: number) => {
-    //TODO
+  deleteColumn = (event:any,columnNumber: number) => {
+    const { customColumnsArray,currentColumnIndex } = this.state;
+    let newArray = customColumnsArray[currentColumnIndex].columnIds.slice(0,columnNumber);
+    customColumnsArray[currentColumnIndex].columnIds.slice(columnNumber+1).forEach(c=>newArray.push(c))
+    customColumnsArray[currentColumnIndex].columnIds = [...newArray]
+    this.setState({ customColumnsArray });
+  }
+
+  addColumn = (event: any) => {
+    const { customColumnsArray,currentColumnIndex } = this.state;
+    let array = customColumnsArray[currentColumnIndex].columnIds;
+    array.push(0);
+    this.setState ({customColumnsArray});
   }
 
   changeColumn = (columnNumber: number, columnHeaderId: number) => {
-    //TODO
+    const { customColumnsArray,currentColumnIndex } = this.state;
+    customColumnsArray[currentColumnIndex].columnIds[columnNumber] = columnHeaderId;
+    this.setState({ customColumnsArray });
   }
 
 
-  render () {
 
-    return (<></>)
+
+  render () {
+    const { isFetching, data, customColumnsArray, currentColumnIndex, menuList } = this.state
+    return (<>
+      {isFetching ? (
+      'Page is loading...'
+    ) : (
+      <CustomColumns data={data} menuList={menuList} 
+      customColumnIdArray={customColumnsArray[currentColumnIndex].columnIds} 
+      changeColumn={this.changeColumn}
+      addColumn={this.addColumn}
+      deleteColumn={this.deleteColumn}/>
+    ) } 
+    </>)
+
+   
   }
 }
