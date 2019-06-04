@@ -51,9 +51,9 @@ export default class CustomColumn extends React.Component<ICustomColumnProps, IC
     const {  } = this.state;
     return (
       <>
-        <Dropdown overlay={dropDown} trigger={['click']}>
+        <Dropdown overlay={dropDown} trigger={['click']} >
           
-           <span>{columnLabel.name} </span> 
+           <span style={{cursor:"pointer"}}>{columnLabel.name} </span> 
          
         </Dropdown>
         

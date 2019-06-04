@@ -26,8 +26,8 @@ export default class App extends React.Component {
                 <style>{css}</style>
                 <BrowserRouter>
                     <nav>
-                        <Menu mode="horizontal">
-                            <Menu.Item><Link to="/home" className="navLinks">View Issues</Link></Menu.Item>
+                        <Menu style={{boxShadow:"2px 2px" }} mode="horizontal">
+                            <Menu.Item ><Link to="/home" className="navLinks">View Issues</Link></Menu.Item>
                             <Menu.Item><Link to="/create" className="navLinks">Create New Issue</Link></Menu.Item>
                             <Menu.Item><Link to="/admin" className="navLinks">Manage Issues</Link></Menu.Item>
                         </Menu>
