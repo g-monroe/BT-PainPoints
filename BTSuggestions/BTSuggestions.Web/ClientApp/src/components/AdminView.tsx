@@ -1,13 +1,15 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import '../styles/App.css';
-import { Layout, Button, Table, Icon, Select, Input, InputNumber} from 'antd';
+import { Layout, Button, Icon, Select, Input, InputNumber, Popconfirm } from 'antd';
 import AdminViewEntity from '../entity/AdminViewEntity';
 import { statusList } from '../types/dropdownValues/statusTypes';
 import { painPointList } from '../types/dropdownValues/painPointTypes';
 import { industryList } from '../types/dropdownValues/industryTypes';
+import { SelectOption } from '../types/dropdownValues/SelectOption';
+import '../styles/AdminView.css';
 
-const { Content} = Layout;
+const { Content } = Layout;
 
 interface IAdminViewProps {
     data: AdminViewEntity;
@@ -23,91 +25,94 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
 
     state = {
         issues: this.props.data.issues
-    }
+    };
 
-    columns = [
-        {
-            title: 'Issue Title',
-            dataIndex: 'painPointTitle',
-            fixed: true,
-            render: (text: string) => <a href="/home/:id">{text}</a>
-        }, 
-        {
-            title: 'ID',
-            width: 50,
-            dataIndex: 'painPointId'
-        },
-        {
-            title: 'Description',
-            width: 250,
-            dataIndex: 'painPointSummary',
-            render: (text: string) => <Input value={text}/>
-        },
-        {
-            title: 'Annotation',
-            width: 250,
-            dataIndex: 'painPointAnnotation',
-            render: (text: string) => <Input value={text}/>
-        },
-        {
-            title: 'Issue Type',
-            dataIndex: 'painPointType',
-            width: 100,
-            render: (text : string) => <Select defaultValue={text}>{painPointList.map((s:any) => <Select.Option key={s.id} value={s.id}>{s.name}</Select.Option>)}</Select>
-        },
-        {
-            title: 'Severity',
-            dataIndex: 'painPointSeverity',
-            width: 15,
-            render: (text: number) => <InputNumber value={text}/>
-        },
-        {
-            title: 'Company Name',
-            dataIndex: 'companyName',
-            width: 150,
-            render: (text: string) => <Input value={text}/>
-        },
-        {
-            title: 'Industry Type',
-            dataIndex: 'industryType',
-            render: (text: string) => <Select defaultValue={text}>{industryList.map((s:any) => <Select.Option key={s.id} value={s.id}>{s.name}</Select.Option>)}</Select>
-        },
-        {
-            title: 'Date Posted',
-            dataIndex: 'datetime'
-        },
-        {
-            title: 'Issue Status',
-            dataIndex: 'submissionStatus',
-            width: 200,
-            render: (text: string) => <Select defaultValue={text}>{statusList.map((s:any) => <Select.Option key={s.id} value={s.id}>{s.name}</Select.Option>)}</Select>
-        },
-        {
-            title: 'Edit',
-            dataIndex: 'editIndex',
-            width: 25,
-            render: (index: number) => <Button onClick={()=>alert("Clicked!")}><Icon type="edit"></Icon></Button>
-        },
-    ]
+    renderDropdowns = (list: SelectOption[]) => {
+        return list.map((value: any) => (
+            <Select.Option key={value.id} value={value.id}>{value.name}</Select.Option>))
+    };
 
-    rowSelection = {
-        getCheckboxProps: (record: string) => ({
-            name: record
-        })
+    handleInput = (e: any, id: number, propName: string) => {
+        const { issues } = this.state;
+        const newIssues = issues.map(i => {
+            if (i.painPointId === id) {
+                i[propName] = e.target.value;
+            }
+            return i;
+        });
+        this.setState(
+            { issues: newIssues }
+        );
+    };
+
+    handleNumberInput = (e: any, id: number) => {
+        const { issues } = this.state;
+        const newIssues = issues.map(i => {
+            if (i.painPointId === id) {
+                i.painPointSeverity = e;
+            }
+            return i;
+        });
+        this.setState(
+            { issues: newIssues }
+        );
+    };
+
+    handleSelect = (e: any, id: number, propName: string, list: SelectOption[]) => {
+        const { issues } = this.state;
+        const newIssues = issues.map(i => {
+            if (i.painPointId === id) {
+                i[propName] = list[e - 1].name;
+            }
+            return i;
+        });
+        this.setState(
+            { issues: newIssues }
+        );
+    };
+
+    handleSubmit = () => {
+        alert("Clicked!")
+    };
+
+    handleDelete = () => {
+        alert("Deleted!")
     };
 
     render() {
-        const css = "../src/styles/App.css";
         return (
             <Layout>
-                <style>
-                    {css}
-                </style>
                 <Content>
-                    <h2>There should probably be a title here</h2>
-                    <Table rowSelection={this.rowSelection} columns={this.columns} dataSource={this.state.issues} scroll={{ x: 1300 }}/>
-                    <Button>Create Group</Button>
-                    <Button>Delete</Button>
+                    <h2>Admin Console</h2>
+                    <table className="adminTable">
+                        <thead className="tableHeader"><tr>
+                            <td className="thickColumn">Issue Title</td>
+                            <td className="thickColumn">Description</td>
+                            <td className="thickColumn">Annotation</td>
+                            <td className="thickColumn">Issue Type</td>
+                            <td className="thinColumn">Severity</td>
+                            <td className="medColumn">Company Name</td>
+                            <td className="medColumn">Industry Type</td>
+                            <td className="medColumn">Date Posted</td>
+                            <td className="medColumn">Status</td>
+                            <td className="medColumn" colSpan={2}>Edit Issue</td>
+                        </tr></thead>
+                        <tbody>
+                            {this.state.issues.map(i => (<tr key={i.painPointId}>
+                                <td className="thickColumn"><a href={"/home/" + i.painPointId}>{i.painPointTitle}</a></td>
+                                <td className="thickColumn"><Input key={"summary"} value={i.painPointSummary} onChange={(e) => this.handleInput(e, i.painPointId, "painPointSummary")}/></td>
+                                <td className="thickColumn"><Input key={"annotation"} value={i.painPointAnnotation} onChange={(e) => this.handleInput(e, i.painPointId, "painPointAnnotation")}/></td>
+                                <td className="thickColumn"><Select key={"type"} defaultValue={i.painPointType}  onChange={(e) => this.handleSelect(e, i.painPointId, "painPointType", painPointList)}>{this.renderDropdowns(painPointList)}</Select></td>
+                                <td className="thinColumn"><InputNumber key={"severity"} value={i.painPointSeverity} min={0} max={5} onChange={(e) => this.handleNumberInput(e, i.painPointId)}/></td>
+                                <td className="medColumn"><Input key={"company"} value={i.companyName} onChange={(e) => this.handleInput(e, i.painPointId, "companyName")}/></td>
+                                <td className="medColumn"><Select key={"industry"} defaultValue={i.industryType} onChange={(e) => this.handleSelect(e, i.painPointId, "industryType", industryList)}>{this.renderDropdowns(industryList)}</Select></td>
+                                <td className="medColumn">{i.datetime}</td>
+                                <td className="medColumn"><Select key={"status"} defaultValue={i.submissionStatus}  onChange={(e) => this.handleSelect(e, i.painPointId, "submissionStatus", statusList)}>{this.renderDropdowns(statusList)}</Select></td>
+                                <td className="thinColumn"><Popconfirm title="Delete this Issue?" onConfirm={this.handleSubmit} okText="Yes" cancelText="No" placement="left"><Button><Icon type="edit"/></Button></Popconfirm></td>
+                                <td className="thinColumn"><Popconfirm title="Delete this Issue?" onConfirm={this.handleDelete} okText="Yes" cancelText="No" placement="left"><Button><Icon type="delete"/></Button></Popconfirm></td>
+                            </tr>))}
+                        </tbody>
+                    </table>
                 </Content>
             </Layout>
         )
