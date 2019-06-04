@@ -1,15 +1,15 @@
 import React from 'react';
-import { Input, Button, message, Form } from 'antd';
+import { Input, Button, message } from 'antd';
 import * as yup from 'yup';
 import FormItem from 'antd/lib/form/FormItem';
-import { withFormik, validateYupSchema } from 'formik';
+import { withFormik, InjectedFormikProps, Form } from 'formik';
 import UserEntity from '../entity/UserEntity';
 
 interface ICreateAccountProps {
     newUser: (username: string) => void
     data: UserEntity,
-    emailConfirmProp?: string,
-    passwordConfirmProp?: string;
+    emailConfirmProp: string,
+    passwordConfirmProp: string;
 }
 
 interface ICreateAccountState {
@@ -33,7 +33,7 @@ const yupValidation = yup.object().shape<ICreateAccountState>({
     passwordConfirm: yup.string().min(10).required().label('Password Confirm')
 })
 
-class CreateAccount extends React.Component {
+class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountProps, ICreateAccountState>> {
     // Default state so that the verification fucntion will work correctly.
     state = {
         email: "",
@@ -44,6 +44,11 @@ class CreateAccount extends React.Component {
         password: "",
         passwordConfirm: ""
     }
+
+    static defaultProps = {
+        emailConfirmProp: "",
+        passowrdConfirmProp: ""
+    };
 
     validateEmailChange = (event: any) => {
 
@@ -116,30 +121,31 @@ class CreateAccount extends React.Component {
     }
     
     render() {
+        const { values, handleSubmit } = this.props;
         return <>
-            <Form  >
+            <Form onSubmitCapture={handleSubmit}>
                 <FormItem label='Email' required >
-                    <Input id='Email' placeholder='Email' onChange={this.handleEmailChange} />
+                    <Input id='Email' placeholder='Email' onChange={this.handleEmailChange} value={values.email} />
                 </FormItem>
                 <FormItem label='Confirm Email' required>
-                    <Input id='EmailConfirm' placeholder='Confirm Email' onChange={this.handleConfirmEmailChange} />
+                    <Input id='EmailConfirm' placeholder='Confirm Email' onChange={this.handleConfirmEmailChange} value={values.emailConfirmProp} />
                 </FormItem>
                 <FormItem label='First Name' required>
-                    <Input id='firstName' placeholder='First Name' onChange={this.handleFirstNameChange} />
+                    <Input id='firstName' placeholder='First Name' onChange={this.handleFirstNameChange} value={values.firstName}/>
                 </FormItem>
                 <FormItem id='lastName' label='Last Name' required>
-                    <Input placeholder='Last Name' onChange={this.handleLastNameChange} />
+                    <Input placeholder='Last Name' onChange={this.handleLastNameChange} value={values.lastName} />
                 </FormItem>
                 <FormItem id='username' label='Username' required>
-                    <Input placeholder='Username' onChange={this.handleUsernameChange} />
+                    <Input placeholder='Username' onChange={this.handleUsernameChange} value={values.username}/>
                 </FormItem>
                 <FormItem id='password' label='Password' required>
-                    <Input placeholder='Password' onChange={this.handlePasswordChange} />
+                    <Input placeholder='Password' onChange={this.handlePasswordChange} value={values.password}/>
                 </FormItem>
                 <FormItem id='passwordConfirm' label='Confirm Password' required>
-                    <Input placeholder='Confirm Password' onChange={this.handlePasswordConfirmChange} />
+                    <Input placeholder='Confirm Password' onChange={this.handlePasswordConfirmChange} value={values.passowrdConfirmProp}/>
                 </FormItem>
-                <Button id='createButton' type='primary' onClick={this.handleCreateAccountClick}>Create Account</Button>
+                <Button id='createButton' htmlType='submit' type='primary' onClick={this.handleCreateAccountClick}>Create Account</Button>
                 <Button id='cancleButton' type='danger' onClick={this.handleCancleCreateClick}>Cancle Create</Button>
             </Form>
         </>
@@ -149,12 +155,12 @@ class CreateAccount extends React.Component {
 export default withFormik<ICreateAccountProps, ICreateAccountState>({
     mapPropsToValues: props => ({
         email: props.data.email,
-        emailConfirm: props.emailConfirmProp,
+        emailConfirm: (props.emailConfirmProp) ? props.emailConfirmProp: " ",
         firstName: props.data.firstName,
         lastName: props.data.lastName,
         username: props.data.username,
         password: props.data.username,
-        passwordConfirm: props.passwordConfirmProp
+        passwordConfirm: (props.passwordConfirmProp) ? props.passwordConfirmProp: " "
     }),
     validationSchema: yupValidation,
     handleSubmit: (values) => {
