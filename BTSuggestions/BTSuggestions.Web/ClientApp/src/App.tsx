@@ -9,11 +9,11 @@ import blankTemplate from '../src/types/blankTemplate.api.json';
 import testData from '../src/types/testData.api.json';
 import tableData from '../src/types/tableTest.api.json';
 import CustomColumns from '../src/components/CustomColumns';
-import { columnNameList } from '../src/types/dropdownValues/columnNameTypes';
-import fakeDataImport from '../src/types/painPointTestDataArray.api.json';
-import PainPointEntity from './entity/PainPointEntity';
 
-const fakeData: PainPointEntity[] = fakeDataImport.data.map(m => new PainPointEntity(m)).slice(0,15);
+import PainPointPage from './components/PainPointPage';
+
+
+
 
 export default class App extends React.Component {
     displayName = App.name
@@ -30,7 +30,7 @@ export default class App extends React.Component {
                         <Link to="/create" className="navLinks" style = {{padding:15,margin:15}}>Create New Issue</Link>
                         <Link to="/admin" className="navLinks" style = {{padding:15,margin:15}}>Manage Issues</Link>
                     </nav>
-                    <Route path="/home" exact render={(props) => <CustomColumns menuList={columnNameList}/>}/>
+                    <Route path="/home" exact render={(props) => <PainPointPage/>}/>
                     <Route path="/create" exact render={(props) => <CreateForm data={blankTemplate} />}/>
                     <Route path="/home/:id" exact render={(props) => <DetailView data={testData}/>}/>
                     <Route path="/admin" exact render={(props) => <AdminView data={tableData}/>}/>
