@@ -8,9 +8,8 @@ import AdminView from '../src/components/AdminView';
 import blankTemplate from '../src/types/blankTemplate.api.json';
 import testData from '../src/types/testData.api.json';
 import tableData from '../src/types/tableTest.api.json';
-import CustomColumns from '../src/components/CustomColumns';
 
-import PainPointPage from './components/PainPointPage';
+import PainPointView from './components/PainPointView';
 
 
 
@@ -30,7 +29,7 @@ export default class App extends React.Component {
                         <Link to="/create" className="navLinks" style = {{padding:15,margin:15}}>Create New Issue</Link>
                         <Link to="/admin" className="navLinks" style = {{padding:15,margin:15}}>Manage Issues</Link>
                     </nav>
-                    <Route path="/home" exact render={(props) => <PainPointPage/>}/>
+                    <Route path="/home" exact render={(props) => <PainPointView/>}/>
                     <Route path="/create" exact render={(props) => <CreateForm data={blankTemplate} />}/>
                     <Route path="/home/:id" exact render={(props) => <DetailView data={testData}/>}/>
                     <Route path="/admin" exact render={(props) => <AdminView data={tableData}/>}/>

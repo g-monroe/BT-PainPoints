@@ -1,9 +1,9 @@
 import React from "react";
 import "antd/dist/antd.css";
 import { SelectOptionWithEntityAndWidth } from "../types/dropdownValues/columnNameTypes";
-import { Button, Menu, Dropdown, Icon } from "antd";
+import { Menu, Dropdown } from "antd";
 import { ClickParam } from "antd/lib/menu";
-import CustomColumnData from "./CustomColumnData";
+
 
 export interface ICustomColumnProps {
   menuList: SelectOptionWithEntityAndWidth[];

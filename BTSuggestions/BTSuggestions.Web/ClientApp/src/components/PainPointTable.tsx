@@ -8,13 +8,13 @@ import fakeDataImport from '../types/painPointTestDataArray.api.json';
 import fakeColumnData from '../types/painPointCustomColumns.api.json'
 import { columnNameList } from '../types/dropdownValues/columnNameTypes';
 import { SelectOptionWithEntityAndWidth } from "../types/dropdownValues/columnNameTypes";
+import  { IPainPointHandler, PainPointHandler } from '../utilities/painPointHandler'
 
-
-interface IPainPointPageProps{
-  
+interface IPainPointTableProps{
+  painPointHandler?:IPainPointHandler; 
 }
 
-interface IPainPointPageState{
+interface IPainPointTableState{
   isFetching: boolean;
   customColumnsArray : CustomColumnEntity[];
   currentColumnIndex: number;
@@ -22,12 +22,12 @@ interface IPainPointPageState{
   menuList : SelectOptionWithEntityAndWidth[];
 }
 
-export default class PainPointPage extends React.Component<IPainPointPageProps,IPainPointPageState> {
+export default class PainPointTable extends React.Component<IPainPointTableProps,IPainPointTableState> {
   static defaultProps = {
-
+    painPointHandler: new PainPointHandler()
   };
 
-  state: IPainPointPageState = {
+  state: IPainPointTableState = {
     isFetching: true,
     customColumnsArray: [],
     currentColumnIndex: 0,  
@@ -39,13 +39,16 @@ export default class PainPointPage extends React.Component<IPainPointPageProps,I
     this.getData();
   }
 
-  getData = () => {
+   getData = async () => {
     console.log("getData called");
     this.setState({isFetching: true});
     console.log("is fetching true");
+    const {painPointHandler} = this.props;
     let { data, customColumnsArray, currentColumnIndex, menuList } = this.state;
     //TODO get data and update customColumnIdArray and data with real data
-    data = fakeDataImport.data.map(m => new PainPointEntity(m)).slice(0,15);
+    if (painPointHandler){
+    data =  (await painPointHandler.getAll()).painPointsList.map(m => new PainPointEntity(m));
+    }
     customColumnsArray = fakeColumnData.data.map(m=>new CustomColumnEntity(m))
     currentColumnIndex = fakeColumnData.currentColumnIndex;
     menuList = columnNameList;
@@ -85,9 +88,10 @@ export default class PainPointPage extends React.Component<IPainPointPageProps,I
 
   render () {
     const { isFetching, data, customColumnsArray, currentColumnIndex, menuList } = this.state
+   
     return (<>
       {isFetching ? (
-      'Page is loading...'
+      'Table is loading...'
     ) : (
       <CustomColumns data={data} menuList={menuList} 
       customColumnIdArray={customColumnsArray[currentColumnIndex].columnIds} 

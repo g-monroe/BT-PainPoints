@@ -9,7 +9,6 @@ import { ColumnProps } from "antd/lib/table/interface";
 
 const { Footer } = Layout;
 
-
 interface ICustomColumnsProps {
   data: PainPointEntity[];
   menuList: SelectOptionWithEntityAndWidth[];
@@ -42,6 +41,7 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
     customColumnIdArray.forEach((id,index)=>{
       columns.push({
         key: index,
+        filterDropdownVisible: true,
         width: menuList[id].width,
         title : <CustomColumn menuList={menuList} 
         data = {data}
@@ -68,7 +68,10 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
     const columns = this.getColumns();   
     return (
       <>
-          <Table columns={columns} dataSource={data} scroll={{ x: 1300 }} />
+          <Table showHeader={true} pagination={false} 
+          columns={columns} dataSource={data} 
+          scroll={{ x: 1300 }}
+           />
       </>
     )
   }
