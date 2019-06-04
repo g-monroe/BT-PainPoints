@@ -119,31 +119,35 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
     handleCancleCreateClick = () => {
         // Go back to parent.
     }
+
+    getValidationStatus = (error: any) => {
+        return !!error ? 'error' : 'success';
+    };
     
     render() {
-        const { values, handleSubmit } = this.props;
+        const { values, handleSubmit, errors } = this.props;
         return <>
             <Form onSubmitCapture={handleSubmit}>
-                <FormItem label='Email' required >
+                <FormItem label='Email' required validateStatus={this.getValidationStatus(errors.email)}>
                     <Input id='Email' placeholder='Email' onChange={this.handleEmailChange} value={values.email} />
                 </FormItem>
-                <FormItem label='Confirm Email' required>
-                    <Input id='EmailConfirm' placeholder='Confirm Email' onChange={this.handleConfirmEmailChange} value={values.emailConfirmProp} />
+                <FormItem label='Confirm Email' required validateStatus={this.getValidationStatus(errors.emailConfirm)}>
+                    <Input id='EmailConfirm' placeholder='Confirm Email' onChange={this.handleConfirmEmailChange} value={values.emailConfirm} />
                 </FormItem>
-                <FormItem label='First Name' required>
+                <FormItem label='First Name' required validateStatus={this.getValidationStatus(errors.firstName)}>
                     <Input id='firstName' placeholder='First Name' onChange={this.handleFirstNameChange} value={values.firstName}/>
                 </FormItem>
-                <FormItem id='lastName' label='Last Name' required>
+                <FormItem id='lastName' label='Last Name' required validateStatus={this.getValidationStatus(errors.lastName)}>
                     <Input placeholder='Last Name' onChange={this.handleLastNameChange} value={values.lastName} />
                 </FormItem>
-                <FormItem id='username' label='Username' required>
+                <FormItem id='username' label='Username' required validateStatus={this.getValidationStatus(errors.username)}>
                     <Input placeholder='Username' onChange={this.handleUsernameChange} value={values.username}/>
                 </FormItem>
-                <FormItem id='password' label='Password' required>
+                <FormItem id='password' label='Password' required validateStatus={this.getValidationStatus(errors.password)}>
                     <Input placeholder='Password' onChange={this.handlePasswordChange} value={values.password}/>
                 </FormItem>
-                <FormItem id='passwordConfirm' label='Confirm Password' required>
-                    <Input placeholder='Confirm Password' onChange={this.handlePasswordConfirmChange} value={values.passowrdConfirmProp}/>
+                <FormItem id='passwordConfirm' label='Confirm Password' required validateStatus={this.getValidationStatus(errors.passwordConfirm)}>
+                    <Input placeholder='Confirm Password' onChange={this.handlePasswordConfirmChange} value={values.passwordConfirm}/>
                 </FormItem>
                 <Button id='createButton' htmlType='submit' type='primary' onClick={this.handleCreateAccountClick}>Create Account</Button>
                 <Button id='cancleButton' type='danger' onClick={this.handleCancleCreateClick}>Cancle Create</Button>
