@@ -8,6 +8,7 @@ import { painPointList } from '../types/dropdownValues/painPointTypes';
 import { industryList } from '../types/dropdownValues/industryTypes';
 import { SelectOption } from '../types/dropdownValues/SelectOption';
 import '../styles/AdminView.css';
+import TextArea from 'antd/lib/input/TextArea';
 
 const { Content } = Layout;
 
@@ -86,30 +87,32 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
                     <h2>Admin Console</h2>
                     <table className="adminTable">
                         <thead className="tableHeader"><tr>
-                            <td className="thickColumn">Issue Title</td>
-                            <td className="thickColumn">Description</td>
-                            <td className="thickColumn">Annotation</td>
-                            <td className="thickColumn">Issue Type</td>
+                            <td className="thinColumn">Date Posted</td>
+                            <td className="megaColumn">Issue Title</td>
+                            <td className="megaColumn">Description</td>
+                            <td className="megaColumn">Annotation</td>
+                            <td className="thinColumn">Issue Type</td>
                             <td className="thinColumn">Severity</td>
-                            <td className="medColumn">Company Name</td>
-                            <td className="medColumn">Industry Type</td>
-                            <td className="medColumn">Date Posted</td>
-                            <td className="medColumn">Status</td>
-                            <td className="medColumn" colSpan={2}>Edit Issue</td>
+                            <td className="megaColumn">Company Name</td>
+                            <td className="thinColumn">Industry Type</td>
+                            <td className="thinColumn">Status</td>
+                            <td className="thickColumn" colSpan={2}>Edit Issue</td>
                         </tr></thead>
                         <tbody>
                             {this.state.issues.map(i => (<tr key={i.painPointId}>
-                                <td className="thickColumn"><a href={"/home/" + i.painPointId}>{i.painPointTitle}</a></td>
-                                <td className="thickColumn"><Input key={"summary"} value={i.painPointSummary} onChange={(e) => this.handleInput(e, i.painPointId, "painPointSummary")}/></td>
-                                <td className="thickColumn"><Input key={"annotation"} value={i.painPointAnnotation} onChange={(e) => this.handleInput(e, i.painPointId, "painPointAnnotation")}/></td>
-                                <td className="thickColumn"><Select key={"type"} defaultValue={i.painPointType}  onChange={(e) => this.handleSelect(e, i.painPointId, "painPointType", painPointList)}>{this.renderDropdowns(painPointList)}</Select></td>
+                                <td className="thinColumn">{i.datetime}</td>
+                                <td className="megaColumn"><a href={"/home/" + i.painPointId}>{i.painPointTitle}</a></td>
+                                <td className="megaColumn"><TextArea rows={2} key={"summary"} value={i.painPointSummary} onChange={(e) => this.handleInput(e, i.painPointId, "painPointSummary")}/></td>
+                                <td className="megaColumn"><TextArea rows={2}  key={"annotation"} value={i.painPointAnnotation} onChange={(e) => this.handleInput(e, i.painPointId, "painPointAnnotation")}/></td>
+                                <td className="thinColumn"><Select key={"type"} style={{ width: 100 }} dropdownMatchSelectWidth={false} defaultValue={i.painPointType}  onChange={(e) => this.handleSelect(e, i.painPointId, "painPointType", painPointList)}>{this.renderDropdowns(painPointList)}</Select></td>
                                 <td className="thinColumn"><InputNumber key={"severity"} value={i.painPointSeverity} min={0} max={5} onChange={(e) => this.handleNumberInput(e, i.painPointId)}/></td>
-                                <td className="medColumn"><Input key={"company"} value={i.companyName} onChange={(e) => this.handleInput(e, i.painPointId, "companyName")}/></td>
-                                <td className="medColumn"><Select key={"industry"} defaultValue={i.industryType} onChange={(e) => this.handleSelect(e, i.painPointId, "industryType", industryList)}>{this.renderDropdowns(industryList)}</Select></td>
-                                <td className="medColumn">{i.datetime}</td>
-                                <td className="medColumn"><Select key={"status"} defaultValue={i.submissionStatus}  onChange={(e) => this.handleSelect(e, i.painPointId, "submissionStatus", statusList)}>{this.renderDropdowns(statusList)}</Select></td>
-                                <td className="thinColumn"><Popconfirm title="Delete this Issue?" onConfirm={this.handleSubmit} okText="Yes" cancelText="No" placement="left"><Button><Icon type="edit"/></Button></Popconfirm></td>
-                                <td className="thinColumn"><Popconfirm title="Delete this Issue?" onConfirm={this.handleDelete} okText="Yes" cancelText="No" placement="left"><Button><Icon type="delete"/></Button></Popconfirm></td>
+                                <td className="megaColumn"><Input key={"company"} value={i.companyName} onChange={(e) => this.handleInput(e, i.painPointId, "companyName")}/></td>
+                                <td className="thinColumn"><Select key={"industry"} style={{ width: 150 }} dropdownMatchSelectWidth={false} defaultValue={i.industryType} onChange={(e) => this.handleSelect(e, i.painPointId, "industryType", industryList)}>{this.renderDropdowns(industryList)}</Select></td>
+                                <td className="thinColumn"><Select key={"status"} style={{ width: 150 }} dropdownMatchSelectWidth={false} defaultValue={i.submissionStatus}  onChange={(e) => this.handleSelect(e, i.painPointId, "submissionStatus", statusList)}>{this.renderDropdowns(statusList)}</Select></td>
+                                <td className="thickColumn">
+                                    <Popconfirm title="Delete this Issue?" onConfirm={this.handleSubmit} okText="Yes" cancelText="No" placement="left"><Button><Icon type="edit" /></Button></Popconfirm>
+                                    <Popconfirm title="Delete this Issue?" onConfirm={this.handleDelete} okText="Yes" cancelText="No" placement="left"><Button><Icon type="delete" /></Button></Popconfirm>
+                                </td>
                             </tr>))}
                         </tbody>
                     </table>
