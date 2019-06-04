@@ -112,6 +112,34 @@ namespace BTSuggestions.Controllers
             }
             return result;
         }
+        [HttpGet("{id}/admin")]
+        public async Task<ActionResult<bool>> GetAdmin(int id)
+        {
+            var result = await _manager.GetUser(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            if (result.Privilege == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        [HttpGet("{username}")]
+        public async Task<ActionResult<UserEntity>> GetUserByUsername(string username)
+        {
+            var results = await _manager.GetUsers();
+            var result = results.FirstOrDefault(x => x.Username == username);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result;
+        }
         // GET api/user/5/privilege
         [HttpGet("{id}/privilege")]
         public async Task<ActionResult<int>> GetPrivilege(int id)

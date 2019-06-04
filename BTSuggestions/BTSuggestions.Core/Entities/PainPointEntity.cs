@@ -28,7 +28,6 @@ namespace BTSuggestions.Core.Entities
         [MinLength(1)]
         [Required]
         public string Status { get; set; }
-        [Required]
         [JsonIgnore]
         public virtual UserEntity User { get; set; }
         [Required]

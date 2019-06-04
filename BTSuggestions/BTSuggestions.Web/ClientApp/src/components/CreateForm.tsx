@@ -4,19 +4,22 @@ import * as yup from 'yup';
 import { painPointList } from '../types/dropdownValues/painPointTypes';
 import { industryList } from '../types/dropdownValues/industryTypes';
 import { withFormik, InjectedFormikProps, Form } from 'formik';
-import CreateFormEntity from '../entity/CreateFormEntity';
-
+import { IssueEntity }  from '../entity/CreateFormEntity';
+import CreateFormEntity  from '../entity/CreateFormEntity';
+import {IPainPointHandler, PainPointHandler } from '../utilities/PainPointHandler';
 const { Content } = Layout;
 const FormItem = AntForm.Item;
 
 interface ICreateFormProps{
-    data: CreateFormEntity; 
+    painPointHandler?: IPainPointHandler;
+    handleSave: (entity: IssueEntity) => Promise<void>;
+    data: IssueEntity; 
 }
 
 interface ICreateFormState{
-    painPointType: string[],
-    painPointTitle: string,
-    painPointSummary: string,
+    Type: string[],
+    Title: string,
+    Summary: string,
     painPointAnnotation?: string,
     painPointSeverity: number,
 
@@ -27,9 +30,9 @@ interface ICreateFormState{
 }
 
 const yupValidation = yup.object().shape<ICreateFormState>({
-    painPointType: yup.array<string>(),
-    painPointTitle: yup.string().min(2).max(150).required().label('Issue Title'),
-    painPointSummary: yup.string().min(2).max(1500).required().label('Issue Summmary'),
+    Type: yup.array<string>(),
+    Title: yup.string().min(2).max(150).required().label('Issue Title'),
+    Summary: yup.string().min(2).max(1500).required().label('Issue Summmary'),
     painPointSeverity: yup.number().min(0).max(10).required().label('Issue Severity'),
     painPointAnnotation: yup.string().min(1).max(1500).label('Issue Annotation'),
 
@@ -42,7 +45,7 @@ const yupValidation = yup.object().shape<ICreateFormState>({
 class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, ICreateFormState>>{
     static defaultProps = {
     };
-
+    
     state = {
         inputValue: 0
     };
@@ -52,7 +55,9 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
             inputValue: value
         });
     };
-
+    handleSave = async (entity: IssueEntity): Promise<void> => {
+          await this.props.painPointHandler!.createHero(entity)
+      }
     getValidationStatus = (error: any) => {
         return !!error ? 'error' : 'success';
     };
@@ -68,17 +73,17 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
                 </style>
                 <Content>
                     <Form onSubmitCapture={handleSubmit}>
-                        <FormItem label="Issue Title" required validateStatus={this.getValidationStatus(errors.painPointTitle)}>
-                            <Input id="painPointTitle" placeholder="Title" value={values.painPointTitle} onChange={handleChange}/>
+                        <FormItem label="Issue Title" required validateStatus={this.getValidationStatus(errors.Title)}>
+                            <Input id="painPointTitle" placeholder="Title" value={values.Title} onChange={handleChange}/>
                         </FormItem>
-                        <FormItem label="Issue Summary" required validateStatus={this.getValidationStatus(errors.painPointSummary)}>
-                            <Input id="painPointSummary" placeholder="Description of Problem" value={values.painPointSummary} onChange={handleChange} minLength={3}/>
+                        <FormItem label="Issue Summary" required validateStatus={this.getValidationStatus(errors.Summary)}>
+                            <Input id="painPointSummary" placeholder="Description of Problem" value={values.Summary} onChange={handleChange} minLength={3}/>
                         </FormItem>
                         <FormItem label="Issue Annotation" validateStatus={this.getValidationStatus(errors.painPointAnnotation)}>
                             <Input id="painPointAnnotation" placeholder="Personal Notes about Problem" value={values.painPointAnnotation} onChange={handleChange} minLength={3}/>
                         </FormItem>
-                        <FormItem label="Issue Type" required validateStatus={this.getValidationStatus(errors.painPointType)}>
-                            <Select mode="multiple" id="painPointType" onChange={x => setFieldValue("painPointType", x)} value={values.painPointType}>{painPointList.map(p => <Select.Option key={p.id} value={p.id}>{p.name}</Select.Option>)}</Select>
+                        <FormItem label="Issue Type" required validateStatus={this.getValidationStatus(errors.Type)}>
+                            <Select mode="multiple" id="painPointType" onChange={x => setFieldValue("painPointType", x)} value={values.Type}>{painPointList.map(p => <Select.Option key={p.id} value={p.id}>{p.name}</Select.Option>)}</Select>
                         </FormItem>
                         <FormItem label="Issue Severity" required validateStatus={this.getValidationStatus(errors.painPointSeverity)}>
                             <Slider id="painPointSeveritySlide" min={0} max={5} onChange={this.slideChange} value={typeof inputValue === 'number' ? inputValue : 0} />
@@ -97,8 +102,13 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
                         <FormItem label="Industry Type" validateStatus={this.getValidationStatus(errors.industryType)}>
                             <Select id="industryType" onChange={x => setFieldValue("industryType", x)} value={values.industryType}>{industryList.map(i => <Select.Option key={i.id} value={i.id}>{i.name}</Select.Option>)}</Select>
                         </FormItem>
-                        <Button id="submit" htmlType="submit">Submit Problem</Button>
+                        <Button loading={this.props.isSubmitting} onClick={this.props.handleSubmit} type="primary">
+                             Submit test
+                        </Button>
                     </Form>
+                    <div>
+              {JSON.stringify(values)}
+            </div>
                 </Content>
             </Layout>
         )
@@ -107,22 +117,24 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
 
 export default withFormik<ICreateFormProps, ICreateFormState>({
     mapPropsToValues: props => ({
-        painPointId: props.data.painPointId,
-        painPointType: props.data.painPointType,
-        painPointTitle: props.data.painPointTitle,
-        painPointSummary: props.data.painPointSummary,
+        Id: props.data.Id,
+        Type: props.data.Type,
+        Title: props.data.Title,
+        Summary: props.data.Summary,
         painPointAnnotation: props.data.painPointAnnotation,
         painPointSeverity: props.data.painPointSeverity,
-        submissionStatus: props.data.submissionStatus,
+        Status: props.data.Status,
         companyName: props.data.companyName,
         companyContact: props.data.companyContact,
         companyLocation: props.data.companyLocation,
         industryType: props.data.industryType
     }),
     validationSchema: yupValidation,
-    handleSubmit: (values) => {
+    handleSubmit: async (values, { setSubmitting, props }) =>  {
         console.log(values);
+        await props.handleSave(new IssueEntity(values));
         alert("You have submitted an issue");
+        setSubmitting(false);
     },
     displayName: 'Create Issue Form'
 })(CreateForm);
