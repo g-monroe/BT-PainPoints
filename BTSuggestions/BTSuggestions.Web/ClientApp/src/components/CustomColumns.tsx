@@ -53,7 +53,7 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
     columns.push({
       key: columns.length,
       width: 50,
-      title : <AddNewButton addColumn={addColumn}/>,
+      title : <span style={{cursor:"crosshair"}}><AddNewButton addColumn={addColumn}/></span>,
       
     })
     return columns;
