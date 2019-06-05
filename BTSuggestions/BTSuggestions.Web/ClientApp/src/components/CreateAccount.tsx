@@ -7,9 +7,6 @@ import UserEntity from '../entity/UserEntity';
 
 interface ICreateAccountProps {
     newUser: (username: string) => void
-    data: UserEntity,
-    emailConfirmProp: string,
-    passwordConfirmProp: string;
 }
 
 interface ICreateAccountState {
@@ -44,11 +41,6 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
         password: "",
         passwordConfirm: ""
     }
-
-    static defaultProps = {
-        emailConfirmProp: "",
-        passowrdConfirmProp: ""
-    };
 
     validateEmailChange = (event: any) => {
 
@@ -158,13 +150,13 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
 
 export default withFormik<ICreateAccountProps, ICreateAccountState>({
     mapPropsToValues: props => ({
-        email: props.data.email,
-        emailConfirm: (props.emailConfirmProp) ? props.emailConfirmProp: " ",
-        firstName: props.data.firstName,
-        lastName: props.data.lastName,
-        username: props.data.username,
-        password: props.data.username,
-        passwordConfirm: (props.passwordConfirmProp) ? props.passwordConfirmProp: " "
+        email: '',
+        emailConfirm: '',
+        firstName: '',
+        lastName:'',
+        username: '',
+        password: '',
+        passwordConfirm: ''
     }),
     validationSchema: yupValidation,
     handleSubmit: (values) => {

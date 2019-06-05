@@ -7,7 +7,7 @@ export default (props: any) => {
     return (
         <Route {...rest}
             render={
-                props => auth ?
+                props => auth === 'true' ?
                     <Component {...props} /> :
                     <Redirect to={{ pathname: redirect, state: {from: props.location} }} />
             }

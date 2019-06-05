@@ -8,9 +8,12 @@ import AdminView from '../src/components/AdminView';
 import CustomColumns from '../src/components/CustomColumns'
 import LoginPage from '../src/components/LoginPage';
 import PrivateRoute from '../src/components/PrivateRoute';
+import CreateAccount from './components/CreateAccount';
+import UserEntity from './entity/UserEntity';
 
 interface IPainPointState {
-    username: string
+    username: string,
+    auth: boolean
 }
 
 const userAuth = {
@@ -32,6 +35,17 @@ export default class App extends React.Component {
         this.setState({
             username: name
         });
+        localStorage.setItem('username', name);
+    }
+
+    handleAuthChange = (authUpdate: boolean) => {
+        this.setState({
+            auth: authUpdate
+        });
+    }
+
+    handleNewUser = (user: string) => {
+        localStorage.setItem('username', user);
     }
 
     render() {
@@ -41,16 +55,17 @@ export default class App extends React.Component {
             
                 <style>{css}</style>
                 <BrowserRouter>
-                    {userAuth.isAuthenticated && <nav>
+                    {localStorage.getItem('Auth') === 'true' && <nav>
                         <Link to="/home" className="navLinks" style = {{padding:15,margin:15}}>View Issues</Link>
                         <Link to="/create" className="navLinks" style = {{padding:15,margin:15}}>Create New Issue</Link>
                         <Link to="/admin" className="navLinks" style = {{padding:15,margin:15}}>Manage Issues</Link>
                     </nav>}
                     <Route path="/login" exact render={(props) => <LoginPage newUsername={this.handleLoginRequest}/>} />
-                    <PrivateRoute path="/home" exact component={CustomColumns} />
-                    <PrivateRoute path="/create" exact component={CreateForm} />
-                    <PrivateRoute path="/home/:id" exact component={DetailView}/>
-                    <PrivateRoute path="/admin" exact component={AdminView} />
+                    <Route path="/create-account" exact render={(props) => <CreateAccount newUser={this.handleNewUser} />}/>
+                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/home" exact component={CustomColumns} />
+                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/create" exact component={CreateForm} />
+                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/home/:id" exact component={DetailView}/>
+                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/admin" exact component={AdminView} />
                 </BrowserRouter> 
                 
             </>
