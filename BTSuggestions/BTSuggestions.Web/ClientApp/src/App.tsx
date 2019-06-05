@@ -5,7 +5,7 @@ import { Link, BrowserRouter, Route, Redirect, RouteProps } from 'react-router-d
 import CreateForm from '../src/components/CreateForm';
 import DetailView from '../src/components/DetailView';
 import AdminView from '../src/components/AdminView';
-import CustomColumns from '../src/components/CustomColumns'
+import PainPointView from '../src/components/PainPointView'
 import LoginPage from '../src/components/LoginPage';
 import PrivateRoute from '../src/components/PrivateRoute';
 import CreateAccount from './components/CreateAccount';
@@ -16,8 +16,6 @@ interface IPainPointState {
     auth: boolean
 }
 
-<<<<<<< HEAD
-=======
 const userAuth = {
     isAuthenticated: false,
     authenticate(cb: any) {
@@ -30,7 +28,6 @@ const userAuth = {
     }
 }
 
->>>>>>> frontend-james
 export default class App extends React.Component {
     displayName = App.name
 
@@ -65,7 +62,7 @@ export default class App extends React.Component {
                     </nav>}
                     <Route path="/login" exact render={(props) => <LoginPage newUsername={this.handleLoginRequest}/>} />
                     <Route path="/create-account" exact render={(props) => <CreateAccount newUser={this.handleNewUser} />}/>
-                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/home" exact component={CustomColumns} />
+                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/home" exact component={PainPointView} />
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/create" exact component={CreateForm} />
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/home/:id" exact component={DetailView}/>
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/admin" exact component={AdminView} />
