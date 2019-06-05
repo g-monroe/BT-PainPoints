@@ -8,25 +8,31 @@ import AdminView from '../src/components/AdminView';
 import blankTemplate from '../src/types/blankTemplate.api.json';
 import testData from '../src/types/testData.api.json';
 import tableData from '../src/types/tableTest.api.json';
-import CustomColumns from '../src/components/CustomColumns'
+
+import PainPointView from './components/PainPointView';
+import { Menu } from 'antd';
+
+
 
 
 export default class App extends React.Component {
     displayName = App.name
 
     render() {
-        const css = "../src/App.css";
+        const css = "../src/App.css";        
         return (
             <>
             
                 <style>{css}</style>
                 <BrowserRouter>
                     <nav>
-                        <Link to="/home" className="navLinks" style = {{padding:15,margin:15}}>View Issues</Link>
-                        <Link to="/create" className="navLinks" style = {{padding:15,margin:15}}>Create New Issue</Link>
-                        <Link to="/admin" className="navLinks" style = {{padding:15,margin:15}}>Manage Issues</Link>
+                        <Menu mode="horizontal">
+                            <Menu.Item><Link to="/home" className="navLinks">View Issues</Link></Menu.Item>
+                            <Menu.Item><Link to="/create" className="navLinks">Create New Issue</Link></Menu.Item>
+                            <Menu.Item><Link to="/admin" className="navLinks">Manage Issues</Link></Menu.Item>
+                        </Menu>
                     </nav>
-                    <Route path="/home" exact render={(props) => <CustomColumns/>}/>
+                    <Route path="/home" exact render={(props) => <PainPointView/>}/>
                     <Route path="/create" exact render={(props) => <CreateForm data={blankTemplate} />}/>
                     <Route path="/home/:id" exact render={(props) => <DetailView data={testData}/>}/>
                     <Route path="/admin" exact render={(props) => <AdminView data={tableData}/>}/>

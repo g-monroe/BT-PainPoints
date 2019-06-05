@@ -1,59 +1,62 @@
 import React from "react";
 import "antd/dist/antd.css";
-import { SelectOptionWithEntity } from "../types/dropdownValues/ColumnNameTypes";
-import { Button, Menu, Dropdown, Icon } from "antd";
+import { SelectOptionWithEntityAndWidth } from "../types/dropdownValues/columnNameTypes";
+import { Menu, Dropdown } from "antd";
 import { ClickParam } from "antd/lib/menu";
-import CustomColumnData from "./CustomColumnData"
 
-interface ICustomColumnProps {
-  menuList: SelectOptionWithEntity[]
-  data: any[]
+
+export interface ICustomColumnProps {
+  menuList: SelectOptionWithEntityAndWidth[];
+  data: any[];
+  columnNumber: number;  
+  columnLabel: SelectOptionWithEntityAndWidth;
+  changeColumn: (columnNumber: number, columnHeaderId: number) => void;
+  deleteColumn: (event:any,columnNumber: number) => void;
+}
+
+interface ICustomColumnState {  
   
 }
 
-interface ICustomColumnState {
-  columnLabel: SelectOptionWithEntity
-}
-
-const getDropDown = (props: ICustomColumnProps, handleOnClick: (e: ClickParam, id: number) => void) => {
-  console.log(props);
-  const { menuList } = props;
-  const dropDownMenu = (menuList.map((d, index) => (
-    <Menu.Item key={index} onClick={e => handleOnClick(e, index)}>
+const getDropDown = (props: ICustomColumnProps, handleMenuOnChange: (e: ClickParam, id: number) => void) => { 
+  const { menuList,columnNumber,deleteColumn } = props;
+  let dropDownMenu = (menuList.map((d, index) => (
+    <Menu.Item key={index} onClick={e => handleMenuOnChange(e, index)}>
       {d.name}
     </Menu.Item>
   )));
+  dropDownMenu.push(<Menu.Item key={dropDownMenu.length} onClick={e=>deleteColumn(e,columnNumber)}>
+  <b style={{color:'red'}}>Delete</b>
+</Menu.Item>)
   return (<Menu>{dropDownMenu}</Menu>);
 };
 
 export default class CustomColumn extends React.Component<ICustomColumnProps, ICustomColumnState> {
   static defaultProps = {
+
   };
   state: ICustomColumnState = {
-    columnLabel: this.props.menuList[0]
+    
+    
   };
 
-  handleOnClick = (e: ClickParam, id: number) => {
-    console.log(this.handleOnClick);
-    let { columnLabel } = this.state;
-    const { menuList } = this.props;
-    columnLabel = menuList[id];
-    this.setState({ columnLabel });
+  handleMenuOnChange = (e: ClickParam, id: number) => {      
+    const { columnLabel,columnNumber, changeColumn} = this.props;
+    changeColumn(columnNumber,id);
   };
 
   render() {
-    const dropDown = getDropDown(this.props, this.handleOnClick);
-    const { columnLabel } = this.state;
-    const { data } = this.props;
-    console.log(dropDown);
+    const dropDown = getDropDown(this.props, this.handleMenuOnChange);    
+    const { data, columnLabel } = this.props;
+    const {  } = this.state;
     return (
       <>
         <Dropdown overlay={dropDown} trigger={['click']}>
-          <Button>
-            {columnLabel.name} <Icon type="down" />
-          </Button>
+          
+           <span>{columnLabel.name} </span> 
+         
         </Dropdown>
-        <CustomColumnData columnHeader={columnLabel} data={data} length={10}/>
+        
       </>
     );
   };

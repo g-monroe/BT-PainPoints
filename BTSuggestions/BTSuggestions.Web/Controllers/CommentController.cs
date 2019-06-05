@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BTSuggestions.Core.Entities;
+using BTSuggestions.Managers.ResponseObjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,24 +21,29 @@ namespace BTSuggestions.Controllers
         /// handle differently.
         /// - Gavin
         /// </summary>
-        private readonly DataAccessHandlers.BTSuggestionContext _context;
+        private readonly Managers.CommentManager _commentManager;
 
-        public CommentController(DataAccessHandlers.BTSuggestionContext context)
+        public CommentController(Managers.CommentManager commentManager)
         {
-            _context = context;
+            _commentManager = commentManager;
         }
         // GET api/comments
         [HttpGet]
-        public ActionResult<IEnumerable<CommentEntity>> Get()
+        public async Task<ActionResult<IEnumerable<CommentEntity>>> Get()
         {
-            return _context.Comments.ToList();
+            var result = await _commentManager.GetComments();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result.ToList();
         }
 
         // GET api/comment/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CommentEntity>> Get(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
+            var comment = await _commentManager.GetComment(id);
             if (comment == null)
             {
                 return NotFound();
@@ -48,9 +54,8 @@ namespace BTSuggestions.Controllers
         [HttpGet("{id}/user")]
         public async Task<ActionResult<UserEntity>> GetUser(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
-            var user = await _context.Users.FindAsync(comment.UserId);
-            if (comment == null || user == null)
+            var user= await _commentManager.GetUser(id);
+            if (user == null)
             {
                 return NotFound();
             }
@@ -61,20 +66,21 @@ namespace BTSuggestions.Controllers
         [HttpGet("{id}/painpoint")]
         public async Task<ActionResult<PainPointEntity>> GetPainPoint(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
-            var pain = await _context.PainPoints.FindAsync(comment.PainPointId);
-            if (comment == null || pain == null)
+            var painPointComment = await _commentManager.GetComment(id);
+            var paintPoint = painPointComment.PainPoint;
+            var comment = await _commentManager.GetComment(id);
+            if (comment == null || paintPoint == null)
             {
                 return NotFound();
             }
 
-            return pain;
+            return paintPoint;
         }
         // GET api/comment/5/text
         [HttpGet("{id}/text")]
         public async Task<ActionResult<string>> GetText(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
+            var comment = await _commentManager.GetComment(id);
             if (comment == null)
             {
                 return NotFound();
@@ -82,11 +88,11 @@ namespace BTSuggestions.Controllers
 
             return comment.CommentText;
         }
-        // GET api/painpoint/5/title
+        // GET api/painpoint/5/status
         [HttpGet("{id}/status")]
         public async Task<ActionResult<string>> GetSatus(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
+            var comment = await _commentManager.GetComment(id);
             if (comment == null)
             {
                 return NotFound();
@@ -96,52 +102,55 @@ namespace BTSuggestions.Controllers
         }
         // POST api/comment
         [HttpPost]
-        public async Task<ActionResult<int>> PostComment(CommentEntity value)
+        public async Task<ActionResult<CommentResponse>> PostComment(CommentEntity value)
         {
-            _context.Comments.Add(value);
-            var result = await _context.SaveChangesAsync();
-            return result;
+            var me = await _commentManager.AddNewComment(value.UserId, value.PainPointId, value.CommentText, value.Status, value.CreatedOn);
+            var response =  new CommentResponse()
+            {
+                User = me.User,
+                UserId = me.UserId,
+                CommentId = me.Id,
+                CreatedOn = me.CreatedOn,
+                PainPointId = me.PainPointId,
+                PainPoint = me.PainPoint,
+                CommentText = me.CommentText,
+                Status = me.Status
+            };
+            if (me == null)
+            {
+                return NotFound();
+            }
+            return response;
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutComment(int id, CommentEntity value)
+        public async Task<ActionResult<CommentEntity>> PutComment(int id, CommentEntity value)
         {
             if (id != value.Id)
             {
                 return BadRequest();
             }
-            _context.Entry(value).State = EntityState.Modified;
-            try
+            var result = await _commentManager.UpdateComment(id, value.CommentText, value.CreatedOn);
+            
+            var issue = _commentManager.GetComment(id);
+            if (issue == null)
             {
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                var issue = _context.Comments.FindAsync(id);
-                if (issue == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return NoContent();
+            return result;
         }
 
         // DELETE api/comments/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> Delete(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
+            var comment = await _commentManager.GetComment(id);
             if (comment == null)
             {
                 return NotFound();
             }
-            _context.Comments.Remove(comment);
-            await _context.SaveChangesAsync();
+            await _commentManager.DeleteComent(comment);
             return true;
         }
     }
