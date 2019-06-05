@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import '../styles/App.css';
-import { Layout, Divider, Comment, Tooltip, Button, Input } from 'antd';
+import { Layout, Divider, Comment, Tooltip, Button, Input, Progress, PageHeader, Tag } from 'antd';
 import DetailViewEntity from '../entity/DetailViewEntity';
 import moment from 'moment';
 import { ICommentHandler, CommentHandler } from '../utilities/CommentHandler';
@@ -44,8 +44,15 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
             this.setState({ result, comments: commentResult.comments });
         }
     }
+    refreshMount = async () => {
+        const { painpointHandler, id } = this.props;
+        if (id) {
+            const result = await painpointHandler!.getById(id);
+            const commentResult = await this.props.painpointHandler!.getCommentsById(this.props.id);
+            this.setState({ result, comments: commentResult.comments });
+        }
+    }
     renderComments = () => {
-        //let painResult = await this.props.painpointHandler!.getById(this.props.id);
         const { comments } = this.state;
         return comments!.map((comment, index) => (
             <Comment key={index} author={this.state.result!.CompanyContact} content={comment.commentText} datetime={
@@ -56,20 +63,20 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
         if (!this.state.newComment) {
             return;
         }
-       
-        this.setState(
-            { newComment: ' ' }
-        );
+      
         let newComment = new CommentEntity({
             commentId: 1,
             painPoint: this.props.id,
             user: 1,
-            commentText: "test",
+            commentText: this.state.newComment,
             status: "Completed",
             createdOn: new Date(),
         })
         this.props.commentHandler!.createComment(newComment);
-
+        this.setState(
+            { newComment: ' ' }
+        );
+     
     };
 
     handleChange = (e: any) => {
@@ -85,26 +92,32 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
         if (result) {
             
             return (
+                
                 <Layout>
                     <style>
                         {css}
                     </style>
-                    <Content>
-                        <h1>Issue: {result.Title}</h1>
-                        <h2>Type: {result.Types.join(", ")}; &nbsp;&nbsp;&nbsp; Severity Level: {result.PriorityLevel}</h2>
-                        <h3>Summary: {result.Summary}</h3>
-                        <h3>Personal Notes: {result.Annotation}</h3>
+                    <Content style={{padding: '20px'}}>
+                         <PageHeader onBack={() => null} title={result.Title} tags={<Tag color="red">{result.Types.join(", ")}</Tag>}/>,
+                        <h3>Summary:</h3>
+                        <p>{result.Summary}</p>
+                        <i>Personal Notes: {result.Annotation}</i>
+                        <Progress
+                            strokeColor={{
+                                '0%': '#108ee9',
+                                '100%': '#87d068',
+                            }}
+                            percent={result.PriorityLevel}
+                            />
+                        <hr/>
+                        <p>Submitted by: {result.CompanyContact} at {result.CompanyName}({result.CompanyLocation})</p>
+                       
                         <Divider>Comments</Divider>
                         {this.renderComments()}
                         <Input placeholder="New Comment" value={this.state.newComment} onChange={this.handleChange} />
                         <Button onClick={this.handleSubmit}>Submit Comment</Button>
+                       
                     </Content>
-                    <Sider style={{ background: '#fff' }} >
-                        <h1>Submitted By:</h1>
-                        <h2>{result.CompanyContact}</h2>
-                        <h3>{result.CompanyName}</h3>
-                        <h3>{result.CompanyLocation}</h3>
-                    </Sider>
                 </Layout>
             )
         } else {
