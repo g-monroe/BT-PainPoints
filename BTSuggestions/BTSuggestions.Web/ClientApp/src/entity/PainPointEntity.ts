@@ -1,18 +1,37 @@
+import { string } from "yup";
+import UserEntity from "./UserEntity";
+
 export default class PainPointEntity {
-    "painPointType": number;
-    "painPointSeverity": number;
-    "description"?: string;
-    "highestKeyword"?: string;
-    "dateCreated": Date;
-    "status": number ;
+        painpointId: number;
+        title: string;
+        summary: string;
+        annotation?: string;
+        status: string;
+        user: UserEntity;
+        userId?: number;
+        priorityLevel: number;
+        companyName?: string;
+        companyContact?: string;
+        companyLocation?: string;
+        industryType?: string;
+        createdOn: Date;
+        types: string[];
 
     constructor(JSONData: any){
-        this.painPointType = JSONData.painPointType;
-        this.painPointSeverity = JSONData.painPointSeverity;
-        this.description = JSONData.description;
-        this.highestKeyword = JSONData.highestKeyword;
-        this.dateCreated = JSONData.dateCreated;
-        this.status = JSONData.status;
+        this.painpointId =  JSONData.painpointId;
+        this.title =  JSONData.title;
+        this.summary = JSONData.summary;
+        this.annotation = JSONData.annotation;
+        this.status =JSONData.status;
+        this.user = JSONData.user;
+        this.userId = JSONData.userId;
+        this.priorityLevel = JSONData.priorityLevel;
+        this.companyName = JSONData.companyName;
+        this.companyContact  = JSONData.companyContact;
+        this.companyLocation  = JSONData.companyLocation;
+        this.industryType  = JSONData.industryType;
+        this.createdOn  = JSONData.createdOn;
+        this.types  = JSONData.types;
     }
 }
 

@@ -11,6 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<IUserHandler, UserHandler>();
             services.AddTransient<IPainPointHandler, PainPointHandler>();
             services.AddTransient<ITypeHandler, TypeHandler>();
+            services.AddTransient<IContentHandler, ContentHandler>();
             return services;
         }
     }

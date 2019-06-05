@@ -5,8 +5,7 @@ import { painPointList } from '../types/dropdownValues/painPointTypes';
 import { industryList } from '../types/dropdownValues/industryTypes';
 import { withFormik, InjectedFormikProps, Form } from 'formik';
 import CreateFormEntity from '../entity/CreateFormEntity';
-import { APIHandler } from '../utilities/apiHandler';
-import TestingDbEntity from '../entity/TestingDbEntity';
+import { SelectOption } from '../types/dropdownValues/SelectOption';
 
 const { Content } = Layout;
 const FormItem = AntForm.Item;
@@ -25,10 +24,7 @@ interface ICreateFormState{
     companyName?: string,
     companyContact?: string,
     companyLocation?: string,
-    industryType?: string,
-
-    //userId?: number,
-    //userName: string
+    industryType?: string
 }
 
 const yupValidation = yup.object().shape<ICreateFormState>({
@@ -42,9 +38,6 @@ const yupValidation = yup.object().shape<ICreateFormState>({
     companyContact: yup.string().label('Company Contact'),
     companyLocation: yup.string().label('Company Location'),
     industryType: yup.string().label('Industry Type')
-
-    //userId: yup.number().required().label('User ID'),
-    //userName: yup.string().required().label('User Name')
 })
 
 class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, ICreateFormState>>{
@@ -63,6 +56,11 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
 
     getValidationStatus = (error: any) => {
         return !!error ? 'error' : 'success';
+    };
+
+    renderDropdowns = (list: SelectOption[]) => {
+        return list.map((value: any) => (
+            <Select.Option key={value.id} value={value.id}>{value.name}</Select.Option>))
     };
 
     render() {
@@ -86,7 +84,7 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
                             <Input id="painPointAnnotation" placeholder="Personal Notes about Problem" value={values.painPointAnnotation} onChange={handleChange} minLength={3}/>
                         </FormItem>
                         <FormItem label="Issue Type" required validateStatus={this.getValidationStatus(errors.painPointType)}>
-                            <Select mode="multiple" id="painPointType" onChange={x => setFieldValue("painPointType", x)} value={values.painPointType}>{painPointList.map(p => <Select.Option key={p.id} value={p.id}>{p.name}</Select.Option>)}</Select>
+                            <Select mode="multiple" id="painPointType" onChange={x => setFieldValue("painPointType", x)} value={values.painPointType}>{this.renderDropdowns(painPointList)}</Select>
                         </FormItem>
                         <FormItem label="Issue Severity" required validateStatus={this.getValidationStatus(errors.painPointSeverity)}>
                             <Slider id="painPointSeveritySlide" min={0} max={5} onChange={this.slideChange} value={typeof inputValue === 'number' ? inputValue : 0} />
@@ -103,7 +101,7 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
                             <Input id="companyLocation" placeholder="Company Location" onChange={handleChange} value={values.companyLocation}/>
                         </FormItem>
                         <FormItem label="Industry Type" validateStatus={this.getValidationStatus(errors.industryType)}>
-                            <Select id="industryType" onChange={x => setFieldValue("industryType", x)} value={values.industryType}>{industryList.map(i => <Select.Option key={i.id} value={i.id}>{i.name}</Select.Option>)}</Select>
+                            <Select id="industryType" onChange={x => setFieldValue("industryType", x)} value={values.industryType}>{this.renderDropdowns(industryList)}</Select>
                         </FormItem>
                         <Button id="submit" htmlType="submit">Submit Problem</Button>
                     </Form>
@@ -126,19 +124,10 @@ export default withFormik<ICreateFormProps, ICreateFormState>({
         companyContact: props.data.companyContact,
         companyLocation: props.data.companyLocation,
         industryType: props.data.industryType
-        //userId: props.data.userId,
-        //userName: props.data.userName
     }),
     validationSchema: yupValidation,
     handleSubmit: (values) => {
         console.log(values);
-        APIHandler(`/api/painpoint/1`, {
-            method: 'GET',
-            responseType: TestingDbEntity
-        }).then(function(r:any) {
-            console.log(r);
-        });
-
         alert("You have submitted an issue");
     },
     displayName: 'Create Issue Form'

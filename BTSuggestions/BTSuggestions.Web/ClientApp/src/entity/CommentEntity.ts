@@ -1,4 +1,4 @@
-export class CommentEntity {
+export class CommentsEntity {
     comments: string[];
 
     constructor(JSONData: any) {
