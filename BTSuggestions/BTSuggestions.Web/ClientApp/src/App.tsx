@@ -9,6 +9,7 @@ import PainPointView from '../src/components/PainPointView'
 import LoginPage from '../src/components/LoginPage';
 import PrivateRoute from '../src/components/PrivateRoute';
 import CreateAccount from './components/CreateAccount';
+import { Menu } from 'antd';
 import UserEntity from './entity/UserEntity';
 
 interface IPainPointState {
@@ -55,11 +56,11 @@ export default class App extends React.Component {
             
                 <style>{css}</style>
                 <BrowserRouter>
-                    {localStorage.getItem('Auth') === 'true' && <nav>
-                        <Link to="/home" className="navLinks" style = {{padding:15,margin:15}}>View Issues</Link>
-                        <Link to="/create" className="navLinks" style = {{padding:15,margin:15}}>Create New Issue</Link>
-                        <Link to="/admin" className="navLinks" style = {{padding:15,margin:15}}>Manage Issues</Link>
-                    </nav>}
+                    {localStorage.getItem('Auth') === 'true' && <Menu style={{boxShadow:"2px 2px" }} mode="horizontal">
+                            <Menu.Item><Link to="/home" className="navLinks">View Issues</Link></Menu.Item>
+                            <Menu.Item><Link to="/create" className="navLinks">Create New Issue</Link></Menu.Item>
+                            <Menu.Item><Link to="/admin" className="navLinks">Manage Issues</Link></Menu.Item>
+                        </Menu>}
                     <Route path="/login" exact render={(props) => <LoginPage newUsername={this.handleLoginRequest}/>} />
                     <Route path="/create-account" exact render={(props) => <CreateAccount newUser={this.handleNewUser} />}/>
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/home" exact component={PainPointView} />
