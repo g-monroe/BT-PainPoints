@@ -268,6 +268,18 @@ namespace BTSuggestions.Controllers
             }
             return result;
         }
+        // POST api/painpoint
+        [HttpPost("multiple")]
+        public async Task<ActionResult<PainPointEntity[]>> PostPainPoints(PainPointEntity[] value)
+        {
+
+            var result = await _painpointManager.AddNewPainPoints(value);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return result;
+        }
         [HttpPost("seed")]
         public void PostSeed()
         {

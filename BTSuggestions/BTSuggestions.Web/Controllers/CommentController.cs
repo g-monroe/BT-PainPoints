@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BTSuggestions.Core.Entities;
+using BTSuggestions.Core.Interfaces.Managers;
 using BTSuggestions.Managers.ResponseObjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,9 +22,9 @@ namespace BTSuggestions.Controllers
         /// handle differently.
         /// - Gavin
         /// </summary>
-        private readonly Managers.CommentManager _commentManager;
+        private readonly ICommentManager _commentManager;
 
-        public CommentController(Managers.CommentManager commentManager)
+        public CommentController(ICommentManager commentManager)
         {
             _commentManager = commentManager;
         }

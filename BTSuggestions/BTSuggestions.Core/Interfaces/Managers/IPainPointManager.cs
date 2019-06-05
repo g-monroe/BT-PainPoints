@@ -10,6 +10,7 @@ namespace BTSuggestions.Core.Interfaces.Managers
     {
         Task<IEnumerable<PainPointEntity>> GetPainPoints();
         Task<PainPointEntity> AddNewPainPoint(PainPointEntity value);
+        Task<PainPointEntity[]> AddNewPainPoints(PainPointEntity[] value);
         Task<PainPointEntity> UpdatePainPoint(int painPointId, PainPointEntity value);
         Task<IEnumerable<CommentEntity>> GetComments(int id);
         Task<PainPointEntity> GetPainPoint(int id);

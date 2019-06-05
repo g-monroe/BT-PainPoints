@@ -11,6 +11,7 @@ namespace BTSuggestions.Core.Interfaces.Engines
         Task<IEnumerable<PainPointEntity>> GetPainPoints();
         Task<PainPointEntity> GetPainPoint(int id);
         Task<PainPointEntity> CreatePainPoint(PainPointEntity value);
+        Task<PainPointEntity[]> CreatePainPoints(PainPointEntity[] value);
         Task<PainPointEntity> UpdatePainPoint(PainPointEntity painPoint, PainPointEntity newValue);
         Task<IEnumerable<CommentEntity>> GetComments(int id);
         Task<string> GetSummary(int id);

@@ -7,13 +7,14 @@ import { withFormik, InjectedFormikProps, Form } from 'formik';
 import { IssueEntity }  from '../entity/CreateFormEntity';
 import CreateFormEntity  from '../entity/CreateFormEntity';
 import {IPainPointHandler, PainPointHandler } from '../utilities/PainPointHandler';
+import PainPointEntity from '../entity/PainPointEntity';
 const { Content } = Layout;
 const FormItem = AntForm.Item;
 
 interface ICreateFormProps{
     painPointHandler?: IPainPointHandler;
-    handleSave: (entity: IssueEntity) => Promise<void>;
-    data: IssueEntity; 
+    handleSave: (entity: PainPointEntity) => Promise<void>;
+    data: PainPointEntity; 
 }
 
 interface ICreateFormState{
@@ -55,7 +56,7 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
             inputValue: value
         });
     };
-    handleSave = async (entity: IssueEntity): Promise<void> => {
+    handleSave = async (entity: PainPointEntity): Promise<void> => {
           await this.props.painPointHandler!.createHero(entity)
       }
     getValidationStatus = (error: any) => {
@@ -117,22 +118,22 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
 
 export default withFormik<ICreateFormProps, ICreateFormState>({
     mapPropsToValues: props => ({
-        Id: props.data.Id,
-        Type: props.data.Type,
+        Id: props.data.painpointId,
+        Type: props.data.Types,
         Title: props.data.Title,
         Summary: props.data.Summary,
-        painPointAnnotation: props.data.painPointAnnotation,
-        painPointSeverity: props.data.painPointSeverity,
+        painPointAnnotation: props.data.Annotation,
+        painPointSeverity: props.data.PriorityLevel,
         Status: props.data.Status,
-        companyName: props.data.companyName,
-        companyContact: props.data.companyContact,
-        companyLocation: props.data.companyLocation,
-        industryType: props.data.industryType
+        companyName: props.data.CompanyName,
+        companyContact: props.data.CompanyContact,
+        companyLocation: props.data.CompanyLocation,
+        industryType: props.data.IndustryType
     }),
     validationSchema: yupValidation,
     handleSubmit: async (values, { setSubmitting, props }) =>  {
         console.log(values);
-        await props.handleSave(new IssueEntity(values));
+        await props.handleSave(new PainPointEntity(values));
         alert("You have submitted an issue");
         setSubmitting(false);
     },

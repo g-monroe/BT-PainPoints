@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,18 +9,18 @@ namespace BTSuggestions.Core.Entities
 {
     public class CommentEntity : BaseEntity
     {
-        [Required]
+        [JsonIgnore]
         public virtual PainPointEntity PainPoint { get; set; }
         [Required]
         public int PainPointId { get; set; }
-        [Required]
+        [JsonIgnore]
         public virtual UserEntity User { get; set; }
         [Required]
-        public int UserId { get; set; }
+        public int UserId { get; set; } 
         [Required]
         [MinLength(1)]
         [MaxLength(1500)]
-        public string CommentText { get; set; }
+        public string CommentText { get; set; } 
         [Required]
         [MinLength(1)]
         [MaxLength(80)]

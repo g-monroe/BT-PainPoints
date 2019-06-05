@@ -20,7 +20,10 @@ namespace BTSuggestions.Managers
         {
             return await _painPointEngine.CreatePainPoint(value);
         }
-
+        public async Task<PainPointEntity[]> AddNewPainPoints(PainPointEntity[] value)
+        {
+            return await _painPointEngine.CreatePainPoints(value);
+        }
         public async Task<IEnumerable<PainPointEntity>> GetPainPoints()
         {
             return await _painPointEngine.GetPainPoints();

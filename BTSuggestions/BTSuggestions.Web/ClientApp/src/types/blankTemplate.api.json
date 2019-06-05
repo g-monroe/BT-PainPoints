@@ -1,5 +1,5 @@
 {
-    "Id": 1,
+    "painpointId": 1,
     "Type": [""],
     "Title": "",
     "Summary": "",
@@ -11,5 +11,9 @@
     "companyLocation": "",
     "industryType": "",
     "userId": 1,
-    "userName": ""
+    "userName": "",
+    "User": "",
+    "PriorityLevel": 0,
+    "CreatedOn": "",
+    "Types" : [""]
 }

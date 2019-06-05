@@ -1,9 +1,9 @@
 import { APIHandler } from './apiHandler';
-import CommentEntity from '../entity/UserEntity';
+import CommentEntity from '../entity/CommentEntity';
 import UserEntity from '../entity/UserEntity';
 export interface ICommentHandler{
     getById(id: number): Promise<CommentEntity>;
-    createComment(comment: UserEntity): Promise<CommentEntity>;
+    createComment(comment: CommentEntity): Promise<CommentEntity>;
     deleteById(id: number): Promise<CommentEntity>;
     updateById(id: number, entity: CommentEntity): Promise<CommentEntity>;
 }
@@ -14,6 +14,7 @@ export interface ICommentHandler{
 //     }
 // }
 export class CommentHandler implements ICommentHandler{
+  
     //Get Element by ID and then respond with the Item.
     async getById(id: number): Promise<CommentEntity>{
         return await APIHandler(`/api/comment/${id}`, {
@@ -23,6 +24,7 @@ export class CommentHandler implements ICommentHandler{
     }
     //Create Element by ID and then respond with the Item.
     async createComment(comment: CommentEntity): Promise<CommentEntity>{
+
         return await APIHandler(`/api/comment`, {
             method: "POST",
             data: comment,
