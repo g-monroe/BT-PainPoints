@@ -1,7 +1,7 @@
 import React from "react";
 import "antd/dist/antd.css";
 import PainPointTable from './PainPointTable'
-import { Card, Collapse } from "antd";
+import {Collapse } from "antd";
 
 interface IPainPointViewProps{
   

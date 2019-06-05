@@ -1,4 +1,3 @@
-import { string } from "yup";
 import UserEntity from "./UserEntity";
 
 export default class PainPointEntity {

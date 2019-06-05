@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import './App.css';
+import '../src/styles/App.css';
 import "antd/dist/antd.css";
 import { Link, BrowserRouter, Route } from 'react-router-dom';
 import CreateForm from '../src/components/CreateForm';
@@ -11,9 +11,6 @@ import tableData from '../src/types/tableTest.api.json';
 
 import PainPointView from './components/PainPointView';
 import { Menu } from 'antd';
-
-
-
 
 export default class App extends React.Component {
     displayName = App.name

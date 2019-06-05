@@ -41,14 +41,13 @@ export default class CustomColumn extends React.Component<ICustomColumnProps, IC
   };
 
   handleMenuOnChange = (e: ClickParam, id: number) => {      
-    const { columnLabel,columnNumber, changeColumn} = this.props;
+    const { columnNumber, changeColumn} = this.props;
     changeColumn(columnNumber,id);
   };
 
   render() {
     const dropDown = getDropDown(this.props, this.handleMenuOnChange);    
-    const { data, columnLabel } = this.props;
-    const {  } = this.state;
+    const { columnLabel } = this.props;
     return (
       <>
         <Dropdown overlay={dropDown} trigger={['click']}>

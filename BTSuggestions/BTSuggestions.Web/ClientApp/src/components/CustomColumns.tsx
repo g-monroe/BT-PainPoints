@@ -1,13 +1,11 @@
 import React from "react";
 import "antd/dist/antd.css";
-import CustomColumn, { ICustomColumnProps } from "./CustomColumn"
-import { columnNameList, SelectOptionWithEntityAndWidth } from '../types/dropdownValues/columnNameTypes';
-import { Button, Col, Pagination, Layout, Table } from "antd";
+import CustomColumn from "./CustomColumn"
+import { SelectOptionWithEntityAndWidth } from '../types/dropdownValues/columnNameTypes';
+import {Table } from "antd";
 import PainPointEntity from '../entity/PainPointEntity';
 import "../styles/CustomColumns.css"
 import { ColumnProps } from "antd/lib/table/interface";
-
-const { Footer } = Layout;
 
 interface ICustomColumnsProps {
   data: PainPointEntity[];

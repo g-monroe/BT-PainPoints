@@ -1,11 +1,9 @@
 import React from "react";
 import "antd/dist/antd.css";
-import { Button, Menu } from "antd";
 import CustomColumns from "./CustomColumns"
 import PainPointEntity from "../entity/PainPointEntity";
-import CustomColumnEntity from "../entity/CustomColumnEntity"
-import fakeDataImport from '../types/painPointTestDataArray.api.json';
-import fakeColumnData from '../types/painPointCustomColumns.api.json'
+import CustomColumnEntity from "../entity/CustomColumnEntity";
+import fakeColumnData from '../types/painPointCustomColumns.api.json';
 import { columnNameList } from '../types/dropdownValues/columnNameTypes';
 import { SelectOptionWithEntityAndWidth } from "../types/dropdownValues/columnNameTypes";
 import  { IPainPointHandler, PainPointHandler } from '../utilities/painPointHandler'
