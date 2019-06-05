@@ -8,8 +8,9 @@ import { ICommentHandler, CommentHandler } from '../utilities/CommentHandler';
 import CommentEntity from '../entity/CommentEntity';
 import UserEntity from '../entity/UserEntity';
 import PainPointEntity from '../entity/PainPointEntity';
-import { IPainPointHandler, PainPointHandler } from '../utilities/PainPointHandler';
+
 import CommentEntities from '../entity/CommentEntities';
+import { IPainPointHandler, PainPointHandler } from '../utilities/PainPointHandler';
 
 const { Content, Sider } = Layout;
 
@@ -40,23 +41,23 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
         const { painpointHandler, id } = this.props;
         if (id) {
             const result = await painpointHandler!.getById(id);
-            const commentResult = await this.props.painpointHandler!.getCommentsById(this.props.id);
-            this.setState({ result, comments: commentResult.comments });
+            // const commentResult = await this.props.painpointHandler!.getCommentsById(this.props.id);
+            //this.setState({ result, comments: commentResult.comments });
         }
     }
     refreshMount = async () => {
         const { painpointHandler, id } = this.props;
         if (id) {
             const result = await painpointHandler!.getById(id);
-            const commentResult = await this.props.painpointHandler!.getCommentsById(this.props.id);
-            this.setState({ result, comments: commentResult.comments });
+           // const commentResult = await this.props.painpointHandler!.getCommentsById(this.props.id);
+            //this.setState({ result, comments: commentResult.comments });
         }
     }
     renderComments = () => {
         const { comments } = this.state;
-        return comments!.map((comment, index) => (
-            <Comment key={index} author={this.state.result!.CompanyContact} content={comment.commentText} datetime={
-                <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}><span>{moment().fromNow()}</span></Tooltip>} />))
+        //return comments!.map((comment, index) => (
+            //<Comment key={index} author={this.state.result!.CompanyContact} content={comment.commentText} datetime={
+              //  <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}><span>{moment().fromNow()}</span></Tooltip>} />))
     };
 
     handleSubmit = () => {
@@ -98,19 +99,19 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
                         {css}
                     </style>
                     <Content style={{padding: '20px'}}>
-                         <PageHeader onBack={() => null} title={result.Title} tags={<Tag color="red">{result.Types.join(", ")}</Tag>}/>,
+                         {/* <PageHeader onBack={() => null} title={result.Title} tags={<Tag color="red">{result.Types.join(", ")}</Tag>}/>, */}
                         <h3>Summary:</h3>
-                        <p>{result.Summary}</p>
-                        <i>Personal Notes: {result.Annotation}</i>
+                       {/* // <p>{result.Summary}</p> */}
+                        {/* //<i>Personal Notes: {result.Annotation}</i> */}
                         <Progress
                             strokeColor={{
                                 '0%': '#108ee9',
                                 '100%': '#87d068',
                             }}
-                            percent={result.PriorityLevel}
+                            // percent={result.PriorityLevel}
                             />
                         <hr/>
-                        <p>Submitted by: {result.CompanyContact} at {result.CompanyName}({result.CompanyLocation})</p>
+                        {/* <p>Submitted by: {result.CompanyContact} at {result.CompanyName}({result.CompanyLocation})</p> */}
                        
                         <Divider>Comments</Divider>
                         {this.renderComments()}

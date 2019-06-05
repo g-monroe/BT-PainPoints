@@ -10,12 +10,6 @@ export interface IContentHandler{
     deleteById(id: number): Promise<ContentEntity>;
     updateById(id: number, entity: ContentEntity): Promise<ContentEntity>;
 }
-// export class SuperheroCollectionResponse{
-//     collection: SuperheroItem[]
-//     constructor(data: any[]){
-//         this.collection = data.map(d => new SuperheroItem(d));
-//     }
-// }
 export class ContentHandler implements IContentHandler{
     //Get Element by ID and then respond with the Item.
     async getById(id: number): Promise<ContentEntity>{

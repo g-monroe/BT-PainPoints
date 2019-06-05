@@ -2,24 +2,39 @@
     "issues": [{
         "painPointTitle": "Test Issue",
         "painPointSummary": "This is a test of the issues list",
-        "painPointType": "Bug",
+        "painPointType": "New Feature",
         "painPointAnnotation": "I am personally offended by the issue listed above",
         "painPointSeverity" : 1,
         "companyName": "Buildertrend",
         "industryType": "Small Business",
-        "datetime" : "12/03/2011",
+        "datetime" : "12/03/11",
         "comments": "What is this suppose to say?",
-        "submissionStatus": "Draft"
+        "submissionStatus": "Draft",
+        "painPointId": 4
     },{
         "painPointTitle": "Second Test Issue",
         "painPointSummary": "Diff",
         "painPointType": "Bug",
         "painPointAnnotation": "Ahhh",
         "painPointSeverity" : 3,
-        "companyName": "Buildertrend",
-        "datetime": "04/08/2012",
-        "industryType": "Small Business",
+        "companyName": "Quaker Oats",
+        "datetime": "04/08/12",
+        "industryType": "Large Scale",
         "comments": "What is this suppose to say?",
-        "submissionStatus": "Reviewed"
+        "submissionStatus": "Reviewed",
+        "painPointId": 7
+    },
+    {
+        "painPointTitle": "The very long text test",
+        "painPointSummary": "This is a test of the width of the columns that I have currently hardcoded which is a pretty weird thing to do isn't it?",
+        "painPointType": "Billing",
+        "painPointAnnotation": "Words words words words words beautiful words",
+        "painPointSeverity" : 4,
+        "companyName": "PBS Kids",
+        "datetime": "01/03/05",
+        "industryType": "Housing",
+        "comments": "n/A",
+        "submissionStatus": "Submitted",
+        "painPointId": 9
     }]
 }

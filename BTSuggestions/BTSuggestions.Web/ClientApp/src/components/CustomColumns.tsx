@@ -1,54 +1,81 @@
 import React from "react";
 import "antd/dist/antd.css";
 import CustomColumn from "./CustomColumn"
-import { columnNameList } from '../types/dropdownValues/ColumnNameTypes';
-import { Button, Col } from "antd";
+import { SelectOptionWithEntityAndWidth } from '../types/dropdownValues/columnNameTypes';
+import {Table } from "antd";
 import PainPointEntity from '../entity/PainPointEntity';
-import fakeDataImport from '../types/painPointTestDataArray.api.json';
-
-
-const fakeData:PainPointEntity[] = fakeDataImport.data.map(m=>new PainPointEntity(m));
+import "../styles/CustomColumns.css"
+import { ColumnProps } from "antd/lib/table/interface";
 
 interface ICustomColumnsProps {
-  data?: PainPointEntity[]
+  data: PainPointEntity[];
+  menuList: SelectOptionWithEntityAndWidth[];
+  customColumnIdArray: number[];
+  changeColumn: (columnNumber: number, columnHeaderId: number) => void;
+  addColumn: (e: any) => void;
+  deleteColumn: (event:any,columnNumber: number) => void;
 }
 
-interface ICustomColumnsState {
-  CustomColumnArray: CustomColumn[]
+interface ICustomColumnsState {  
+  
 }
 
 export default class CustomColumns extends React.Component<ICustomColumnsProps, ICustomColumnsState> {
   static defaultProps = {
-      data: fakeData
+    data: [],
+    menuList: []
   };
 
-  state: ICustomColumnsState = {
-    CustomColumnArray: [new CustomColumn({ menuList: columnNameList, data: this.props.data?this.props.data:[]})]
+  state: ICustomColumnsState = {   
+    
   };
 
-  handleAddOnClick = (e: any) => {
-    console.log("CustomColum Add On Click")
-    let { CustomColumnArray } = this.state;
-    CustomColumnArray.push(new CustomColumn({ menuList: columnNameList, data: this.props.data?this.props.data:[]}))
-    this.setState({ CustomColumnArray });
+  getColumns = () => {
+    
+    const { customColumnIdArray, menuList, data, changeColumn,addColumn,deleteColumn } = this.props;
+    console.log(JSON.stringify(menuList));
+    let columns:ColumnProps<PainPointEntity>[];
+    columns = [];
+    customColumnIdArray.forEach((id,index)=>{
+      columns.push({
+        key: index,
+        filterDropdownVisible: true,
+        width: menuList[id].width,
+        title : <CustomColumn menuList={menuList} 
+        data = {data}
+        columnNumber = {index}  
+        columnLabel={menuList[id]}
+        changeColumn={changeColumn}
+        deleteColumn={deleteColumn}/>,
+        dataIndex: menuList[id].entityName
+      })
+    });
+    columns.push({
+      key: columns.length,
+      width: 50,
+      title : <span style={{cursor:"crosshair"}}><AddNewButton addColumn={addColumn}/></span>,
+      
+    })
+    return columns;
+     
   }
 
-  render() {    
-    const { CustomColumnArray } = this.state;
+  render() {  
+    
     const { data } = this.props;
-    console.log("RENDERING CUSTOM COLUMNS");
-    console.log(JSON.stringify(data));
+    const columns = this.getColumns();   
     return (
       <>
-        {CustomColumnArray.map((c, index) => 
-          <Col className={index.toString()} key={index} span={6}>
-        <CustomColumn key={index} menuList={c.props.menuList} data={data?data:[]} />        
-        </Col>
-        
-        )}
-        
-        <Button onClick={e => this.handleAddOnClick(e)}>+</Button>
+          <Table showHeader={true} pagination={false} 
+          columns={columns} dataSource={data} 
+          scroll={{ x: 1300 }}
+           />
       </>
     )
   }
 }
+
+const AddNewButton = (props:any) => {
+  return ( <div onClick={props.addColumn}>+</div> );
+   
+};

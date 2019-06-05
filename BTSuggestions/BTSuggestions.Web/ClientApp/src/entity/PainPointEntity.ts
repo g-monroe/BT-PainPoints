@@ -2,36 +2,35 @@ import UserEntity from "./UserEntity";
 
 export default class PainPointEntity {
         painpointId: number;
-        Title: string;
-        Summary: string;
-        Annotation?: string;
-        Status: string;
-        User: UserEntity;
-        UserId?: number;
-        PriorityLevel: number;
-        CompanyName?: string;
-        CompanyContact?: string;
-        CompanyLocation?: string;
-        IndustryType?: string;
-        CreatedOn: Date;
-        Types: string[];
+        title: string;
+        summary: string;
+        annotation?: string;
+        status: string;
+        user: UserEntity;
+        userId?: number;
+        priorityLevel: number;
+        companyName?: string;
+        companyContact?: string;
+        companyLocation?: string;
+        industryType?: string;
+        createdOn: Date;
+        types: string[];
 
     constructor(JSONData: any){
-        this.painpointId =  JSONData.painPointId;
-        this.Title =  JSONData.title;
-        this.Summary = JSONData.summary;
-        this.Annotation = JSONData.annotation;
-        this.Status =JSONData.status;
-        this.User = JSONData.user;
-        this.UserId = JSONData.userId;
-        this.PriorityLevel = JSONData.priorityLevel;
-        this.CompanyName = JSONData.companyName;
-        this.CompanyContact  = JSONData.companyContact;
-        this.CompanyLocation  = JSONData.comapnyLocation;
-        this.IndustryType  = JSONData.industryType;
-        this.CreatedOn  = JSONData.createdOn;
-        this.Types  = JSONData.type;
-        
+        this.painpointId =  JSONData.painpointId;
+        this.title =  JSONData.title;
+        this.summary = JSONData.summary;
+        this.annotation = JSONData.annotation;
+        this.status =JSONData.status;
+        this.user = JSONData.user;
+        this.userId = JSONData.userId;
+        this.priorityLevel = JSONData.priorityLevel;
+        this.companyName = JSONData.companyName;
+        this.companyContact  = JSONData.companyContact;
+        this.companyLocation  = JSONData.companyLocation;
+        this.industryType  = JSONData.industryType;
+        this.createdOn  = JSONData.createdOn;
+        this.types  = JSONData.types;
     }
 }
 

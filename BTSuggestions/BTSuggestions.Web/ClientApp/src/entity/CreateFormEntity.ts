@@ -46,10 +46,10 @@ export class IssueEntity {
 
     Status: string;
 
-    companyName: string;
-    companyContact: string;
-    companyLocation: string;
-    industryType: string;
+    companyName?: string;
+    companyContact?: string;
+    companyLocation?: string;
+    industryType?: string;
 
     //userId?: number;
     //userName: string;
