@@ -5,16 +5,17 @@ import CommentEntity from '../entity/CommentEntity';
 import CommentEntities from '../entity/CommentEntities';
 //import SuperheroItems  from '../types/superhero/SuperheroItems';
 export interface IPainPointHandler{
-    getAll(): Promise<PainPointCollectionResponse>;
-    getById(id: number): Promise<PainPointEntity>;    
-    createPainPoint(issue:PainPointEntity): Promise<PainPointEntity>;
+    getAll(): Promise<PainPointEntity>;
+    getById(id: number): Promise<PainPointEntity>;
+    getCommentsById(id: number): Promise<CommentEntities>;
+    createHero(issue:PainPointEntity): Promise<PainPointEntity>;
     deleteById(id: number): Promise<PainPointEntity>;
     updateById(id: number, entity:PainPointEntity): Promise<PainPointEntity>;
 }
-export class PainPointCollectionResponse{
-    collection: PainPointEntity[]
+export class CommentCollectionResponse{
+    collection: CommentEntity[]
     constructor(data: any[]){
-        this.collection = data.map(d => new PainPointEntity(d));
+        this.collection = data.map(d => new CommentEntity(d));
     }
 }
 export class PainPointHandler implements IPainPointHandler{
@@ -25,22 +26,28 @@ export class PainPointHandler implements IPainPointHandler{
             responseType: PainPointEntity
         });
     }
-    async getAll(): Promise<PainPointCollectionResponse>{
+    async getAll(): Promise<PainPointEntity>{
         return await APIHandler(`/api/painpoint`, {
             method: "GET",
-            responseType: PainPointCollectionResponse
+            responseType: PainPointEntity
         });
     }
-   
+    async getCommentsById(id: number): Promise<CommentEntities>{
+       
+        return await APIHandler(`/api/painpoint/${id}/comments`, {
+            method: "GET",
+            responseType: CommentEntities
+           
+        });
+    }
     //Create Element by ID and then respond with the Item.
-    async createPainPoint(issue:PainPointEntity): Promise<PainPointEntity>{
+    async createHero(issue:PainPointEntity): Promise<PainPointEntity>{
         return await APIHandler(`/api/painpoint`, {
             method: "POST",
             data: issue,
             responseType:PainPointEntity
         });
     }
-
     //Delete Element by ID and then respond with the Item.
     async deleteById(id: number): Promise<PainPointEntity>{
         return await APIHandler(`/api/painpoint/${id}`, {
@@ -48,8 +55,7 @@ export class PainPointHandler implements IPainPointHandler{
             responseType:PainPointEntity
         });
     }
-
-    //Update Element by ID and then respond with the Item.
+    // //Update Element by ID and then respond with the Item.
     async updateById(id: number, entity:PainPointEntity): Promise<PainPointEntity>{
         return await APIHandler(`/api/painpoint/${id}`, {
             method: "PUT",
