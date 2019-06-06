@@ -31,8 +31,9 @@ export class UserHandler implements IUserHandler{
         });
     }
     async getByUsername(username: string): Promise<UserEntity>{
-        return await APIHandler(`/api/user/${username}`, {
-            method: "GET",
+        return await APIHandler(`/api/user/username`, {
+            method: "POST",
+            data: username,
             responseType: UserEntity
         });
     }
