@@ -13,39 +13,32 @@ interface ICreateAccountProps {
 
 interface ICreateAccountState {
     email: string,
-    emailConfirm: string,
     firstName: string,
     lastName: string,
     username: string,
-    password: string,
-    passwordConfirm: string
+    password: string
 }
 
 //TODO: work on fixing this to make sure that it lines up with what we want.
 const yupValidation = yup.object().shape<ICreateAccountState>({
     email: yup.string().required().label('Email'),
-    emailConfirm: yup.string().required().label('Email Confirm'),
     firstName: yup.string().required().label("First Name"),
     lastName: yup.string().required().label('Last Name'),
     username: yup.string().max(30).required().label('Username'),
-    password: yup.string().min(10).required().label('Password'),
-    passwordConfirm: yup.string().min(10).required().label('Password Confirm')
+    password: yup.string().min(10).required().label('Password')
 })
 
 class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountProps, ICreateAccountState>> {
     static defaultProps = {
         userHandler: new UserHandler()
     }
-    
-    // Default state so that the verification fucntion will work correctly.
+
     state = {
-        email: "",
-        emailConfirm: "",
-        firstName: "",
-        lastName: "",
-        username: "",
-        password: "",
-        passwordConfirm: ""
+        email: '',
+        firstName: '',
+        lastName: '',
+        username: '',
+        password: ''
     }
 
     validateEmailChange = (event: any) => {
@@ -59,12 +52,6 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
         });
     }
 
-    handleConfirmEmailChange = (event: any) => {
-        this.setState({
-            emailConfirm: event.target.value
-        })
-    }
-
     handleFirstNameChange = (event: any) => {
         this.setState({
             firstName: event.target.value
@@ -72,6 +59,7 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
     }
 
     handleLastNameChange = (event: any) => {
+        console.log(event.target.value);
         this.setState({
             lastName: event.target.value
         });
@@ -89,15 +77,38 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
         });
     }
 
-    handlePasswordConfirmChange = (event: any) => {
-        this.setState({
-            passwordConfirm: event.target.value
-        });
-    }
+  
 
     // Handler for the button clicks
     handleCreateAccountClick = () => {
-        
+        let data: UserEntity;
+        yupValidation.validate({
+            email: this.state.email,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            username: this.state.username,
+            password: this.state.password
+        }).then(async(isValid) => {
+            if (isValid){
+                const userHandler = new UserHandler();
+                if (userHandler){
+                    try{
+                        const newUser = new UserEntity(this.state)
+                        data = (await userHandler.createUser(newUser));
+
+                        message.success("Account Successfully Created!", 2);
+                        localStorage.setItem('Auth', 'false');
+
+                        window.location.href = '/login';
+
+                    }catch(error){
+                        message.error('Account Creation Failed', 5);
+                    }
+                }else {
+                    message.error('Account Creation Failed', 5);
+                }
+            }
+        })
     }
 
     handleCancleCreateClick = () => {
@@ -114,25 +125,19 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
         return <>
             <Form onSubmitCapture={handleSubmit}>
                 <FormItem label='Email' required validateStatus={this.getValidationStatus(errors.email)}>
-                    <Input id='Email' placeholder='Email' onChange={this.handleEmailChange} value={values.email} />
-                </FormItem>
-                <FormItem label='Confirm Email' required validateStatus={this.getValidationStatus(errors.emailConfirm)}>
-                    <Input id='EmailConfirm' placeholder='Confirm Email' onChange={this.handleConfirmEmailChange} value={values.emailConfirm} />
+                    <Input id='Email' placeholder='Email' onChange={this.handleEmailChange} value={this.state.email} />
                 </FormItem>
                 <FormItem label='First Name' required validateStatus={this.getValidationStatus(errors.firstName)}>
-                    <Input id='firstName' placeholder='First Name' onChange={this.handleFirstNameChange} value={values.firstName}/>
+                    <Input id='firstName' placeholder='First Name' onChange={this.handleFirstNameChange} value={this.state.firstName}/>
                 </FormItem>
                 <FormItem id='lastName' label='Last Name' required validateStatus={this.getValidationStatus(errors.lastName)}>
-                    <Input placeholder='Last Name' onChange={this.handleLastNameChange} value={values.lastName} />
+                    <Input placeholder='Last Name' onChange={this.handleLastNameChange} value={this.state.lastName} />
                 </FormItem>
                 <FormItem id='username' label='Username' required validateStatus={this.getValidationStatus(errors.username)}>
-                    <Input placeholder='Username' onChange={this.handleUsernameChange} value={values.username}/>
+                    <Input placeholder='Username' onChange={this.handleUsernameChange} value={this.state.username}/>
                 </FormItem>
                 <FormItem id='password' label='Password' required validateStatus={this.getValidationStatus(errors.password)}>
-                    <Input placeholder='Password' onChange={this.handlePasswordChange} value={values.password}/>
-                </FormItem>
-                <FormItem id='passwordConfirm' label='Confirm Password' required validateStatus={this.getValidationStatus(errors.passwordConfirm)}>
-                    <Input placeholder='Confirm Password' onChange={this.handlePasswordConfirmChange} value={values.passwordConfirm}/>
+                    <Input placeholder='Password' onChange={this.handlePasswordChange} value={this.state.password}/>
                 </FormItem>
                 <Button id='createButton' htmlType='submit' type='primary' onClick={this.handleCreateAccountClick}>Create Account</Button>
                 <Button id='cancelButton' type='danger' onClick={this.handleCancleCreateClick}>Cancel Create</Button>
@@ -144,47 +149,14 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
 export default withFormik<ICreateAccountProps, ICreateAccountState>({
     mapPropsToValues: props => ({
         email: '',
-        emailConfirm: '',
         firstName: '',
         lastName:'',
         username: '',
         password: '',
-        passwordConfirm: ''
     }),
     validationSchema: yupValidation,
     handleSubmit: (values) => {
-        let data: UserEntity;
-        yupValidation.validate({
-            email: values.email,
-            emailConfirmation: values.emailConfirm,
-            firstName: values.firstName,
-            lastName: values.lastName,
-            username: values.username,
-            password: values.password,
-            passwordConfirm: values.passwordConfirm
-        }).then(async(isValid) => {
-            if (isValid){
-                const userHandler = new UserHandler();
-                if (userHandler){
-                    try{
-                        const newUser = new UserEntity(values)
-                        data = (await userHandler.createUser(newUser));
-
-                        message.success("Account Successfully Created!", 2);
-                        localStorage.setItem('Auth', 'true');
-                        localStorage.setItem('userId', data.userId.toString());
-
-                        window.location.href = '/home';
-
-                    }catch(error){
-                        message.error('Account Creation Failed', 5);
-                    }
-                }else {
-                    message.error('Account Creation Failed', 5);
-                }
-            }
-        })
-
+       
     },
     displayName: 'Create Account'
 })(CreateAccount);
