@@ -17,9 +17,6 @@ interface IPainPointState {
     username: string,
     auth: boolean
 }
-interface IAppProps{
-    painPointHandler?: IPainPointHandler;
-}
 const userAuth = {
     isAuthenticated: false,
     authenticate(cb: any) {
@@ -32,11 +29,8 @@ const userAuth = {
     }
 }
 
-export default class App extends React.Component<IAppProps> {
+export default class App extends React.Component {
     displayName = App.name
-    static defaultProps = {
-        painPointHandler: new PainPointHandler()
-    }
     handleLoginRequest = (name: string) => {
         this.setState({
             username: name
