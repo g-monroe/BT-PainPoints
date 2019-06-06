@@ -74,7 +74,7 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
         });
     };
     handleSave = async (entity: PainPointEntity): Promise<void> => {
-          await this.props.painPointHandler!.createHero(entity)
+          await this.props.painPointHandler!.createPainPoint(entity)
       }
     getValidationStatus = (error: any) => {
         return !!error ? 'error' : 'success';

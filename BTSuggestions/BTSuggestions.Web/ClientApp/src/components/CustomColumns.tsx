@@ -2,7 +2,7 @@ import React from "react";
 import "antd/dist/antd.css";
 import CustomColumn from "./CustomColumn"
 import { SelectOptionWithEntityAndWidth } from '../types/dropdownValues/columnNameTypes';
-import {Table } from "antd";
+import {Table, Button } from "antd";
 import PainPointEntity from '../entity/PainPointEntity';
 import "../styles/CustomColumns.css"
 import { ColumnProps } from "antd/lib/table/interface";
