@@ -9,8 +9,7 @@ using System.Text;
 
 namespace BTSuggestions.Core.Entities
 {
-    [DataContract(IsReference = true)]
-    [JsonObject(IsReference = false)]
+
     public class PainPointEntity : BaseEntity
     {
         [MaxLength(150)]
@@ -62,7 +61,7 @@ namespace BTSuggestions.Core.Entities
         {
             Status = "";
             User = new UserEntity();
-           TypeEntities= new List<PainPointTypeEntity>();
+            TypeEntities= new List<PainPointTypeEntity>();
         }
     }
 }

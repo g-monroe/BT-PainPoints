@@ -11,6 +11,7 @@ using BTSuggestions.Core.Interfaces.DataAccessHandlers;
 using BTSuggestions.Core.Interfaces.Managers;
 using BTSuggestions.Core.Interfaces.Engines;
 using BTSuggestions.Managers.ResponseObjects;
+using BTSuggestions.Managers.RequestObjects;
 
 namespace BTSuggestions.Controllers
 {
@@ -258,15 +259,46 @@ namespace BTSuggestions.Controllers
         }
         // POST api/painpoint
         [HttpPost]
-        public async Task<ActionResult<PainPointEntity>> PostPainPoint(PainPointEntity value)
+        public async Task<ActionResult<PainPointResponse>> PostPainPoint(PainPointRequest value)
         {
-
-            var result = await _painpointManager.AddNewPainPoint(value);
-            if (result == null)
+            var newMe = new PainPointEntity()
+            {
+                User = value.User,
+                PriorityLevel = value.PriorityLevel,
+                UserId = value.UserId,
+                Annotation = value.Annotation,
+                CompanyLocation = value.CompanyLocation,
+                CompanyContact = value.CompanyContact,
+                CompanyName = value.CompanyName,
+                Title = value.Title,
+                CreatedOn = value.CreatedOn,
+                Summary = value.Summary,
+                IndustryType = value.IndustryType,
+                Status = value.Status
+            };
+            var me = await _painpointManager.AddNewPainPoint(newMe);
+            if (me == null)
             {
                 return NotFound();
             }
-            return result;
+            var resp = new PainPointResponse
+            {
+                User = me.User,
+                PriorityLevel = me.PriorityLevel,
+                UserId = me.UserId,
+                Type = me.Types,
+                Annotation = me.Annotation,
+                ComapnyLocation = me.CompanyLocation,
+                CompanyContact = me.CompanyContact,
+                CompanyName = me.CompanyName,
+                Title = me.Title,
+                PainPointId = me.Id,
+                CreatedOn = me.CreatedOn.ToString(),
+                Summary = me.Summary,
+                IndustryType = me.IndustryType,
+                Status = me.Status
+            };
+            return resp;
         }
         // POST api/painpoint
         [HttpPost("multiple")]
