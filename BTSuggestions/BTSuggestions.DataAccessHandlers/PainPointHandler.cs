@@ -99,6 +99,7 @@ namespace BTSuggestions.DataAccessHandlers
         }
         public void PostSeed()
         {
+            IEnumerable<string> types = new string[]{ "Bug"};
             var newUser = new UserEntity
             {
                 Username = "johnwick",
@@ -132,7 +133,7 @@ namespace BTSuggestions.DataAccessHandlers
                 Email = "johnwickman@gmail.com"
             };
             var newUsers = new List<UserEntity>() { newUser, newUser2 };
-            var newPain = new PainPointEntity
+            var newPain = new PainPointEntity()
             {
                 Title = "This is test",
                 Summary = "This is the summary of the descripted Pain Point.",
@@ -146,7 +147,7 @@ namespace BTSuggestions.DataAccessHandlers
                 IndustryType = "Ninja",
                 PriorityLevel = 99
             };
-            var newPain2 = new PainPointEntity
+            var newPain2 = new PainPointEntity()
             {
                 Title = "A new test. This is test",
                 Summary = "Wow this is cool. This is the summary of the descripted Pain Point.",

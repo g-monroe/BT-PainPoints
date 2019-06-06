@@ -44,6 +44,7 @@ namespace BTSuggestions.Managers.Extensions
         {
             if (updating == null)
             {
+                IEnumerable<string> types = new string[] { };
                 updating = new PainPointEntity();
             }
             updating.User = me.User;

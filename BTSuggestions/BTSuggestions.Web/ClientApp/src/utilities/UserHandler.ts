@@ -14,6 +14,14 @@ export interface IUserHandler{
 //         this.collection = data.map(d => new SuperheroItem(d));
 //     }
 // }
+
+export class UserCollectionResponse {
+    collection: UserEntity[]
+    constructor(data: any[]){
+        this.collection = data.map(d => new UserEntity(d));
+    }
+}
+
 export class UserHandler implements IUserHandler{
     //Get Element by ID and then respond with the Item.
     async getById(id: number): Promise<UserEntity>{

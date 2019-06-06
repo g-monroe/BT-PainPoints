@@ -8,7 +8,7 @@ import CreateFormEntity from '../entity/CreateFormEntity';
 import { SelectOption } from '../types/dropdownValues/SelectOption';
 import '../styles/CreateForm.css';
 import TextArea from 'antd/lib/input/TextArea';
-import { IPainPointHandler } from '../utilities/PainPointHandler';
+import { IPainPointHandler } from '../utilities/painPointHandler';
 import PainPointEntity from '../entity/PainPointEntity';
 
 const { Content } = Layout;
@@ -74,7 +74,7 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
         });
     };
     handleSave = async (entity: PainPointEntity): Promise<void> => {
-          await this.props.painPointHandler!.createHero(entity)
+          await this.props.painPointHandler!.createPainPoint(entity)
       }
     getValidationStatus = (error: any) => {
         return !!error ? 'error' : 'success';
