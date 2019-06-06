@@ -10,10 +10,10 @@ import { IPainPointHandler, PainPointHandler } from '../utilities/painPointHandl
 
 const { Content, Sider } = Layout;
 
-interface IDetailViewProps {
+export interface IDetailViewProps {
     commentHandler?: ICommentHandler;
     painpointHandler?: IPainPointHandler;
-    id: number;
+    id: string;
 }
 
 interface IDetailViewState {
@@ -25,7 +25,8 @@ interface IDetailViewState {
 export default class DetailView extends React.Component<IDetailViewProps, IDetailViewState>{
     static defaultProps = {
         commentHandler: new CommentHandler(),
-        painpointHandler: new PainPointHandler()
+        painpointHandler: new PainPointHandler(),
+        id: "0"
     };
 
     state: IDetailViewState = {
@@ -33,22 +34,16 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
         comments: undefined,
         newComment: ''
     };
+
     componentDidMount = async () => {
         const { painpointHandler, id } = this.props;
         if (id) {
-            const result = await painpointHandler!.getById(id);
-            const commentResult = await this.props.painpointHandler!.getCommentsById(this.props.id);
+            const result = await painpointHandler!.getById(parseInt(id));
+            const commentResult = await this.props.painpointHandler!.getCommentsById(parseInt(this.props.id));
             this.setState({ result, comments: commentResult.comments });
         }
     }
-    refreshMount = async () => {
-        const { painpointHandler, id } = this.props;
-        if (id) {
-            const result = await painpointHandler!.getById(id);
-           const commentResult = await this.props.painpointHandler!.getCommentsById(this.props.id);
-            this.setState({ result, comments: commentResult.comments });
-        }
-    }
+
     renderComments = () => {
         const { comments } = this.state;
         return comments!.map((comment, index) => (
@@ -63,15 +58,20 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
       
         let newComment = new CommentEntity({
             commentId: 1,
-            painPoint: this.props.id,
+            painPoint: parseInt(this.props.id),
             user: 1,
             commentText: this.state.newComment,
             status: "Completed",
             createdOn: new Date(),
         })
         this.props.commentHandler!.createComment(newComment);
+        if (newComment) {
+            this.state.comments!.push(newComment);
+        }
         this.setState(
-            { newComment: ' ' }
+            {
+                newComment: ' '
+            }
         );
      
     };
@@ -85,16 +85,14 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
     render() {
         const css = "../src/styles/App.css";
         const { result } = this.state;
-      
-        if (result) {
-            
+        if (result) {  
             return (
                 <Layout>
                     <Content>
-                        <h1>Issue: {this.state.result!.title}</h1>
-                        <h2>Type: {this.state.result!.types.join(",")}; &nbsp;&nbsp;&nbsp; Severity Level: {this.state.result!.priorityLevel}</h2>
-                        <h3>Summary: {this.state.result!.summary}</h3>
-                        <h3>Personal Notes: {this.state.result!.annotation}</h3>
+                        <h1>Issue: {result.title}</h1>
+                        <h2>Type: {result.types.join(",")}; &nbsp;&nbsp;&nbsp; Severity Level: {result.priorityLevel}</h2>
+                        <h3>Summary: {result.summary}</h3>
+                        <h3>Personal Notes: {result.annotation}</h3>
                         <Divider>Comments</Divider>
                             {this.renderComments()}
                         <Input placeholder="New Comment" value={this.state.newComment} onChange={this.handleChange}/>
@@ -102,14 +100,14 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
                     </Content>
                     <Sider style={{ background: '#fff' }} >
                         <h1>Submitted By:</h1>
-                        <h2>{this.state.result!.companyContact}</h2>
-                        <h3>{this.state.result!.companyName}</h3>
-                        <h3>{this.state.result!.companyLocation}</h3>
+                        <h2>{result.companyContact}</h2>
+                        <h3>{result.companyName}</h3>
+                        <h3>{result.companyLocation}</h3>
                     </Sider>
                 </Layout>
             )
         } else {
-            return <h1>Nothing to render!</h1>;
+            return <h2>This issue has been resolved.</h2>;
         }
     }
 };

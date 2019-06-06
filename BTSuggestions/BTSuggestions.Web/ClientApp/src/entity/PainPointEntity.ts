@@ -30,7 +30,12 @@ export default class PainPointEntity {
         this.companyLocation  = JSONData.companyLocation;
         this.industryType  = JSONData.industryType;
         this.createdOn  = JSONData.createdOn;
-        this.types  = JSONData.types;
+        if(!JSONData.types){
+            this.types = [];
+        }
+        else {
+            this.types = JSONData.types;
+        }
     }
 }
 

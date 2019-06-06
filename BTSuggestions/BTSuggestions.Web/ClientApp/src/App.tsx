@@ -3,7 +3,7 @@ import '../src/styles/App.css';
 import "antd/dist/antd.css";
 import { Link, BrowserRouter, Route} from 'react-router-dom';
 import CreateForm from '../src/components/CreateForm';
-import DetailView from '../src/components/DetailView';
+import DetailView, { IDetailViewProps } from '../src/components/DetailView';
 import AdminView from '../src/components/AdminView';
 import PainPointView from '../src/components/PainPointView'
 import LoginPage from '../src/components/LoginPage';
@@ -12,22 +12,22 @@ import CreateAccount from './components/CreateAccount';
 import { Menu } from 'antd';
 import tableData from '../src/types/tableTest.api.json';
 
-interface IPainPointState {
-    username: string,
-    auth: boolean
-}
+// interface IPainPointState {
+//     username: string,
+//     auth: boolean
+// }
 
-const userAuth = {
-    isAuthenticated: false,
-    authenticate(cb: any) {
-        this.isAuthenticated = true
-        setTimeout(cb, 100)
-    },
-    signout(cb: any) {
-        this.isAuthenticated = false
-        setTimeout(cb, 100)
-    }
-}
+// const userAuth = {
+//     isAuthenticated: false,
+//     authenticate(cb: any) {
+//         this.isAuthenticated = true
+//         setTimeout(cb, 100)
+//     },
+//     signout(cb: any) {
+//         this.isAuthenticated = false
+//         setTimeout(cb, 100)
+//     }
+// }
 
 export default class App extends React.Component {
     displayName = App.name
@@ -65,7 +65,7 @@ export default class App extends React.Component {
                     <Route path="/create-account" exact render={(props) => <CreateAccount newUser={this.handleNewUser} />}/>
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/home" exact component={PainPointView} />
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/create" exact component={CreateForm} />
-                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/home/:id" exact component={DetailView}/>
+                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/home/:id" exact render={DetailView}/>
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/admin" exact component={() => <AdminView data={tableData}/>}/>
                 </BrowserRouter> 
             </>
