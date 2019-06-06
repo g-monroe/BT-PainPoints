@@ -56,10 +56,11 @@ export default class LoginPage extends React.Component<ILoginProps, ILoginState>
                     if (userHandler){         
                         try{
                             data = (await userHandler.getByUsername(this.state.username));
-                            
-                            if (data.password === this.state.password){
+                            console.log(data);
+                            if (data.password.toString() === this.state.password){
                                 message.success('Login Successful');
                                 localStorage.setItem('Auth', 'true');
+                                localStorage.setItem('userId', data.userId.toString());
                                 window.location.href = '/home';
                             }
                             else{
@@ -68,6 +69,7 @@ export default class LoginPage extends React.Component<ILoginProps, ILoginState>
                         }catch(error){
                             message.error('Login Failed', 5);
                             localStorage.setItem('Auth', 'false');
+                            console.log('error');
                         }
                     }
                 }else{
