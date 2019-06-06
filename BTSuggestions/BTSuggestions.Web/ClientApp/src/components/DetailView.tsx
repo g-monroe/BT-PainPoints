@@ -10,7 +10,7 @@ import UserEntity from '../entity/UserEntity';
 import PainPointEntity from '../entity/PainPointEntity';
 
 import CommentEntities from '../entity/CommentEntities';
-import { IPainPointHandler, PainPointHandler } from '../utilities/PainPointHandler';
+import { IPainPointHandler, PainPointHandler } from '../utilities/commit';
 
 const { Content, Sider } = Layout;
 

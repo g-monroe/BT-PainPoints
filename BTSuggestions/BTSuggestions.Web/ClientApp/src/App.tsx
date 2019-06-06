@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import '../src/styles/App.css';
 import "antd/dist/antd.css";
-import { Link, BrowserRouter, Route, Redirect, RouteProps } from 'react-router-dom';
+import { Link, BrowserRouter, Route} from 'react-router-dom';
 import CreateForm from '../src/components/CreateForm';
 import DetailView from '../src/components/DetailView';
 import AdminView from '../src/components/AdminView';
@@ -10,7 +10,7 @@ import LoginPage from '../src/components/LoginPage';
 import PrivateRoute from '../src/components/PrivateRoute';
 import CreateAccount from './components/CreateAccount';
 import { Menu } from 'antd';
-import UserEntity from './entity/UserEntity';
+import tableData from '../src/types/tableTest.api.json';
 
 interface IPainPointState {
     username: string,
@@ -66,9 +66,8 @@ export default class App extends React.Component {
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/home" exact component={PainPointView} />
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/create" exact component={CreateForm} />
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/home/:id" exact component={DetailView}/>
-                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/admin" exact component={AdminView} />
+                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/admin" exact component={() => <AdminView data={tableData}/>}/>
                 </BrowserRouter> 
-                
             </>
         );
     }
