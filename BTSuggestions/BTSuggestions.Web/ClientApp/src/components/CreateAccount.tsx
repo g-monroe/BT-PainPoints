@@ -4,9 +4,11 @@ import * as yup from 'yup';
 import FormItem from 'antd/lib/form/FormItem';
 import { withFormik, InjectedFormikProps, Form } from 'formik';
 import UserEntity from '../entity/UserEntity';
+import { IUserHandler, UserHandler } from '../utilities/UserHandler';
 
 interface ICreateAccountProps {
-    newUser: (username: string) => void
+    newUser: (username: string) => void,
+    userHandler?: IUserHandler
 }
 
 interface ICreateAccountState {
@@ -31,6 +33,10 @@ const yupValidation = yup.object().shape<ICreateAccountState>({
 })
 
 class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountProps, ICreateAccountState>> {
+    static defaultProps = {
+        userHandler: new UserHandler()
+    }
+    
     // Default state so that the verification fucntion will work correctly.
     state = {
         email: "",
@@ -91,25 +97,12 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
 
     // Handler for the button clicks
     handleCreateAccountClick = () => {
-        yupValidation.validate({
-            email: this.state.email,
-            emailConfirmation: this.state.emailConfirm,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            username: this.state.username,
-            password: this.state.password,
-            passwordConfirm: this.state.passwordConfirm
-        }).then((isValid) => {
-            if (isValid){
-                message.success('Created Account Successfully.', 7);
-            }else {
-                message.error('Account Creation Failed', 10);
-            }
-        })
+        
     }
 
     handleCancleCreateClick = () => {
         // Go back to parent.
+        window.location.href = '/login';
     }
 
     getValidationStatus = (error: any) => {
@@ -142,7 +135,7 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
                     <Input placeholder='Confirm Password' onChange={this.handlePasswordConfirmChange} value={values.passwordConfirm}/>
                 </FormItem>
                 <Button id='createButton' htmlType='submit' type='primary' onClick={this.handleCreateAccountClick}>Create Account</Button>
-                <Button id='cancleButton' type='danger' onClick={this.handleCancleCreateClick}>Cancle Create</Button>
+                <Button id='cancelButton' type='danger' onClick={this.handleCancleCreateClick}>Cancel Create</Button>
             </Form>
         </>
     }
@@ -160,7 +153,38 @@ export default withFormik<ICreateAccountProps, ICreateAccountState>({
     }),
     validationSchema: yupValidation,
     handleSubmit: (values) => {
-        console.log(values + 'User created');
+        let data: UserEntity;
+        yupValidation.validate({
+            email: values.email,
+            emailConfirmation: values.emailConfirm,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            username: values.username,
+            password: values.password,
+            passwordConfirm: values.passwordConfirm
+        }).then(async(isValid) => {
+            if (isValid){
+                const userHandler = new UserHandler();
+                if (userHandler){
+                    try{
+                        const newUser = new UserEntity(values)
+                        data = (await userHandler.createUser(newUser));
+
+                        message.success("Account Successfully Created!", 2);
+                        localStorage.setItem('Auth', 'true');
+                        localStorage.setItem('userId', data.userId.toString());
+
+                        window.location.href = '/home';
+
+                    }catch(error){
+                        message.error('Account Creation Failed', 5);
+                    }
+                }else {
+                    message.error('Account Creation Failed', 5);
+                }
+            }
+        })
+
     },
     displayName: 'Create Account'
 })(CreateAccount);
