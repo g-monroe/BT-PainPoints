@@ -3,10 +3,13 @@ import { Button, Input, Col, Row, Icon, message } from 'antd';
 import * as yup from 'yup';
 import { Link } from 'react-router-dom';
 import { render } from 'react-dom';
+import { UserHandler } from '../utilities/UserHandler';
+import UserEntity from '../entity/UserEntity';
 
 interface ILoginState {
     username: string,
-    password: string
+    password: string,
+    data?: UserEntity
 }
 
 interface ILoginProps {
