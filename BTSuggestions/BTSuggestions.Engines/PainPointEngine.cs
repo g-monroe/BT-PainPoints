@@ -23,7 +23,16 @@ namespace BTSuggestions.Engines
 
             return value;
         }
+        public async Task<PainPointEntity[]> CreatePainPoints(PainPointEntity[] value)
+        {
+            foreach (PainPointEntity x in value)
+            {
+                await __painPointHandler.Insert(x);
+            }
+            await __painPointHandler.SaveChanges();
 
+            return value;
+        }
         public async Task<IEnumerable<CommentEntity>> GetComments(int id)
         {
             var result = await __painPointHandler.GetComments(id);

@@ -1,15 +1,19 @@
 {
-    "painPointId": 1,
-    "painPointType": [""],
-    "painPointTitle": "",
-    "painPointSummary": "",
+    "painpointId": 1,
+    "Type": [""],
+    "Title": "",
+    "Summary": "",
     "painPointAnnotation": "",
     "painPointSeverity": 1,
-    "submissionStatus": "",
+    "Status": "",
     "companyName": "",
     "companyContact": "",
     "companyLocation": "",
     "industryType": "",
     "userId": 1,
-    "userName": ""
+    "userName": "",
+    "User": "",
+    "PriorityLevel": 0,
+    "CreatedOn": "",
+    "Types" : [""]
 }

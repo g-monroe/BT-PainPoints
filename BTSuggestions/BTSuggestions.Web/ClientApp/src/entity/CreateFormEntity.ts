@@ -1,12 +1,12 @@
 export default class CreateFormEntity {
-    painPointId: number;
-    painPointType: string[];
-    painPointTitle: string;
-    painPointSummary: string;
+    Id: number;
+    Type: string[];
+    Title: string;
+    Summary: string;
     painPointAnnotation: string;
     painPointSeverity: number;
 
-    submissionStatus: string;
+    Status: string;
 
     companyName: string;
     companyContact: string;
@@ -17,14 +17,14 @@ export default class CreateFormEntity {
     //userName: string;
 
     constructor(JSONData: any) {
-        this.painPointId = JSONData.painPointId;
-        this.painPointType = JSONData.painPointType;
-        this.painPointTitle = JSONData.painPointTitle;
-        this.painPointSummary = JSONData.painPointSummary;
+        this.Id = JSONData.Id;
+        this.Type = JSONData.Type;
+        this.Title = JSONData.Title;
+        this.Summary = JSONData.Summary;
         this.painPointAnnotation = JSONData.painPointAnnotation;
         this.painPointSeverity = JSONData.painPointSeverity;
 
-        this.submissionStatus = JSONData.submissionStatus;
+        this.Status = JSONData.Status;
 
         this.companyName = JSONData.companyName;
         this.companyContact = JSONData.companyContact;
@@ -37,14 +37,14 @@ export default class CreateFormEntity {
 }
 
 export class IssueEntity {
-    painPointId: number;
-    painPointType: string[];
-    painPointTitle: string;
-    painPointSummary: string;
+    Id: number;
+    Type: string[];
+    Title: string;
+    Summary: string;
     painPointAnnotation: string;
     painPointSeverity: number;
 
-    submissionStatus: string;
+    Status: string;
 
     companyName?: string;
     companyContact?: string;
@@ -55,14 +55,14 @@ export class IssueEntity {
     //userName: string;
 
     constructor(JSONData: any) {
-        this.painPointId = JSONData.painPointId;
-        this.painPointType = JSONData.painPointType;
-        this.painPointTitle = JSONData.painPointTitle;
-        this.painPointSummary = JSONData.painPointSummary;
+        this.Id = JSONData.Id;
+        this.Type = JSONData.Type;
+        this.Title = JSONData.Title;
+        this.Summary = JSONData.Summary;
         this.painPointAnnotation = JSONData.painPointAnnotation;
         this.painPointSeverity = JSONData.painPointSeverity;
 
-        this.submissionStatus = JSONData.submissionStatus;
+        this.Status = JSONData.Status;
 
         this.companyName = JSONData.companyName;
         this.companyContact = JSONData.companyContact;

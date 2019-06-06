@@ -8,15 +8,34 @@ import CreateFormEntity from '../entity/CreateFormEntity';
 import { SelectOption } from '../types/dropdownValues/SelectOption';
 import '../styles/CreateForm.css';
 import TextArea from 'antd/lib/input/TextArea';
+import { IPainPointHandler } from '../utilities/PainPointHandler';
+import PainPointEntity from '../entity/PainPointEntity';
 
 const { Content } = Layout;
 const FormItem = AntForm.Item;
 
 interface ICreateFormProps {
+    
+    painPointHandler?: IPainPointHandler;
+    handleSave: (entity: PainPointEntity) => Promise<void>;
     data: CreateFormEntity;
 }
 
 interface ICreateFormState {
+        title: string;
+        summary: string;
+        annotation?: string;
+        status: string;
+        userId?: number;
+        priorityLevel: number;
+        companyName?: string;
+        companyContact?: string;
+        companyLocation?: string;
+        industryType?: string;
+        createdOn: Date;
+        types: string[];
+}
+interface INewCreateForm{
     painPointType: string[],
     painPointTitle: string,
     painPointSummary: string,
@@ -28,8 +47,7 @@ interface ICreateFormState {
     companyLocation?: string,
     industryType?: string
 }
-
-const yupValidation = yup.object().shape<ICreateFormState>({
+const yupValidation = yup.object().shape<INewCreateForm>({
     painPointType: yup.array<string>(),
     painPointTitle: yup.string().min(2).max(150).required().label('Issue Title'),
     painPointSummary: yup.string().min(2).max(1500).required().label('Issue Summmary'),
@@ -42,10 +60,10 @@ const yupValidation = yup.object().shape<ICreateFormState>({
     industryType: yup.string().label('Industry Type')
 })
 
-class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, ICreateFormState>>{
+class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, INewCreateForm>>{
     static defaultProps = {
     };
-
+    
     state = {
         inputValue: 0
     };
@@ -55,7 +73,9 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
             inputValue: value
         });
     };
-
+    handleSave = async (entity: PainPointEntity): Promise<void> => {
+          await this.props.painPointHandler!.createHero(entity)
+      }
     getValidationStatus = (error: any) => {
         return !!error ? 'error' : 'success';
     };
@@ -88,7 +108,7 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
                                 <TextArea id="painPointAnnotation" placeholder="Personal Notes about Problem" value={values.painPointAnnotation} onChange={handleChange} rows={2} />
                             </FormItem>
                             <FormItem className="input" label="Issue Type" required validateStatus={this.getValidationStatus(errors.painPointType)}>
-                                <Select mode="multiple" id="painPointType" onChange={x => setFieldValue("painPointType", x)} value={values.painPointType}>{this.renderDropdowns(painPointList)}</Select>
+                                <Select mode="multiple" id="painPointType" onChange={(x:any) => setFieldValue("painPointType", x)} value={values.painPointType}>{this.renderDropdowns(painPointList)}</Select>
                             </FormItem>
                             <FormItem label="Issue Severity" required validateStatus={this.getValidationStatus(errors.painPointSeverity)}>
                                 <div className="wrapper">
@@ -111,37 +131,41 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
                                 <Input id="companyLocation" placeholder="Company Location" onChange={handleChange} value={values.companyLocation} />
                             </FormItem>
                             <FormItem className="input" label="Industry Type" validateStatus={this.getValidationStatus(errors.industryType)}>
-                                <Select id="industryType" onChange={x => setFieldValue("industryType", x)} value={values.industryType}>{this.renderDropdowns(industryList)}</Select>
+                                <Select id="industryType" onChange={(x:any) => setFieldValue("industryType", x)} value={values.industryType}>{this.renderDropdowns(industryList)}</Select>
                             </FormItem>
                             <FormItem>
                                 <Button className="button" id="submit" htmlType="submit">Submit Problem</Button>
                             </FormItem>
                         </div>
                     </Form>
+                    <div>
+              {JSON.stringify(values)}
+            </div>
                 </Content>
             </Layout>
         )
     }
 };
 
-export default withFormik<ICreateFormProps, ICreateFormState>({
+export default withFormik<ICreateFormProps, INewCreateForm>({
     mapPropsToValues: props => ({
-        painPointId: props.data.painPointId,
-        painPointType: props.data.painPointType,
-        painPointTitle: props.data.painPointTitle,
-        painPointSummary: props.data.painPointSummary,
-        painPointAnnotation: props.data.painPointAnnotation,
-        painPointSeverity: props.data.painPointSeverity,
-        submissionStatus: props.data.submissionStatus,
-        companyName: props.data.companyName,
-        companyContact: props.data.companyContact,
-        companyLocation: props.data.companyLocation,
-        industryType: props.data.industryType
+        painPointType: [""],
+        painPointTitle: "",
+        painPointSummary: "",
+        painPointAnnotation: "",
+        painPointSeverity: 0,
+        companyName: "",
+        companyContact: "",
+        companyLocation: "",
+        industryType: "",
+        
     }),
     validationSchema: yupValidation,
-    handleSubmit: (values) => {
+    handleSubmit: async (values, { setSubmitting, props }) =>  {
         console.log(values);
+        await props.handleSave(new PainPointEntity(values));
         alert("You have submitted an issue");
+        setSubmitting(false);
     },
     displayName: 'Create Issue Form'
 })(CreateForm);

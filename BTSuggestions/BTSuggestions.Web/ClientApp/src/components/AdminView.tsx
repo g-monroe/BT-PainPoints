@@ -24,9 +24,9 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
     static defaultProps = {
     };
 
-    state = {
-        issues: this.props.data.issues
-    };
+    //state = {
+    //    issues: this.props.data.issues
+    //};
 
     renderDropdowns = (list: SelectOption[]) => {
         return list.map((value: any) => (
@@ -34,42 +34,42 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
     };
 
     handleInput = (e: any, id: number, propName: string) => {
-        const { issues } = this.state;
-        const newIssues = issues.map(i => {
-            if (i.painPointId === id) {
-                i[propName] = e.target.value;
-            }
-            return i;
-        });
-        this.setState(
-            { issues: newIssues }
-        );
+        //const { issues } = this.state;
+        // const newIssues = issues.map(i => {
+        //     if (i.painPointId === id) {
+        //         i[propName] = e.target.value;
+        //     }
+        //     return i;
+        // });
+        // this.setState(
+        //     { issues: newIssues }
+        // );
     };
 
     handleNumberInput = (e: any, id: number) => {
-        const { issues } = this.state;
-        const newIssues = issues.map(i => {
-            if (i.painPointId === id) {
-                i.painPointSeverity = e;
-            }
-            return i;
-        });
-        this.setState(
-            { issues: newIssues }
-        );
+        // const { issues } = this.state;
+        // const newIssues = issues.map(i => {
+        //     if (i.painPointId === id) {
+        //         i.painPointSeverity = e;
+        //     }
+        //     return i;
+        // });
+        // this.setState(
+        //     { issues: newIssues }
+        // );
     };
 
     handleSelect = (e: any, id: number, propName: string, list: SelectOption[]) => {
-        const { issues } = this.state;
-        const newIssues = issues.map(i => {
-            if (i.painPointId === id) {
-                i[propName] = list[e - 1].name;
-            }
-            return i;
-        });
-        this.setState(
-            { issues: newIssues }
-        );
+        // const { issues } = this.state;
+        // const newIssues = issues.map(i => {
+        //     if (i.painPointId === id) {
+        //         i[propName] = list[e - 1].name;
+        //     }
+        //     return i;
+        // });
+        // this.setState(
+        //     { issues: newIssues }
+        // );
     };
 
     handleSubmit = () => {
