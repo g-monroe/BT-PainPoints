@@ -97,6 +97,7 @@ namespace BTSuggestions.DataAccessHandlers
         {
             return await _context.PainPoints.GroupBy(x => x.TypeEntities).OrderBy(pp => pp.Select(z => z.PriorityLevel)).ToListAsync();
         }
+  
         public void PostSeed()
         {
             IEnumerable<string> types = new string[]{ "Bug"};
