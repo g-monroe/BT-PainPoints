@@ -6,7 +6,7 @@ import CustomColumnEntity from "../entity/CustomColumnEntity";
 import fakeColumnData from '../types/painPointCustomColumns.api.json';
 import { columnNameList } from '../types/dropdownValues/columnNameTypes';
 import { SelectOptionWithEntityAndWidth } from "../types/dropdownValues/columnNameTypes";
-import  { IPainPointHandler, PainPointHandler } from '../utilities/commit';
+import  { IPainPointHandler, PainPointHandler } from '../utilities/painPointHandler';
 
 interface IPainPointTableProps{
   painPointHandler?:IPainPointHandler; 
@@ -45,7 +45,7 @@ export default class PainPointTable extends React.Component<IPainPointTableProps
     let { data, customColumnsArray, currentColumnIndex, menuList } = this.state;
     //TODO get data and update customColumnIdArray and data with real data
     if (painPointHandler){
-    //data =  (await painPointHandler.getAll()).collection.map((m:any) => new PainPointEntity(m));
+    data =  (await painPointHandler.getAll()).painPointsList.map(m => new PainPointEntity(m));
     }
     customColumnsArray = fakeColumnData.data.map(m=>new CustomColumnEntity(m))
     currentColumnIndex = fakeColumnData.currentColumnIndex;
