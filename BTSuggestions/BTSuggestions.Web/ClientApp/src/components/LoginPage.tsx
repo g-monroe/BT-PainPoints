@@ -62,7 +62,6 @@ export default class LoginPage extends React.Component<ILoginProps, ILoginState>
                         }else {
                             localStorage.setItem('Auth', 'true');
                             message.success('Login successful', 3);
-
                             window.location.href = '/home';
                         }
                     }
