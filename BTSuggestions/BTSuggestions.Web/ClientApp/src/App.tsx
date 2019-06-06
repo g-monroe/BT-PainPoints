@@ -11,27 +11,26 @@ import PrivateRoute from '../src/components/PrivateRoute';
 import CreateAccount from './components/CreateAccount';
 import { Menu } from 'antd';
 import tableData from '../src/types/tableTest.api.json';
+import { PainPointHandler, IPainPointHandler } from './utilities/painPointHandler';
 
-// interface IPainPointState {
-//     username: string,
-//     auth: boolean
-// }
-
-// const userAuth = {
-//     isAuthenticated: false,
-//     authenticate(cb: any) {
-//         this.isAuthenticated = true
-//         setTimeout(cb, 100)
-//     },
-//     signout(cb: any) {
-//         this.isAuthenticated = false
-//         setTimeout(cb, 100)
-//     }
-// }
+interface IPainPointState {
+    username: string,
+    auth: boolean
+}
+const userAuth = {
+    isAuthenticated: false,
+    authenticate(cb: any) {
+        this.isAuthenticated = true
+        setTimeout(cb, 100)
+    },
+    signout(cb: any) {
+        this.isAuthenticated = false
+        setTimeout(cb, 100)
+    }
+}
 
 export default class App extends React.Component {
     displayName = App.name
-
     handleLoginRequest = (name: string) => {
         this.setState({
             username: name
@@ -48,7 +47,6 @@ export default class App extends React.Component {
     handleNewUser = (user: string) => {
         localStorage.setItem('username', user);
     }
-
     render() {
         const css = "../src/App.css";
         return (

@@ -19,8 +19,16 @@ namespace BTSuggestions.Engines
 
         public async Task<ContentEntity> CreateContent(ContentEntity content)
         {
-            await _contentHandler.Insert(content);
-            await _contentHandler.SaveChanges();
+            var result = _contentHandler.GetContentByUser(content.UserId);
+            if (result == null)
+            {
+                await _contentHandler.Insert(content);
+                await _contentHandler.SaveChanges();
+            }
+            else
+            {
+                await UpdateContent(result.Id, content);
+            }
 
             return content;
         }

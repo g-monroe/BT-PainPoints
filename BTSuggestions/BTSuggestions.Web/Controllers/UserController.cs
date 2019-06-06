@@ -129,16 +129,27 @@ namespace BTSuggestions.Controllers
                 return true;
             }
         }
-        [HttpGet("{username}")]
-        public async Task<ActionResult<UserEntity>> GetUserByUsername(string username)
+        [HttpPost("username")]
+        public async Task<ActionResult<UserResponse>> GetUserByUsername([FromBody]string username)
         {
             var results = await _manager.GetUsers();
-            var result = results.FirstOrDefault(x => x.Username == username);
-            if (result == null)
+
+            var me = results.FirstOrDefault(x => x.Username == username);
+            var newUser = new UserResponse
+            {
+                UserId = me.Id,
+                Username = me.Username,
+                FirstName = me.Firstname,
+                LastName = me.Lastname,
+                Email = me.Email,
+                Password = me.Password,
+                Privilege = me.Privilege
+            };
+            if (me == null)
             {
                 return NotFound();
             }
-            return result;
+            return newUser;
         }
         // GET api/user/5/privilege
         [HttpGet("{id}/privilege")]
