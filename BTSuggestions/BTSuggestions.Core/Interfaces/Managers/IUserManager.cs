@@ -18,5 +18,6 @@ namespace BTSuggestions.Core.Interfaces.Managers
         Task<string> GetLastname(int id);
         Task<string> GetFirstname(int id);
         Task Delete(UserEntity user);
+        IEnumerable<PainPointEntity> GetByStatus(int id, string status);
     }
 }

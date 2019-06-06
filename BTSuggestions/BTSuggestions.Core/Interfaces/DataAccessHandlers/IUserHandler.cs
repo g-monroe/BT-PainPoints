@@ -13,5 +13,6 @@ namespace BTSuggestions.Core.Interfaces.DataAccessHandlers
         Task<string> GetEmail(int id);
         Task<string> GetLastname(int id);
         Task<string> GetFirstname(int id);
+        IEnumerable<PainPointEntity> GetByStatus(int id, string status);
     }
 }

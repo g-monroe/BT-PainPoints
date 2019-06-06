@@ -112,6 +112,37 @@ namespace BTSuggestions.Controllers
             }
             return result;
         }
+        [HttpGet("{id}/Status/{status}")]
+        public ActionResult<PainPointResponseList> GetStatusPainPoints(int id, string status)
+        {
+            var results =  _manager.GetByStatus(id, status);
+            if (results == null)
+            {
+                return NotFound();
+            }
+            var resp = new PainPointResponseList
+            {
+                TotalResults = results.Count(),
+                PainPointsList = results.Select(me => new PainPointResponse()
+                {
+                    User = me.User,
+                    PriorityLevel = me.PriorityLevel,
+                    UserId = me.UserId,
+                    Type = me.Types,
+                    Annotation = me.Annotation,
+                    ComapnyLocation = me.CompanyLocation,
+                    CompanyContact = me.CompanyContact,
+                    CompanyName = me.CompanyName,
+                    Title = me.Title,
+                    PainPointId = me.Id,
+                    CreatedOn = me.CreatedOn.ToString(),
+                    Summary = me.Summary,
+                    IndustryType = me.IndustryType,
+                    Status = me.Status
+                }).ToList()
+            };
+            return resp;
+        }
         [HttpGet("{id}/admin")]
         public async Task<ActionResult<bool>> GetAdmin(int id)
         {
