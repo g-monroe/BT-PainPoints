@@ -1,12 +1,13 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import '../styles/App.css';
-import { Layout, Divider, Comment, Tooltip, Button, Input} from 'antd';
+import { Layout, Divider, Comment, Tooltip, Button, Input, Descriptions} from 'antd';
 import moment from 'moment';
 import { ICommentHandler, CommentHandler } from '../utilities/CommentHandler';
 import CommentEntity from '../entity/CommentEntity';
 import PainPointEntity from '../entity/PainPointEntity';
 import { IPainPointHandler, PainPointHandler } from '../utilities/painPointHandler';
+import '../styles/DetailView.css';
 
 const { Content, Sider } = Layout;
 
@@ -39,7 +40,17 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
         const { painpointHandler, id } = this.props;
         if (id) {
             const result = await painpointHandler!.getById(parseInt(id));
-            const commentResult = await this.props.painpointHandler!.getCommentsById(parseInt(this.props.id));
+            //const commentResult = await this.props.painpointHandler!.getCommentsById(parseInt(this.props.id));
+            const commentResult = {
+                comments: [new CommentEntity({
+                    commentId: 1,
+                    painPoint: parseInt(this.props.id),
+                    user: 1,
+                    commentText: this.state.newComment,
+                    status: "Completed",
+                    createdOn: new Date(),
+                })]
+            }
             this.setState({ result, comments: commentResult.comments });
         }
     }
@@ -89,10 +100,29 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
             return (
                 <Layout>
                     <Content>
-                        <h1>Issue: {result.title}</h1>
-                        <h2>Type: {result.types.join(",")}; &nbsp;&nbsp;&nbsp; Severity Level: {result.priorityLevel}</h2>
-                        <h3>Summary: {result.summary}</h3>
-                        <h3>Personal Notes: {result.annotation}</h3>
+                        <table>
+                            <thead><tr><h1>Issue: {result.title}</h1></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td className= "thinColumn"><h2>Types</h2></td>
+                                    <td className= "thinColumn"><h2>Severity</h2></td>
+                                    <td className= "thinColumn"><h2>Status</h2></td>
+                                </tr>
+                                <tr>
+                                    <td className="megaColumn">{result.types.join(",")}</td>
+                                    <td className="megaColumn">{result.priorityLevel}</td>
+                                    <td className="megaColumn">{result.status}</td>
+                                </tr>
+                                <tr>
+                                    <td><h2>Summary</h2></td>
+                                    <td>{result.summary}</td>
+                                </tr>
+                                <tr>
+                                    <td><h2>Personal Notes</h2></td>
+                                    <td>{result.annotation}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                         <Divider>Comments</Divider>
                             {this.renderComments()}
                         <Input placeholder="New Comment" value={this.state.newComment} onChange={this.handleChange}/>
