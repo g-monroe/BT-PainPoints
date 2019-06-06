@@ -108,7 +108,7 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
                                 <TextArea id="painPointAnnotation" placeholder="Personal Notes about Problem" value={values.painPointAnnotation} onChange={handleChange} rows={2} />
                             </FormItem>
                             <FormItem className="input" label="Issue Type" required validateStatus={this.getValidationStatus(errors.painPointType)}>
-                                <Select mode="multiple" id="painPointType" onChange={x => setFieldValue("painPointType", x)} value={values.painPointType}>{this.renderDropdowns(painPointList)}</Select>
+                                <Select mode="multiple" id="painPointType" onChange={(x:any) => setFieldValue("painPointType", x)} value={values.painPointType}>{this.renderDropdowns(painPointList)}</Select>
                             </FormItem>
                             <FormItem label="Issue Severity" required validateStatus={this.getValidationStatus(errors.painPointSeverity)}>
                                 <div className="wrapper">
@@ -131,7 +131,7 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
                                 <Input id="companyLocation" placeholder="Company Location" onChange={handleChange} value={values.companyLocation} />
                             </FormItem>
                             <FormItem className="input" label="Industry Type" validateStatus={this.getValidationStatus(errors.industryType)}>
-                                <Select id="industryType" onChange={x => setFieldValue("industryType", x)} value={values.industryType}>{this.renderDropdowns(industryList)}</Select>
+                                <Select id="industryType" onChange={(x:any) => setFieldValue("industryType", x)} value={values.industryType}>{this.renderDropdowns(industryList)}</Select>
                             </FormItem>
                             <FormItem>
                                 <Button className="button" id="submit" htmlType="submit">Submit Problem</Button>
