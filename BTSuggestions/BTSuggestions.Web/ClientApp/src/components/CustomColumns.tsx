@@ -34,7 +34,6 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
   getColumns = () => {
     
     const { customColumnIdArray, menuList, data, changeColumn,addColumn,deleteColumn } = this.props;
-    console.log(JSON.stringify(menuList));
     let columns:ColumnProps<PainPointEntity>[];
     columns = [];    
     customColumnIdArray.forEach((id,index)=>{
@@ -61,12 +60,10 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
   };
 
   onRow=(record:PainPointEntity, rowIndex:number) => {
-    console.log("ON ROW!@!!");
     return {
       onClick: (e:any) => {
-        console.log("ON ROW CLICK");
         e.preventDefault();
-        window.location.href = '/home/'+record.painpointId;
+        window.location.href = '/home/'+record.painPointId;
       },      
     };
   }
