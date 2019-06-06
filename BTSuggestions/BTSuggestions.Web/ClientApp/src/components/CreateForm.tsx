@@ -8,7 +8,7 @@ import CreateFormEntity from '../entity/CreateFormEntity';
 import { SelectOption } from '../types/dropdownValues/SelectOption';
 import '../styles/CreateForm.css';
 import TextArea from 'antd/lib/input/TextArea';
-import { IPainPointHandler } from '../utilities/commit';
+import { IPainPointHandler } from '../utilities/painpointHandler';
 import PainPointEntity from '../entity/PainPointEntity';
 
 const { Content } = Layout;
