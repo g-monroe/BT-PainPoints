@@ -9,7 +9,7 @@ import CommentEntity from '../entity/CommentEntity';
 import UserEntity from '../entity/UserEntity';
 import PainPointEntity from '../entity/PainPointEntity';
 import CommentEntities from '../entity/CommentEntities';
-import { IPainPointHandler, PainPointHandler } from '../utilities/painpointHandler';
+import { IPainPointHandler, PainPointHandler } from '../utilities/painPointHandler';
 
 const { Content, Sider } = Layout;
 

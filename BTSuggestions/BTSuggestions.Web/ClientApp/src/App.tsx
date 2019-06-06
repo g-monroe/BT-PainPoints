@@ -11,12 +11,15 @@ import PrivateRoute from '../src/components/PrivateRoute';
 import CreateAccount from './components/CreateAccount';
 import { Menu } from 'antd';
 import tableData from '../src/types/tableTest.api.json';
+import { PainPointHandler, IPainPointHandler } from './utilities/painPointHandler';
 
 interface IPainPointState {
     username: string,
     auth: boolean
 }
-
+interface IAppProps{
+    painPointHandler?: IPainPointHandler;
+}
 const userAuth = {
     isAuthenticated: false,
     authenticate(cb: any) {
@@ -29,9 +32,11 @@ const userAuth = {
     }
 }
 
-export default class App extends React.Component {
+export default class App extends React.Component<IAppProps> {
     displayName = App.name
-
+    static defaultProps = {
+        painPointHandler: new PainPointHandler()
+    }
     handleLoginRequest = (name: string) => {
         this.setState({
             username: name
@@ -48,7 +53,6 @@ export default class App extends React.Component {
     handleNewUser = (user: string) => {
         localStorage.setItem('username', user);
     }
-
     render() {
         const css = "../src/App.css";
         return (
@@ -65,7 +69,7 @@ export default class App extends React.Component {
                     <Route path="/create-account" exact render={(props) => <CreateAccount newUser={this.handleNewUser} />}/>
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/home" exact component={PainPointView} />
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/create" exact component={CreateForm} />
-                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/home/:id" exact component={DetailView}/>
+                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/home/:id" exact component={DetailView} />
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/admin" exact component={() => <AdminView data={tableData}/>}/>
                 </BrowserRouter> 
             </>

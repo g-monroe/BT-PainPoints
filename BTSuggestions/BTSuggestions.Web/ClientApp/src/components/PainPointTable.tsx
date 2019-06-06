@@ -6,7 +6,7 @@ import CustomColumnEntity from "../entity/CustomColumnEntity";
 import fakeColumnData from '../types/painPointCustomColumns.api.json';
 import { columnNameList } from '../types/dropdownValues/columnNameTypes';
 import { SelectOptionWithEntityAndWidth } from "../types/dropdownValues/columnNameTypes";
-import  { IPainPointHandler, PainPointHandler } from '../utilities/painpointHandler';
+import  { IPainPointHandler, PainPointHandler } from '../utilities/painPointHandler';
 
 interface IPainPointTableProps{
   painPointHandler?:IPainPointHandler; 
