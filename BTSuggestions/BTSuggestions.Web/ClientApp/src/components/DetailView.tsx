@@ -8,6 +8,7 @@ import { ICommentHandler, CommentHandler } from '../utilities/CommentHandler';
 import CommentEntity from '../entity/CommentEntity';
 import UserEntity from '../entity/UserEntity';
 import PainPointEntity from '../entity/PainPointEntity';
+
 import CommentEntities from '../entity/CommentEntities';
 import { IPainPointHandler, PainPointHandler } from '../utilities/painPointHandler';
 
@@ -36,6 +37,7 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
         comments: undefined,
         newComment: ''
     };
+    
     componentDidMount = async () => {
         const { painpointHandler, id } = this.props;
         if (id) {
