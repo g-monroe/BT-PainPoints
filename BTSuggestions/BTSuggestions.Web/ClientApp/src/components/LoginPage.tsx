@@ -15,7 +15,7 @@ interface ILoginState {
 interface ILoginProps {
     newUsername: (name: string) => void,
     username?: string,
-    password?: string
+    password?: string,
     userHandler?: IUserHandler;
 }
 

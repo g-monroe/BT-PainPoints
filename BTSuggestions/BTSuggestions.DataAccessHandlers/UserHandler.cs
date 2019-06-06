@@ -2,6 +2,7 @@
 using BTSuggestions.Core.Interfaces.DataAccessHandlers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,7 +55,10 @@ namespace BTSuggestions.DataAccessHandlers
             }
             return user.Privilege;
         }
-
+        public IEnumerable<PainPointEntity> GetByStatus(int id, string status)
+        {
+            return _context.PainPoints.Where(x => x.Status == status && x.UserId == id).ToList();
+        }
         public async Task<string> GetUsername(int id)
         {
             var user = await GetById(id);
