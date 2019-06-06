@@ -71,6 +71,10 @@ namespace BTSuggestions.Engines
             await _userHandler.Update(user);
             return user;
         }
+        public IEnumerable<PainPointEntity> GetByStatus(int id, string status)
+        {
+            return _userHandler.GetByStatus(id, status);
+        }
         public Task Delete(UserEntity user)
         {
             return _userHandler.Delete(user);
