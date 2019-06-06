@@ -3,7 +3,7 @@ import PainPointEntity  from '../entity/PainPointEntity';
 import AdminViewEntity from '../entity/AdminViewEntity';
 import CommentEntity from '../entity/CommentEntity';
 import CommentEntities from '../entity/CommentEntities';
-//import SuperheroItems  from '../types/superhero/SuperheroItems';
+
 export interface IPainPointHandler{
     getAll(): Promise<PainPointEntity>;
     getById(id: number): Promise<PainPointEntity>;
@@ -55,7 +55,7 @@ export class PainPointHandler implements IPainPointHandler{
             responseType:PainPointEntity
         });
     }
-    // //Update Element by ID and then respond with the Item.
+    //Update Element by ID and then respond with the Item.
     async updateById(id: number, entity:PainPointEntity): Promise<PainPointEntity>{
         return await APIHandler(`/api/painpoint/${id}`, {
             method: "PUT",
