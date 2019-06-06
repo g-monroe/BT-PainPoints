@@ -3,16 +3,21 @@ import { Button, Input, Col, Row, Icon, message } from 'antd';
 import * as yup from 'yup';
 import { Link } from 'react-router-dom';
 import { render } from 'react-dom';
+import { IUserHandler, UserHandler } from '../utilities/UserHandler';
+import UserEntity from '../entity/UserEntity';
+import { isNull } from 'util';
 
 interface ILoginState {
     username: string,
-    password: string
+    password: string,
+    data?: UserEntity
 }
 
 interface ILoginProps {
     newUsername: (name: string) => void,
     username?: string,
     password?: string
+    userHandler?: IUserHandler;
 }
 
 const yupValidation = yup.object().shape<ILoginState>({
@@ -27,7 +32,8 @@ export default class LoginPage extends React.Component<ILoginProps, ILoginState>
     }
     static defaultProps = {
         username: "",
-        password: ""
+        password: "",
+        userHandler: new UserHandler()
     }
 
     handleUsernameInput = (user: ChangeEvent<HTMLInputElement>) => {
@@ -43,9 +49,23 @@ export default class LoginPage extends React.Component<ILoginProps, ILoginState>
     }
 
     handleLoginClick = () => {
+        let data: UserEntity;
         yupValidation.isValid({username: this.state.username, password: this.state.password})
-            .then((isValid) => {
+            .then(async (isValid) => {
                 if (isValid){
+                    const {userHandler} = this.props;
+                    if (userHandler){
+                        data = (await userHandler.getByUsername(this.state.username))
+                        if (isNull(data)){
+                            localStorage.setItem('Auth', 'false');
+                            message.error('Login failed', 5);
+                        }else {
+                            localStorage.setItem('Auth', 'true');
+                            message.success('Login successful', 3);
+
+                            window.location.href = '/home';
+                        }
+                    }
                     message.success('Login successful',3);
                     localStorage.setItem('Auth', 'true');
                     window.location.href = '/home'
