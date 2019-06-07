@@ -338,6 +338,11 @@ namespace BTSuggestions.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             PainPointEntity result = await _painpointManager.GetPainPoint(id);
+            UserEntity user = await _painpointManager.GetUser(id);
+            if (user.Privilege != 1)
+            {
+                return Unauthorized();
+            }
             if (result == null)
             {
                 return NotFound();
