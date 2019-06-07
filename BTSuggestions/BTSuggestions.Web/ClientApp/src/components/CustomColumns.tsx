@@ -6,6 +6,7 @@ import {Table, Button } from "antd";
 import PainPointEntity from '../entity/PainPointEntity';
 import "../styles/CustomColumns.css"
 import { ColumnProps } from "antd/lib/table/interface";
+import { Redirect } from "react-router";
 
 interface ICustomColumnsProps {
   data: PainPointEntity[];
@@ -33,13 +34,11 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
   getColumns = () => {
     
     const { customColumnIdArray, menuList, data, changeColumn,addColumn,deleteColumn } = this.props;
-    console.log(JSON.stringify(menuList));
     let columns:ColumnProps<PainPointEntity>[];
-    columns = [];
+    columns = [];    
     customColumnIdArray.forEach((id,index)=>{
       columns.push({
-        key: index,
-        filterDropdownVisible: true,
+        key: index,        
         width: menuList[id].width,
         title : <CustomColumn menuList={menuList} 
         data = {data}
@@ -47,17 +46,26 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
         columnLabel={menuList[id]}
         changeColumn={changeColumn}
         deleteColumn={deleteColumn}/>,
-        dataIndex: menuList[id].entityName
-      })
-    });
+        dataIndex: menuList[id].entityName,
+    });});
     columns.push({
-      key: columns.length,
+      key: "addNew",
       width: 50,
       title : <span style={{cursor:"crosshair"}}><AddNewButton addColumn={addColumn}/></span>,
       
-    })
+    });
+    
     return columns;
      
+  };
+
+  onRow=(record:PainPointEntity, rowIndex:number) => {
+    return {
+      onClick: (e:any) => {
+        e.preventDefault();
+        window.location.href = '/home/'+record.painPointId;
+      },      
+    };
   }
 
   render() {  
@@ -66,7 +74,7 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
     const columns = this.getColumns();   
     return (
       <>
-          <Table showHeader={true} pagination={false} 
+          <Table onRow={this.onRow} showHeader={true} pagination={false} 
           columns={columns} dataSource={data} 
           scroll={{ x: 1300 }}
            />

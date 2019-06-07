@@ -137,7 +137,6 @@ class CreateForm extends React.Component<InjectedFormikProps<ICreateFormProps, I
                         </div>
                     </Form>
                     <div>
-              {JSON.stringify(values)}
             </div>
                 </Content>
             </Layout>

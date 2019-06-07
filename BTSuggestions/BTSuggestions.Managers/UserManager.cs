@@ -63,5 +63,10 @@ namespace BTSuggestions.Managers
         {
             return await _userEngine.GetUsername(id);
         }
+
+        public IEnumerable<PainPointEntity> GetByStatus(int id, string status)
+        {
+            return _userEngine.GetByStatus(id, status);
+        }
     }
 }

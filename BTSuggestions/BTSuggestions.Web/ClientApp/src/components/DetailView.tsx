@@ -40,18 +40,8 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
         const { painpointHandler, id } = this.props;
         if (id) {
             const result = await painpointHandler!.getById(parseInt(id));
-            //const commentResult = await this.props.painpointHandler!.getCommentsById(parseInt(this.props.id));
-            const commentResult = {
-                comments: [new CommentEntity({
-                    commentId: 1,
-                    painPoint: parseInt(this.props.id),
-                    user: 1,
-                    commentText: this.state.newComment,
-                    status: "Completed",
-                    createdOn: new Date(),
-                })]
-            }
-            this.setState({ result, comments: commentResult.comments });
+            const commentResult = await this.props.painpointHandler!.getCommentsById(parseInt(this.props.id));
+            this.setState({ result, comments: commentResult.commentsList });
         }
     }
 
