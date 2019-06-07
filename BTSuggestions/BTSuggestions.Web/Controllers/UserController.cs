@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BTSuggestions.Core.Entities;
 using BTSuggestions.Core.Interfaces.Engines;
 using BTSuggestions.Core.Interfaces.Managers;
+using BTSuggestions.Managers.RequestObjects;
 using BTSuggestions.Managers.ResponseObjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -193,6 +194,13 @@ namespace BTSuggestions.Controllers
         [HttpPost]
         public async Task<ActionResult<UserEntity>> PostUser(UserEntity value)
         {
+            var results = await _manager.GetUsers();
+            var username = results.First(x => x.Username == value.Username);
+            var email = results.First(x => x.Email == value.Email);
+            if (username != null || email != null)
+            {
+                return BadRequest();
+            }
             var result = await _manager.AddNewUser(value);
             if (result == null)
             {
@@ -203,13 +211,23 @@ namespace BTSuggestions.Controllers
 
         // PUT api/user/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<UserEntity>> PutUser(int id, UserEntity value)
+        public async Task<ActionResult<UserResponse>> PutUser(int id, UserRequest value)
         {
-            if (id != value.Id)
+            if (id != value.UserId)
             {
                 return BadRequest();
             }
-            UserEntity result = await _manager.UpdateUser(id, value.Email, value.Firstname, value.Lastname, value.Password, value.Privilege);
+            UserEntity me = await _manager.UpdateUser(id, value.Email, value.FirstName, value.LastName, value.Password, value.Privilege);
+            var result = new UserResponse
+            {
+                UserId = me.Id,
+                Username = me.Username,
+                FirstName = me.Firstname,
+                LastName = me.Lastname,
+                Email = me.Email,
+                Password = me.Password,
+                Privilege = me.Privilege
+            };
             return result;
         }
 

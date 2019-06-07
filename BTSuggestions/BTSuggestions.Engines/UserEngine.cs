@@ -18,7 +18,7 @@ namespace BTSuggestions.Engines
 
         public async Task<UserEntity> CreateUserEntity(UserEntity newUser)
         {
-
+           
            await _userHandler.Insert(newUser);
            await _userHandler.SaveChanges();
 
