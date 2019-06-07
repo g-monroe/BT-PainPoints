@@ -1,12 +1,12 @@
-import React, from "react";
+import React from "react";
 import "antd/dist/antd.css";
 import CustomColumn from "./CustomColumn"
 import { SelectOptionWithEntityAndWidth } from '../types/dropdownValues/columnNameTypes';
-import { Table } from "antd";
+import { Table, Input, Button, Icon } from "antd";
 import PainPointEntity from '../entity/PainPointEntity';
 import "../styles/CustomColumns.css"
 import { ColumnProps } from "antd/lib/table/interface";
-
+import Highlighter from 'react-highlight-words';
 
 interface ICustomColumnsProps {
   data: PainPointEntity[];
@@ -18,7 +18,7 @@ interface ICustomColumnsProps {
 }
 
 interface ICustomColumnsState {
-
+  searchText: any;
 }
 
 export default class CustomColumns extends React.Component<ICustomColumnsProps, ICustomColumnsState> {
@@ -28,8 +28,14 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
   };
 
   state: ICustomColumnsState = {
-
+    searchText: ''
   };
+  searchInput: any;
+
+  constructor(props: ICustomColumnsProps) {
+    super(props);
+    this.searchInput = React.createRef<HTMLInputElement>();
+  }
 
   getColumns = () => {
     const { customColumnIdArray, menuList, data, changeColumn, addColumn, deleteColumn } = this.props;
@@ -46,6 +52,7 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
           changeColumn={changeColumn}
           deleteColumn={deleteColumn} />,
         dataIndex: menuList[id].entityName,
+        ...this.getColumnSearchProps(menuList[id].entityName)
       });
     });
     columns.push({
@@ -60,10 +67,68 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
     return {
       onClick: (e: any) => {
         e.preventDefault();
-        window.location.href = '/home/'+record.painPointId;
+        window.location.href = '/home/' + record.painPointId;
       },
     };
   }
+
+  getColumnSearchProps = (dataIndex: any) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters }) => {
+      return (
+        <div style={{ padding: 8 }}>
+          <Input
+            ref={node => {
+              this.searchInput = node;
+            }}
+            placeholder={`Search ${dataIndex}`}
+            value={selectedKeys[0]}
+            onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+            onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
+            style={{ width: 188, marginBottom: 8, display: 'block' }}
+          />
+          <Button
+            type="primary"
+            onClick={() => this.handleSearch(selectedKeys, confirm)}
+            icon="search"
+            size="small"
+            style={{ width: 90, marginRight: 8 }}
+          >
+            Search
+        </Button>
+          <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+            Reset
+        </Button>
+        </div>
+      )
+    },
+    filterIcon: (filtered: any) => (
+      <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
+    ),
+    onFilter: (value: any, record: any) =>
+      record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes(value.toLowerCase()),
+    onFilterDropdownVisibleChange: (visible: any) => {
+      if (visible) {
+        setTimeout(() => this.searchInput.select());
+      }
+    },
+  });
+
+  handleSearch = (selectedKeys: any, confirm: any) => {
+    confirm();
+    this.setState({ searchText: selectedKeys[0] });
+  };
+
+  handleReset = (clearFilters: any) => {
+    clearFilters();
+    this.setState({ searchText: '' });
+  };
 
   render() {
     const { data } = this.props;
