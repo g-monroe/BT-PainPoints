@@ -23,7 +23,7 @@ interface ICreateAccountState {
 
 //TODO: work on fixing this to make sure that it lines up with what we want.
 const yupValidation = yup.object().shape<ICreateAccountState>({
-    email: yup.string().required().label('Email'),
+    email: yup.string().required().email().label('Email'),
     firstName: yup.string().required().label("First Name"),
     lastName: yup.string().required().label('Last Name'),
     username: yup.string().max(30).required().label('Username'),
