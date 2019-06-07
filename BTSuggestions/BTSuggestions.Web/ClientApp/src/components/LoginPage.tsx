@@ -95,18 +95,21 @@ export default class LoginPage extends React.Component<ILoginProps, ILoginState>
                         onChange={this.handleUsernameInput} />
 
                     <div style={{ height: '25px' }}/>
-                    <Input.Password placeholder="Password" onChange={this.handlePasswordInput}></Input.Password>
+                    <Input.Password placeholder="Password"
+                        prefix={<Icon type="lock" 
+                        style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        onChange={this.handlePasswordInput}> 
+                    </Input.Password>
                 </Col>
                 <Col span={6}></Col>
             </Row>
-            <Row>
+            <Row style={{margin: 'auto'}}>
                 <div style={{ height: '75px' }}></div>
-                <Col span={5} offset={11}>
-                    <Button type="primary" style={{ width: '150px' }} onClick={this.handleLoginClick}>
+                <Col style={{margin: 'auto'}}>
+                    <Button type='link' style={{ width: '150px', marginLeft: '39.5%'}} onClick={this.handleLoginClick}>
                         Login
                     </Button>
-                    <div style={{ width: '20px', height: '25px' }}/>
-                    <Button type="dashed" style={{ width: '150px' }}>
+                    <Button type="link" style={{ width: '150px' }}>
                         <Link to="/create-account">Create Account</Link>
                     </Button>
                 </Col>

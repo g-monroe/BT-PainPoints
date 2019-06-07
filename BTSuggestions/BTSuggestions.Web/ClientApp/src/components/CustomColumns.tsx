@@ -6,7 +6,6 @@ import { Table, Input, Button, Icon } from "antd";
 import PainPointEntity from '../entity/PainPointEntity';
 import "../styles/CustomColumns.css"
 import { ColumnProps } from "antd/lib/table/interface";
-import Highlighter from 'react-highlight-words';
 
 interface ICustomColumnsProps {
   data: PainPointEntity[];
