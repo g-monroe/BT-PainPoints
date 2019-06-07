@@ -64,7 +64,7 @@ export default class App extends React.Component {
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/home" exact component={PainPointView} />
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/create" exact component={CreateForm} />
                     <PrivateRoute auth={localStorage.getItem('Auth')} path="/home/:id" exact render={DetailView}/>
-                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/admin" exact component={() => <AdminView data={tableData}/>}/>
+                    <PrivateRoute auth={localStorage.getItem('Auth')} path="/admin" exact component={() => <AdminView  data={tableData} />}/>
                 </BrowserRouter> 
             </>
         );
