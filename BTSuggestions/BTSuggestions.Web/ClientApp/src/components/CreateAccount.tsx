@@ -1,10 +1,11 @@
 import React from 'react';
-import { Input, Button, message } from 'antd';
+import { Input, Button, message, Layout } from 'antd';
 import * as yup from 'yup';
 import FormItem from 'antd/lib/form/FormItem';
 import { withFormik, InjectedFormikProps, Form } from 'formik';
 import UserEntity from '../entity/UserEntity';
 import { IUserHandler, UserHandler } from '../utilities/UserHandler';
+import { Link } from 'react-router-dom';
 
 interface ICreateAccountProps {
     newUser: (username: string) => void,
@@ -16,7 +17,8 @@ interface ICreateAccountState {
     firstName: string,
     lastName: string,
     username: string,
-    password: string
+    password: string,
+    validCreate?: boolean
 }
 
 //TODO: work on fixing this to make sure that it lines up with what we want.
@@ -38,7 +40,8 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
         firstName: '',
         lastName: '',
         username: '',
-        password: ''
+        password: '',
+        validCreate: false
     }
 
     validateEmailChange = (event: any) => {
@@ -77,7 +80,6 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
         });
     }
 
-  
 
     // Handler for the button clicks
     handleCreateAccountClick = () => {
@@ -113,7 +115,7 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
 
     handleCancleCreateClick = () => {
         // Go back to parent.
-        window.location.href = '/login';
+       // window.location.href = '/login';
     }
 
     getValidationStatus = (error: any) => {
@@ -122,26 +124,34 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
     
     render() {
         const { values, handleSubmit, errors } = this.props;
+        const { Content, Header } = Layout;
         return <>
-            <Form onSubmitCapture={handleSubmit}>
-                <FormItem label='Email' required validateStatus={this.getValidationStatus(errors.email)}>
-                    <Input id='Email' placeholder='Email' onChange={this.handleEmailChange} value={this.state.email} />
-                </FormItem>
-                <FormItem label='First Name' required validateStatus={this.getValidationStatus(errors.firstName)}>
-                    <Input id='firstName' placeholder='First Name' onChange={this.handleFirstNameChange} value={this.state.firstName}/>
-                </FormItem>
-                <FormItem id='lastName' label='Last Name' required validateStatus={this.getValidationStatus(errors.lastName)}>
-                    <Input placeholder='Last Name' onChange={this.handleLastNameChange} value={this.state.lastName} />
-                </FormItem>
-                <FormItem id='username' label='Username' required validateStatus={this.getValidationStatus(errors.username)}>
-                    <Input placeholder='Username' onChange={this.handleUsernameChange} value={this.state.username}/>
-                </FormItem>
-                <FormItem id='password' label='Password' required validateStatus={this.getValidationStatus(errors.password)}>
-                    <Input placeholder='Password' onChange={this.handlePasswordChange} value={this.state.password}/>
-                </FormItem>
-                <Button id='createButton' htmlType='submit' type='primary' onClick={this.handleCreateAccountClick}>Create Account</Button>
-                <Button id='cancelButton' type='danger' onClick={this.handleCancleCreateClick}>Cancel Create</Button>
-            </Form>
+            <Layout>
+                <Header style={{textAlign: 'center', color: 'white'}}>Create Account</Header>
+                <Content>
+                    <Form onSubmitCapture={handleSubmit} style={{width: '50%', margin: 'auto'}}>
+                        <FormItem label='Email' required validateStatus={this.getValidationStatus(errors.email)}>
+                            <Input id='Email' placeholder='Email' onChange={this.handleEmailChange} value={this.state.email}  />
+                        </FormItem>
+                        <FormItem label='First Name' required validateStatus={this.getValidationStatus(errors.firstName)}>
+                            <Input id='firstName' placeholder='First Name' onChange={this.handleFirstNameChange} value={this.state.firstName} />
+                        </FormItem>
+                        <FormItem id='lastName' label='Last Name' required validateStatus={this.getValidationStatus(errors.lastName)}>
+                            <Input placeholder='Last Name' onChange={this.handleLastNameChange} value={this.state.lastName} />
+                        </FormItem>
+                        <FormItem id='username' label='Username' required validateStatus={this.getValidationStatus(errors.username)}>
+                            <Input placeholder='Username' onChange={this.handleUsernameChange} value={this.state.username} />
+                        </FormItem>
+                        <FormItem id='password' label='Password' required validateStatus={this.getValidationStatus(errors.password)}>
+                            <Input placeholder='Password' onChange={this.handlePasswordChange} value={this.state.password} />
+                        </FormItem>
+                        <Button id='createButton' htmlType='submit' type='primary' onClick={this.handleCreateAccountClick} style={{marginLeft: '32%'}}>Create Account</Button>
+                        <Button id='cancelButton' type='danger' onClick={this.handleCancleCreateClick} style={{marginLeft: '20px'}}>
+                            <Link to='/login'>Cancel Creation</Link>
+                        </Button>
+                    </Form>
+                </Content>
+            </Layout>
         </>
     }
 };

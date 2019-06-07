@@ -1,13 +1,13 @@
 import { APIHandler } from './apiHandler';
 import PainPointEntity  from '../entity/PainPointEntity';
 import CommentEntity from '../entity/CommentEntity';
-
+import BooleanEntity from '../entity/BooleanEntity';
 export interface IPainPointHandler{
     getAll(): Promise<PainPointCollectionResponse>;
     getById(id: number): Promise<PainPointEntity>;
     getCommentsById(id: number): Promise<CommentCollectionResponse>;    
     createPainPoint(issue:PainPointEntity): Promise<PainPointEntity>;
-    deleteById(id: number): Promise<PainPointEntity>;
+    deleteById(id: number, userid: number): Promise<BooleanEntity>;
     updateById(id: number, entity:PainPointEntity): Promise<PainPointEntity>;
 }
 export class PainPointCollectionResponse{
@@ -59,10 +59,10 @@ export class PainPointHandler implements IPainPointHandler{
     }
 
     //Delete Element by ID and then respond with the Item.
-    async deleteById(id: number): Promise<PainPointEntity>{
-        return await APIHandler(`/api/painpoint/${id}`, {
+    async deleteById(id: number, userid: number): Promise<BooleanEntity>{
+        return await APIHandler(`/api/painpoint/${id}/user/${userid}`, {
             method: "DELETE",
-            responseType:PainPointEntity
+            responseType: BooleanEntity
         });
     }
 

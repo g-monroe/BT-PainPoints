@@ -43,7 +43,12 @@ export default class PainPointTable extends React.Component<IPainPointTableProps
     let { data, customColumnsArray, currentColumnIndex, menuList } = this.state;
     //TODO get data and update customColumnIdArray and data with real data
     if (painPointHandler){
-    data =  (await painPointHandler.getAll()).painPointsList.map(m => new PainPointEntity(m));
+    try {
+      data =  (await painPointHandler.getAll()).painPointsList.map(m => new PainPointEntity(m));
+    } catch (error) {
+      data = []
+    }  
+    
     }
     customColumnsArray = fakeColumnData.data.map(m=>new CustomColumnEntity(m))
     currentColumnIndex = fakeColumnData.currentColumnIndex;

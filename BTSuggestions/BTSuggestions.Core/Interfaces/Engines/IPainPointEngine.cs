@@ -23,6 +23,6 @@ namespace BTSuggestions.Core.Interfaces.Engines
         Task<IEnumerable<PainPointEntity>> GetOrderByPriority();
         Task<IEnumerable<PainPointEntity>> GetByPriority(int level);
         IEnumerable<PainPointEntity> GetOrderByPriorityType(string typeName);
-        Task Delete(PainPointEntity entity);
+        bool DeleteById(PainPointEntity input, int userid);
     }
 }
