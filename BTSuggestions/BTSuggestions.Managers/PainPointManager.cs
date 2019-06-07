@@ -41,9 +41,9 @@ namespace BTSuggestions.Managers
         {
             _painPointEngine.PostSeed();
         }
-        public Task Delete(PainPointEntity value)
+        public bool DeleteById(PainPointEntity value, int userid)
         {
-            return  _painPointEngine.Delete(value);
+            return  _painPointEngine.DeleteById(value, userid);
         }
 
         public async Task<IEnumerable<CommentEntity>> GetComments(int id)

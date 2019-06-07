@@ -5,6 +5,7 @@ import FormItem from 'antd/lib/form/FormItem';
 import { withFormik, InjectedFormikProps, Form } from 'formik';
 import UserEntity from '../entity/UserEntity';
 import { IUserHandler, UserHandler } from '../utilities/UserHandler';
+import { Link } from 'react-router-dom';
 
 interface ICreateAccountProps {
     newUser: (username: string) => void,
@@ -16,7 +17,8 @@ interface ICreateAccountState {
     firstName: string,
     lastName: string,
     username: string,
-    password: string
+    password: string,
+    validCreate?: boolean
 }
 
 //TODO: work on fixing this to make sure that it lines up with what we want.
@@ -38,7 +40,8 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
         firstName: '',
         lastName: '',
         username: '',
-        password: ''
+        password: '',
+        validCreate: false
     }
 
     validateEmailChange = (event: any) => {
@@ -77,7 +80,6 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
         });
     }
 
-  
 
     // Handler for the button clicks
     handleCreateAccountClick = () => {
@@ -113,7 +115,7 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
 
     handleCancleCreateClick = () => {
         // Go back to parent.
-        window.location.href = '/login';
+       // window.location.href = '/login';
     }
 
     getValidationStatus = (error: any) => {
@@ -140,7 +142,9 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
                     <Input placeholder='Password' onChange={this.handlePasswordChange} value={this.state.password}/>
                 </FormItem>
                 <Button id='createButton' htmlType='submit' type='primary' onClick={this.handleCreateAccountClick}>Create Account</Button>
-                <Button id='cancelButton' type='danger' onClick={this.handleCancleCreateClick}>Cancel Create</Button>
+                <Button id='cancelButton' type='danger' onClick={this.handleCancleCreateClick}>
+                    <Link to='/login'>Cancel Creation</Link>
+                </Button>
             </Form>
         </>
     }

@@ -319,31 +319,60 @@ namespace BTSuggestions.Controllers
         }
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<PainPointEntity>> PutPainPoint(int id, PainPointEntity value)
+        public async Task<ActionResult<PainPointResponse>> PutPainPoint(int id, PainPointRequest value)
         {
-            if (id != value.Id)
+            var newMe = new PainPointEntity()
+            {
+                Id = value.PainPointId,
+                User = value.User,
+                PriorityLevel = value.PriorityLevel,
+                UserId = value.UserId,
+                Annotation = value.Annotation,
+                CompanyLocation = value.CompanyLocation,
+                CompanyContact = value.CompanyContact,
+                CompanyName = value.CompanyName,
+                Title = value.Title,
+                CreatedOn = value.CreatedOn,
+                Summary = value.Summary,
+                IndustryType = value.IndustryType,
+                Status = value.Status
+            };
+            if (id != newMe.Id)
             {
                 return NotFound();
             }
-            var result = await _painpointManager.UpdatePainPoint(id, value);
-            if (result == null)
+            var me = await _painpointManager.UpdatePainPoint(id, newMe);
+            var resp = new PainPointResponse
             {
-                return NotFound();
-            }
-            return result;
+                User = me.User,
+                PriorityLevel = me.PriorityLevel,
+                UserId = me.UserId,
+                Type = me.Types,
+                Annotation = me.Annotation,
+                ComapnyLocation = me.CompanyLocation,
+                CompanyContact = me.CompanyContact,
+                CompanyName = me.CompanyName,
+                Title = me.Title,
+                PainPointId = me.Id,
+                CreatedOn = me.CreatedOn.ToString(),
+                Summary = me.Summary,
+                IndustryType = me.IndustryType,
+                Status = me.Status
+            };
+            return resp;
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        [HttpDelete("{id}/user/{userid}")]
+        public async Task<ActionResult<bool>> Delete([FromRoute]int id, [FromRoute]int userid)
         {
-            PainPointEntity result = await _painpointManager.GetPainPoint(id);
+            PainPointEntity result = await _painpointManager.GetIncludes(id);
+
             if (result == null)
             {
                 return NotFound();
             }
-            await _painpointManager.Delete(result);
-            return Ok();
+            return _painpointManager.DeleteById(result, userid);
         }
     }
 }
