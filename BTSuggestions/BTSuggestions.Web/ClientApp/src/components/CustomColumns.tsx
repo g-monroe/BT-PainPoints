@@ -36,22 +36,34 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
     this.searchInput = React.createRef<HTMLInputElement>();
   }
 
+   uuidv4 = () => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
   getColumns = () => {
     const { customColumnIdArray, menuList, data, changeColumn, addColumn, deleteColumn } = this.props;
     let columns: ColumnProps<PainPointEntity>[];
     columns = [];
     customColumnIdArray.forEach((id, index) => {
       columns.push({
-        key: index,
-        width: menuList[id].width,
+        key: menuList[id].entityName + "-index:"+index,
+        width: menuList[id].width,        
         title: <CustomColumn menuList={menuList}
           data={data}
           columnNumber={index}
           columnLabel={menuList[id]}
           changeColumn={changeColumn}
           deleteColumn={deleteColumn} />,
-        dataIndex: menuList[id].entityName,
-        ...this.getColumnSearchProps(menuList[id].entityName)
+          dataIndex: menuList[id].entityName,
+          defaultSortOrder: 'descend',
+          sorter: (a, b) => {
+            if(a[menuList[id].entityName] < b[menuList[id].entityName]) { return -1; }
+            if(a[menuList[id].entityName] > b[menuList[id].entityName]) { return 1; }
+            return 0;},
+        ...this.getColumnSearchProps(menuList[id].entityName)        
       });
     });
     columns.push({
@@ -77,10 +89,11 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
       selectedKeys,
       confirm,
       clearFilters }) => {
+        console.log("INPUT: SK" + selectedKeys[0]);
       return (
         <div style={{ padding: 8 }}>
           <Input
-            ref={node => {
+            ref={node => {              
               this.searchInput = node;
             }}
             placeholder={`Search ${dataIndex}`}
@@ -107,12 +120,15 @@ export default class CustomColumns extends React.Component<ICustomColumnsProps, 
     filterIcon: (filtered: any) => (
       <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
     ),
-    onFilter: (value: any, record: any) =>
-      record[dataIndex]
+    onFilter: (value: any, record: any) => {
+    console.log("onFilter: " +JSON.stringify(record));
+    console.log("onFilter: " +JSON.stringify(dataIndex));
+      return (
+        record[dataIndex]
         .toString()
         .toLowerCase()
-        .includes(value.toLowerCase()),
-    onFilterDropdownVisibleChange: (visible: any) => {
+        .includes(value.toLowerCase()))},
+         onFilterDropdownVisibleChange: (visible: any) => {
       if (visible) {
         setTimeout(() => this.searchInput.select());
       }

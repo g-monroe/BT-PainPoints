@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Form as AntForm, Select, Input, Button, Slider, Icon } from 'antd';
+import { Layout, Form as AntForm, Select, Input, Button, Slider, Icon, message } from 'antd';
 import * as yup from 'yup';
 import { painPointList } from '../types/dropdownValues/painPointTypes';
 import { industryList } from '../types/dropdownValues/industryTypes';
@@ -164,6 +164,7 @@ export default withFormik<ICreateFormProps, ICreateFormState>({
         console.log(props.painPointHandler);
         const painPointHandler = new PainPointHandler();
         await painPointHandler.createPainPoint(new PainPointEntity(values));
+        message.success("Pain Point Created Successfully!");
         setSubmitting(false);
     },
     displayName: 'Create Issue Form'

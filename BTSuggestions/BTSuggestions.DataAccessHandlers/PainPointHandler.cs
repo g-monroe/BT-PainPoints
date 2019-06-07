@@ -105,6 +105,7 @@ namespace BTSuggestions.DataAccessHandlers
                 return false;
             }
             var result =  Delete(input).IsCompletedSuccessfully;
+            _context.SaveChanges();
             return result;
         }
         public void PostSeed()

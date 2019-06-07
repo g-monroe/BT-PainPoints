@@ -35,7 +35,8 @@ interface IColumnViewState {
 }
 class Column extends React.Component<IColumnViewProps, IColumnViewState>{
     static defaultProps = {
-        painPointHandler: new PainPointHandler()
+        painPointHandler: new PainPointHandler(),
+        userId: localStorage.getItem("userId")
     };
     state: IColumnViewState = {
         isSaving: false,
@@ -89,11 +90,17 @@ class Column extends React.Component<IColumnViewProps, IColumnViewState>{
     };
 
     handleDelete = async () => {
-        const { painPointHandler, data, parent } = this.props;
-        let result = await painPointHandler.deleteById(data.painPointId, 1);
+        const { painPointHandler, data, parent} = this.props;
+        let num = localStorage.getItem('userId');
+        if (num == null){
+            message.error("You aren't logged in!");
+            return;
+        }
+        let result = await painPointHandler.deleteById(data.painPointId, parseInt(num));
         console.log(result);
         if (!result.result) {
             message.error("Could not delete Issue!");
+            return;
         }
         this.setState(
             {
