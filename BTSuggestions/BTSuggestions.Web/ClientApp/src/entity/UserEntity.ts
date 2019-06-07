@@ -13,7 +13,7 @@ export default class UserEntity {
         this.username = JSONData.username;
         this.firstName = JSONData.firstName;
         this.lastName = JSONData.lastName;
-        this.password = JSONData.passwrod;
+        this.password = JSONData.password;
         this.privilege = JSONData.privilege;
     }
 }

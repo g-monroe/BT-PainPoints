@@ -110,7 +110,7 @@ export default class AdminView extends React.Component<IAdminViewProps, IAdminVi
                                 <td className="thinColumn"><Select key={"industry"} style={{ width: 150 }} dropdownMatchSelectWidth={false} defaultValue={i.industryType} onChange={(e) => this.handleSelect(e, i.painPointId, "industryType", industryList)}>{this.renderDropdowns(industryList)}</Select></td>
                                 <td className="thinColumn"><Select key={"status"} style={{ width: 150 }} dropdownMatchSelectWidth={false} defaultValue={i.submissionStatus}  onChange={(e) => this.handleSelect(e, i.painPointId, "submissionStatus", statusList)}>{this.renderDropdowns(statusList)}</Select></td>
                                 <td className="thickColumn">
-                                    <Popconfirm title="Delete this Issue?" onConfirm={this.handleSubmit} okText="Yes" cancelText="No" placement="left"><Button><Icon type="edit" /></Button></Popconfirm>
+                                    <Popconfirm title="Save this Issue?" onConfirm={this.handleSubmit} okText="Yes" cancelText="No" placement="left"><Button><Icon type="save" /></Button></Popconfirm>
                                     <Popconfirm title="Delete this Issue?" onConfirm={this.handleDelete} okText="Yes" cancelText="No" placement="left"><Button><Icon type="delete" /></Button></Popconfirm>
                                 </td>
                             </tr>))}

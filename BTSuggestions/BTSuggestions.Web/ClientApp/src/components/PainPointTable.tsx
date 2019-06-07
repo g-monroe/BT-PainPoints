@@ -38,26 +38,27 @@ export default class PainPointTable extends React.Component<IPainPointTableProps
   }
 
    getData = async () => {
-    console.log("getData called");
-    this.setState({isFetching: true});
-    console.log("is fetching true");
+    this.setState({isFetching: true});    
     const {painPointHandler} = this.props;
     let { data, customColumnsArray, currentColumnIndex, menuList } = this.state;
     //TODO get data and update customColumnIdArray and data with real data
     if (painPointHandler){
-    data =  (await painPointHandler.getAll()).painPointsList.map(m => new PainPointEntity(m));
+    try {
+      data =  (await painPointHandler.getAll()).painPointsList.map(m => new PainPointEntity(m));
+    } catch (error) {
+      data = []
+    }  
+    
     }
     customColumnsArray = fakeColumnData.data.map(m=>new CustomColumnEntity(m))
     currentColumnIndex = fakeColumnData.currentColumnIndex;
     menuList = columnNameList;
     this.sortData();
-    console.log("sort data complete");
     this.setState({isFetching: false, data, customColumnsArray, currentColumnIndex, menuList})
-    console.log("setState");
   }
 
   sortData = () => {
-    console.log("sortData called");
+    
   }
 
   deleteColumn = (event:any,columnNumber: number) => {

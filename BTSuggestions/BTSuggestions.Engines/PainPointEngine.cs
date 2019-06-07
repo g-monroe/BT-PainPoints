@@ -19,7 +19,7 @@ namespace BTSuggestions.Engines
         public async Task<PainPointEntity> CreatePainPoint(PainPointEntity value)
         {
             var user = await __painPointHandler.GetUser(value.UserId);
-            value.User.Lastname = user.Lastname;
+            value.User = user;
            await __painPointHandler.Insert(value);
            await __painPointHandler.SaveChanges();
 

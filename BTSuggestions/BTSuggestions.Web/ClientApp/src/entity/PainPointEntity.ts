@@ -1,7 +1,7 @@
 import UserEntity from "./UserEntity";
 
 export default class PainPointEntity {
-        painpointId: number;
+        painPointId: number;
         title: string;
         summary: string;
         annotation?: string;
@@ -17,7 +17,7 @@ export default class PainPointEntity {
         types: string[];
 
     constructor(JSONData: any){
-        this.painpointId =  JSONData.painpointId;
+        this.painPointId =  JSONData.painPointId;
         this.title =  JSONData.title;
         this.summary = JSONData.summary;
         this.annotation = JSONData.annotation;
@@ -30,7 +30,12 @@ export default class PainPointEntity {
         this.companyLocation  = JSONData.companyLocation;
         this.industryType  = JSONData.industryType;
         this.createdOn  = JSONData.createdOn;
-        this.types  = JSONData.types;
+        if(!JSONData.types){
+            this.types = [];
+        }
+        else {
+            this.types = JSONData.types;
+        }
     }
 }
 

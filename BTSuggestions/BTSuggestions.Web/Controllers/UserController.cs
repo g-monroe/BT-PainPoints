@@ -112,6 +112,37 @@ namespace BTSuggestions.Controllers
             }
             return result;
         }
+        [HttpGet("{id}/Status/{status}")]
+        public ActionResult<PainPointResponseList> GetStatusPainPoints(int id, string status)
+        {
+            var results =  _manager.GetByStatus(id, status);
+            if (results == null)
+            {
+                return NotFound();
+            }
+            var resp = new PainPointResponseList
+            {
+                TotalResults = results.Count(),
+                PainPointsList = results.Select(me => new PainPointResponse()
+                {
+                    User = me.User,
+                    PriorityLevel = me.PriorityLevel,
+                    UserId = me.UserId,
+                    Type = me.Types,
+                    Annotation = me.Annotation,
+                    ComapnyLocation = me.CompanyLocation,
+                    CompanyContact = me.CompanyContact,
+                    CompanyName = me.CompanyName,
+                    Title = me.Title,
+                    PainPointId = me.Id,
+                    CreatedOn = me.CreatedOn.ToString(),
+                    Summary = me.Summary,
+                    IndustryType = me.IndustryType,
+                    Status = me.Status
+                }).ToList()
+            };
+            return resp;
+        }
         [HttpGet("{id}/admin")]
         public async Task<ActionResult<bool>> GetAdmin(int id)
         {
@@ -129,16 +160,27 @@ namespace BTSuggestions.Controllers
                 return true;
             }
         }
-        [HttpGet("{username}")]
-        public async Task<ActionResult<UserEntity>> GetUserByUsername(string username)
+        [HttpPost("username")]
+        public async Task<ActionResult<UserResponse>> GetUserByUsername([FromBody]string username)
         {
             var results = await _manager.GetUsers();
-            var result = results.FirstOrDefault(x => x.Username == username);
-            if (result == null)
+
+            var me = results.FirstOrDefault(x => x.Username == username);
+            var newUser = new UserResponse
+            {
+                UserId = me.Id,
+                Username = me.Username,
+                FirstName = me.Firstname,
+                LastName = me.Lastname,
+                Email = me.Email,
+                Password = me.Password,
+                Privilege = me.Privilege
+            };
+            if (me == null)
             {
                 return NotFound();
             }
-            return result;
+            return newUser;
         }
         // GET api/user/5/privilege
         [HttpGet("{id}/privilege")]
