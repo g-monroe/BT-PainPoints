@@ -101,7 +101,7 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
                         message.success("Account Successfully Created!", 2);
                         localStorage.setItem('Auth', 'false');
 
-                        //window.location.href = '/login';
+                        window.location.href = '/login';
 
                     }catch(error){
                         message.error('Account Creation Failed', 5);
@@ -141,9 +141,7 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
                 <FormItem id='password' label='Password' required validateStatus={this.getValidationStatus(errors.password)}>
                     <Input placeholder='Password' onChange={this.handlePasswordChange} value={this.state.password}/>
                 </FormItem>
-                <Button id='createButton' htmlType='submit' type='primary' onClick={this.handleCreateAccountClick}>
-                    <Link to='/login' >Create Account</Link>
-                </Button>
+                <Button id='createButton' htmlType='submit' type='primary' onClick={this.handleCreateAccountClick}>Create Account</Button>
                 <Button id='cancelButton' type='danger' onClick={this.handleCancleCreateClick}>
                     <Link to='/login'>Cancel Creation</Link>
                 </Button>

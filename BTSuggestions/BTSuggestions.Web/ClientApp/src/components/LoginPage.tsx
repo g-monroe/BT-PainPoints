@@ -62,8 +62,7 @@ export default class LoginPage extends React.Component<ILoginProps, ILoginState>
                                 localStorage.setItem('Auth', 'true');
                                 localStorage.setItem('userId', data.userId.toString());
                                 
-                                //window.location.href = '/home';
-                                <Link to="/home">Login</Link>
+                                window.location.href = '/home';
                             }
                             else{
                                 message.error('Incorrect Password', 5);
@@ -104,7 +103,7 @@ export default class LoginPage extends React.Component<ILoginProps, ILoginState>
                 <div style={{ height: '75px' }}></div>
                 <Col span={5} offset={11}>
                     <Button type="primary" style={{ width: '150px' }} onClick={this.handleLoginClick}>
-                        
+                        Login
                     </Button>
                     <div style={{ width: '20px', height: '25px' }}/>
                     <Button type="dashed" style={{ width: '150px' }}>
