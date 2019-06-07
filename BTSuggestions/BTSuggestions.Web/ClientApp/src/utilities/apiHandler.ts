@@ -64,7 +64,6 @@ export async function APIHandler<T>(url: string, props: APIHandlerProps<T>): Pro
 
         case "PUT":
         case "POST":
-            console.log("Here");
         case "DELETE":
             // add data to the request body
             if (props.data) {
