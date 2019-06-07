@@ -97,7 +97,16 @@ namespace BTSuggestions.DataAccessHandlers
         {
             return await _context.PainPoints.GroupBy(x => x.TypeEntities).OrderBy(pp => pp.Select(z => z.PriorityLevel)).ToListAsync();
         }
-  
+        public bool DeleteById(PainPointEntity input, int userid)
+        {
+            UserEntity user =  _context.Users.First(x => x.Id == userid);
+            if (user.Privilege != 1)
+            {
+                return false;
+            }
+            var result =  Delete(input).IsCompletedSuccessfully;
+            return result;
+        }
         public void PostSeed()
         {
             IEnumerable<string> types = new string[]{ "Bug"};

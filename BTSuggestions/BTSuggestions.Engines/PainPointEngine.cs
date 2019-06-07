@@ -85,10 +85,9 @@ namespace BTSuggestions.Engines
             await __painPointHandler.Update(result);
             return painPoint;
         }
-        public Task Delete(PainPointEntity entity)
+        public bool DeleteById(PainPointEntity entity, int userid)
         {
-             __painPointHandler.Delete(entity);
-            return Task.CompletedTask;
+            return __painPointHandler.DeleteById(entity, userid);
         }
         public async Task<PainPointEntity> GetIncludes(int id)
         {

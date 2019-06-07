@@ -16,6 +16,7 @@ namespace BTSuggestions.Core.Interfaces.DataAccessHandlers
         Task<PainPointEntity> GetIncludes(int id);
         Task<IEnumerable<PainPointEntity>> GetOrderByPriority();
         Task<IEnumerable<PainPointEntity>> GetByPriority(int level);
+        bool DeleteById(PainPointEntity input, int userid);
         IEnumerable<PainPointEntity> GetOrderByPriorityType(string typeName);
         void PostSeed();
     }
