@@ -86,6 +86,7 @@ export default class LoginPage extends React.Component<ILoginProps, ILoginState>
 
     render() {
         return <div>
+            <img src='https://constructech.com/wp-content/uploads/2019/01/CT_TP19_buildertrend-logo_01-300x150.jpg' style={{marginLeft: '40%'}}></img>
             <Row style={{ paddingTop: '100px' }}>
                 <Col span={6}></Col>
                 <Col span={12} >
