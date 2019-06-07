@@ -192,7 +192,7 @@ namespace BTSuggestions.Controllers
         }
         // POST api/user
         [HttpPost]
-        public async Task<ActionResult<UserEntity>> PostUser(UserEntity value)
+        public async Task<ActionResult<UserResponse>> PostUser(UserRequest value)
         {
             var results = await _manager.GetUsers();
             var username = results.First(x => x.Username == value.Username);
@@ -201,11 +201,31 @@ namespace BTSuggestions.Controllers
             {
                 return BadRequest();
             }
-            var result = await _manager.AddNewUser(value);
-            if (result == null)
+            var user = new UserEntity
+            {
+                Id = value.UserId,
+                Username = value.Username,
+                Firstname = value.FirstName,
+                Lastname = value.LastName,
+                Email = value.Email,
+                Password = value.Password,
+                Privilege = value.Privilege
+            };
+            var me = await _manager.AddNewUser(user);
+            if (me == null)
             {
                 return NotFound();
             }
+            var result = new UserResponse
+            {
+                UserId = me.Id,
+                Username = me.Username,
+                FirstName = me.Firstname,
+                LastName = me.Lastname,
+                Email = me.Email,
+                Password = me.Password,
+                Privilege = me.Privilege
+            };
             return result;
         }
 
