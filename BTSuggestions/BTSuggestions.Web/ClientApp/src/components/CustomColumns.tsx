@@ -1,4 +1,4 @@
-import React, from "react";
+import React from "react";
 import "antd/dist/antd.css";
 import CustomColumn from "./CustomColumn"
 import { SelectOptionWithEntityAndWidth } from '../types/dropdownValues/columnNameTypes';
