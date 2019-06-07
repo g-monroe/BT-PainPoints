@@ -125,21 +125,21 @@ class CreateAccount extends React.Component<InjectedFormikProps<ICreateAccountPr
     render() {
         const { values, handleSubmit, errors } = this.props;
         return <>
-            <Form onSubmitCapture={handleSubmit}>
+            <Form onSubmitCapture={handleSubmit} style={{width: '50%', margin: 'auto'}}>
                 <FormItem label='Email' required validateStatus={this.getValidationStatus(errors.email)}>
-                    <Input id='Email' placeholder='Email' onChange={this.handleEmailChange} value={this.state.email} />
+                    <Input id='Email' placeholder='Email' onChange={this.handleEmailChange} value={this.state.email}  />
                 </FormItem>
                 <FormItem label='First Name' required validateStatus={this.getValidationStatus(errors.firstName)}>
-                    <Input id='firstName' placeholder='First Name' onChange={this.handleFirstNameChange} value={this.state.firstName}/>
+                    <Input id='firstName' placeholder='First Name' onChange={this.handleFirstNameChange} value={this.state.firstName} />
                 </FormItem>
                 <FormItem id='lastName' label='Last Name' required validateStatus={this.getValidationStatus(errors.lastName)}>
                     <Input placeholder='Last Name' onChange={this.handleLastNameChange} value={this.state.lastName} />
                 </FormItem>
                 <FormItem id='username' label='Username' required validateStatus={this.getValidationStatus(errors.username)}>
-                    <Input placeholder='Username' onChange={this.handleUsernameChange} value={this.state.username}/>
+                    <Input placeholder='Username' onChange={this.handleUsernameChange} value={this.state.username} />
                 </FormItem>
                 <FormItem id='password' label='Password' required validateStatus={this.getValidationStatus(errors.password)}>
-                    <Input placeholder='Password' onChange={this.handlePasswordChange} value={this.state.password}/>
+                    <Input placeholder='Password' onChange={this.handlePasswordChange} value={this.state.password} />
                 </FormItem>
                 <Button id='createButton' htmlType='submit' type='primary' onClick={this.handleCreateAccountClick}>Create Account</Button>
                 <Button id='cancelButton' type='danger' onClick={this.handleCancleCreateClick}>
