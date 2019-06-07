@@ -146,9 +146,9 @@ export default class DetailView extends React.Component<IDetailViewProps, IDetai
                                         <tbody>
                                             <tr>
                                                 <th colSpan={1} className="first-column">Date Created</th>
-                                                <td colSpan={2}>{result.createdOn}</td>
-                                                <th colSpan={4} className="second-column">Issue Type</th>
-                                                <td colSpan={1}>{result.types}</td>
+                                                <td colSpan={3}>{moment(result.createdOn.toString()).format('HH:mm on MM-DD-YYYY')}</td>
+                                                <th colSpan={1} className="second-column">Issue Type</th>
+                                                <td colSpan={1}>{result.types.join(",")}</td>
                                             </tr>
                                             <tr>
                                                     <th colSpan={1} className="first-column">Issue Summary</th>
